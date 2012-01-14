@@ -26,5 +26,6 @@
 #include <XnCppWrapper.h>
 
 void DrawDepthMap(const xn::DepthMetaData& dmd, const xn::SceneMetaData& smd);
+void DrawUserInfo();
 
 #endif

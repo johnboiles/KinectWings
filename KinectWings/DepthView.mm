@@ -44,17 +44,20 @@ static void drawTriangle() {
 
     // Read next available data
     // If we skip this, the view will appear paused
+    // TODO(johnb): I wonder if this is polling as is implied by 'Wait"
     [CocoaOpenNI sharedOpenNI].context.WaitAndUpdateAll();
 
     // Process the data
     [CocoaOpenNI sharedOpenNI].depthGenerator.GetMetaData(depthMD);
     [CocoaOpenNI sharedOpenNI].userGenerator.GetUserPixels(0, sceneMD);
     DrawDepthMap(depthMD, sceneMD);
+    DrawUserInfo();
+
     // TODO(johnb): I wonder what the difference in swapping buffers and flushing is
     // glutSwapBuffers();
     glFlush();
   } else {
-    // Draw a triange. Why the hell not?
+    // Draw a triangle. Why the hell not?
     glClearColor(0, 0, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT);
     drawTriangle();

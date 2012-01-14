@@ -115,8 +115,8 @@
 			children = (
 				427B8DE914C1578100EDAD05 /* DepthView.h */,
 				427B8DEA14C1578100EDAD05 /* DepthView.mm */,
-				42312CEF14C130C600C616F3 /* SceneDrawer.mm */,
 				42312CF014C130C600C616F3 /* SceneDrawer.h */,
+				42312CEF14C130C600C616F3 /* SceneDrawer.mm */,
 				42312CE114C12E5800C616F3 /* Shared.cpp */,
 				42312CE214C12E5800C616F3 /* Shared.h */,
 				42312CD514C12CCB00C616F3 /* JBAppDelegate.h */,
