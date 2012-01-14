@@ -37,18 +37,18 @@ static void drawTriangle() {
 
     xn::SceneMetaData sceneMD;
     xn::DepthMetaData depthMD;
-    [CocoaOpenNI sharedOpenNI].depthGenerator.GetMetaData(depthMD);
+    [[CocoaOpenNI sharedOpenNI] depthGenerator].GetMetaData(depthMD);
     glOrtho(0, depthMD.XRes(), depthMD.YRes(), 0, -1.0, 1.0);
 
     glDisable(GL_TEXTURE_2D);
 
     // Read next available data
     // If we skip this, the view will appear paused
-    [CocoaOpenNI sharedOpenNI].context.WaitNoneUpdateAll();
+    [[CocoaOpenNI sharedOpenNI] context].WaitNoneUpdateAll();
 
     // Process the data
-    [CocoaOpenNI sharedOpenNI].depthGenerator.GetMetaData(depthMD);
-    [CocoaOpenNI sharedOpenNI].userGenerator.GetUserPixels(0, sceneMD);
+    [[CocoaOpenNI sharedOpenNI] depthGenerator].GetMetaData(depthMD);
+    [[CocoaOpenNI sharedOpenNI] userGenerator].GetUserPixels(0, sceneMD);
     DrawDepthMap(depthMD, sceneMD);
     DrawUserInfo();
 
