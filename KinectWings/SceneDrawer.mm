@@ -20,9 +20,6 @@
 *                                                                            *
 *****************************************************************************/
 
-
-
-
 //---------------------------------------------------------------------------
 // Includes
 //---------------------------------------------------------------------------
@@ -60,6 +57,14 @@ XnUInt32 nColors = 10;
 // Global state
 float g_pDepthHist[MAX_DEPTH];
 GLfloat texcoords[8];
+
+unsigned int getClosestPowerOfTwo(unsigned int n);
+GLuint initTexture(void** buf, int& width, int& height);
+void DrawRectangle(float topLeftX, float topLeftY, float bottomRightX, float bottomRightY);
+void DrawTexture(float topLeftX, float topLeftY, float bottomRightX, float bottomRightY);
+void glPrintString(void *font, char *str);
+void DrawLimb(XnUserID player, XnSkeletonJoint eJoint1, XnSkeletonJoint eJoint2);
+void PrintNodeY(XnUserID player, XnSkeletonJoint eJoint1);
 
 unsigned int getClosestPowerOfTwo(unsigned int n) {
   unsigned int m = 2;

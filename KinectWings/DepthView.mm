@@ -11,10 +11,6 @@
 #import "CocoaOpenNI.h"
 #include <XnCppWrapper.h>
 
-@implementation DepthView
-
-@synthesize started=_started;
-
 static void drawTriangle() {
   glColor3f(1.0f, 0.85f, 0.35f);
   glBegin(GL_TRIANGLES);
@@ -26,7 +22,11 @@ static void drawTriangle() {
   glEnd();
 }
 
--(void)drawRect:(NSRect) bounds {
+@implementation DepthView
+
+@synthesize started=_started;
+
+-(void)drawRect:(NSRect)bounds {
   if (_started) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -44,8 +44,7 @@ static void drawTriangle() {
 
     // Read next available data
     // If we skip this, the view will appear paused
-    // TODO(johnb): I wonder if this is polling as is implied by 'Wait"
-    [CocoaOpenNI sharedOpenNI].context.WaitAndUpdateAll();
+    [CocoaOpenNI sharedOpenNI].context.WaitNoneUpdateAll();
 
     // Process the data
     [CocoaOpenNI sharedOpenNI].depthGenerator.GetMetaData(depthMD);

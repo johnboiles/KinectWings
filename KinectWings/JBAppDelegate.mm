@@ -39,7 +39,7 @@
   [[CocoaOpenNI sharedOpenNI] start];
   [self initOpenGL];
   // XXX(johnb): I think I'm supposed to do this with CADisplayLink or something like that. This seems ghetto
-  [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(display) userInfo:nil repeats:YES];
+  [NSTimer scheduledTimerWithTimeInterval:0.03 target:self selector:@selector(display) userInfo:nil repeats:YES];
 }
 
 @end
