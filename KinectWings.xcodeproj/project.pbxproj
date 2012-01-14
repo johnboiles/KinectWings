@@ -12,7 +12,6 @@
 		42312CD414C12CCB00C616F3 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 42312CD214C12CCB00C616F3 /* Credits.rtf */; };
 		42312CDA14C12CCB00C616F3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42312CD814C12CCB00C616F3 /* MainMenu.xib */; };
 		42312CDF14C12D4900C616F3 /* libOpenNI.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 42312CDE14C12D4900C616F3 /* libOpenNI.dylib */; };
-		42312CE414C12E5800C616F3 /* Shared.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42312CE114C12E5800C616F3 /* Shared.cpp */; };
 		42312CEE14C12FFB00C616F3 /* SamplesConfig.xml in Resources */ = {isa = PBXBuildFile; fileRef = 42312CED14C12FFB00C616F3 /* SamplesConfig.xml */; };
 		42312CF114C130C600C616F3 /* SceneDrawer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 42312CEF14C130C600C616F3 /* SceneDrawer.mm */; };
 		42312CF314C131D400C616F3 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42312CF214C131D400C616F3 /* GLUT.framework */; };
@@ -39,8 +38,6 @@
 		42312CD614C12CCB00C616F3 /* JBAppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = JBAppDelegate.mm; sourceTree = "<group>"; };
 		42312CD914C12CCB00C616F3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		42312CDE14C12D4900C616F3 /* libOpenNI.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libOpenNI.dylib; path = SDKs/MacOSX10.7.sdk/usr/lib/libOpenNI.dylib; sourceTree = DEVELOPER_DIR; };
-		42312CE114C12E5800C616F3 /* Shared.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shared.cpp; sourceTree = "<group>"; };
-		42312CE214C12E5800C616F3 /* Shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shared.h; sourceTree = "<group>"; };
 		42312CED14C12FFB00C616F3 /* SamplesConfig.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SamplesConfig.xml; sourceTree = "<group>"; };
 		42312CEF14C130C600C616F3 /* SceneDrawer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SceneDrawer.mm; sourceTree = "<group>"; };
 		42312CF014C130C600C616F3 /* SceneDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneDrawer.h; sourceTree = "<group>"; };
@@ -117,8 +114,6 @@
 				427B8DEA14C1578100EDAD05 /* DepthView.mm */,
 				42312CF014C130C600C616F3 /* SceneDrawer.h */,
 				42312CEF14C130C600C616F3 /* SceneDrawer.mm */,
-				42312CE114C12E5800C616F3 /* Shared.cpp */,
-				42312CE214C12E5800C616F3 /* Shared.h */,
 				42312CD514C12CCB00C616F3 /* JBAppDelegate.h */,
 				42312CD614C12CCB00C616F3 /* JBAppDelegate.mm */,
 				42312CD814C12CCB00C616F3 /* MainMenu.xib */,
@@ -213,7 +208,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42312CE414C12E5800C616F3 /* Shared.cpp in Sources */,
 				42312CF114C130C600C616F3 /* SceneDrawer.mm in Sources */,
 				42312CF614C1390E00C616F3 /* JBAppDelegate.mm in Sources */,
 				42312CF714C1399300C616F3 /* main.m in Sources */,
@@ -270,7 +264,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COPY_PHASE_STRIP = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -281,7 +274,6 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -300,14 +292,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KinectWings/KinectWings-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;

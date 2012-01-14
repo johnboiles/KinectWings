@@ -11,7 +11,6 @@
 #include <XnCodecIDs.h>
 #include <XnCppWrapper.h>
 #include "SceneDrawer.h"
-#include "Shared.h"
 
 @interface CocoaOpenNI : NSObject {
   xn::Context _context;
@@ -33,6 +32,9 @@
 - (xn::UserGenerator)userGenerator;
 
 - (XnStatus)start;
+- (void)stop;
+
+- (XnUserID)firstTrackingUser;
 
 + (CocoaOpenNI *)sharedOpenNI;
 

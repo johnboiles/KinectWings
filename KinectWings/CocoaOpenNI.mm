@@ -177,6 +177,20 @@ CocoaOpenNI *gSharedOpenNI;
   return _userGenerator;
 }
 
+
+- (XnUserID)firstTrackingUser {
+  XnUserID aUsers[10];
+  XnUInt16 nUsers = 10;
+  _userGenerator.GetUsers(aUsers, nUsers);
+  // The first user that's tracking will be in control
+  for (int i = 0; i < nUsers; ++i) {
+    if(_userGenerator.GetSkeletonCap().IsTracking(aUsers[i])){
+      return aUsers[i];
+    }
+  }
+  return NULL;  
+}
+
 #pragma mark - OpenNI Callbacks
 
 - (void)userGenerator:(xn::UserGenerator&)userGenerator didGetNewWithUserID:(XnUserID)user cookie:(void *)cookie {
