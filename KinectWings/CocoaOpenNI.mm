@@ -52,7 +52,7 @@ void XN_CALLBACK_TYPE UserPose_PoseInProgress(xn::PoseDetectionCapability& pose,
 // Callback: Started calibration
 void XN_CALLBACK_TYPE UserCalibration_CalibrationStart(xn::SkeletonCapability& capability, XnUserID user, void* pCookie)
 {
-	[[CocoaOpenNI sharedOpenNI] skeletonCapability:capability didStartCalibrationForUserID:user cookie:pCookie];
+  [[CocoaOpenNI sharedOpenNI] skeletonCapability:capability didStartCalibrationForUserID:user cookie:pCookie];
 }
 
 // Callback: Calibration is in progress
@@ -106,53 +106,53 @@ CocoaOpenNI *gSharedOpenNI;
   }
 
   // Create depth generator
-	nRetVal = _context.FindExistingNode(XN_NODE_TYPE_DEPTH, _depthGenerator);
-	if (nRetVal != XN_STATUS_OK) {
+  nRetVal = _context.FindExistingNode(XN_NODE_TYPE_DEPTH, _depthGenerator);
+  if (nRetVal != XN_STATUS_OK) {
     printf("Find depth generator failed: %s\n", xnGetStatusString(nRetVal));
     return nRetVal;
   }
 
   // Create user generator
-	nRetVal = _context.FindExistingNode(XN_NODE_TYPE_USER, _userGenerator);
-	if (nRetVal != XN_STATUS_OK) {
-		nRetVal = _userGenerator.Create(_context);
+  nRetVal = _context.FindExistingNode(XN_NODE_TYPE_USER, _userGenerator);
+  if (nRetVal != XN_STATUS_OK) {
+    nRetVal = _userGenerator.Create(_context);
     if (nRetVal != XN_STATUS_OK) {
       printf("Find user generator failed: %s\n", xnGetStatusString(nRetVal));
       return nRetVal;
     }
-	}
+  }
 
   // Start user tracking
-	if (!_userGenerator.IsCapabilitySupported(XN_CAPABILITY_SKELETON)) {
-		printf("Supplied user generator doesn't support skeleton\n");
-		return 1;
-	}
-	XnCallbackHandle hUserCallbacks, hCalibrationStart, hCalibrationComplete, hPoseDetected, hCalibrationInProgress, hPoseInProgress;
-	_userGenerator.RegisterUserCallbacks(User_NewUser, User_LostUser, NULL, hUserCallbacks);
-	_userGenerator.GetSkeletonCap().RegisterToCalibrationStart(UserCalibration_CalibrationStart, NULL, hCalibrationStart);
+  if (!_userGenerator.IsCapabilitySupported(XN_CAPABILITY_SKELETON)) {
+    printf("Supplied user generator doesn't support skeleton\n");
+    return 1;
+  }
+  XnCallbackHandle hUserCallbacks, hCalibrationStart, hCalibrationComplete, hPoseDetected, hCalibrationInProgress, hPoseInProgress;
+  _userGenerator.RegisterUserCallbacks(User_NewUser, User_LostUser, NULL, hUserCallbacks);
+  _userGenerator.GetSkeletonCap().RegisterToCalibrationStart(UserCalibration_CalibrationStart, NULL, hCalibrationStart);
   _userGenerator.GetSkeletonCap().RegisterToCalibrationComplete(UserCalibration_CalibrationComplete, NULL, hCalibrationComplete);
 
   // See if we need a pose for calibration
-	if (_userGenerator.GetSkeletonCap().NeedPoseForCalibration()) {
-		_bNeedPose = TRUE;
-		if (!_userGenerator.IsCapabilitySupported(XN_CAPABILITY_POSE_DETECTION)) {
-			printf("Pose required, but not supported\n");
-			return 1;
-		}
-		_userGenerator.GetPoseDetectionCap().RegisterToPoseDetected(UserPose_PoseDetected, NULL, hPoseDetected);
-		_userGenerator.GetSkeletonCap().GetCalibrationPose(_strPose);
-	}
+  if (_userGenerator.GetSkeletonCap().NeedPoseForCalibration()) {
+    _bNeedPose = TRUE;
+    if (!_userGenerator.IsCapabilitySupported(XN_CAPABILITY_POSE_DETECTION)) {
+      printf("Pose required, but not supported\n");
+      return 1;
+    }
+    _userGenerator.GetPoseDetectionCap().RegisterToPoseDetected(UserPose_PoseDetected, NULL, hPoseDetected);
+    _userGenerator.GetSkeletonCap().GetCalibrationPose(_strPose);
+  }
 
-	_userGenerator.GetSkeletonCap().SetSkeletonProfile(XN_SKEL_PROFILE_ALL);
+  _userGenerator.GetSkeletonCap().SetSkeletonProfile(XN_SKEL_PROFILE_ALL);
 
   nRetVal = _userGenerator.GetSkeletonCap().RegisterToCalibrationInProgress(UserCalibration_CalibrationInProgress, NULL, hCalibrationInProgress);
-	nRetVal = _userGenerator.GetPoseDetectionCap().RegisterToPoseInProgress(UserPose_PoseInProgress, NULL, hPoseInProgress);
+  nRetVal = _userGenerator.GetPoseDetectionCap().RegisterToPoseInProgress(UserPose_PoseInProgress, NULL, hPoseInProgress);
 
   // Maybe this will retain it?
   xnProductionNodeAddRef(_userGenerator);
 
   // Start generating some users
-	nRetVal = _context.StartGeneratingAll();
+  nRetVal = _context.StartGeneratingAll();
   if (nRetVal != XN_STATUS_OK) {
     printf("StartGenerating failed: %s\n", xnGetStatusString(nRetVal));
     return nRetVal;
@@ -195,8 +195,8 @@ CocoaOpenNI *gSharedOpenNI;
 
 - (void)poseDetectionCapability:(xn::PoseDetectionCapability&)capability didDetectPose:(const XnChar *)pose userID:(XnUserID)userID cookie:(void *)cookie {
   printf("Pose %s detected for user %d\n", pose, userID);
-	_userGenerator.GetPoseDetectionCap().StopPoseDetection(userID);
-	_userGenerator.GetSkeletonCap().RequestCalibration(userID, TRUE);
+  _userGenerator.GetPoseDetectionCap().StopPoseDetection(userID);
+  _userGenerator.GetSkeletonCap().RequestCalibration(userID, TRUE);
 }
 
 - (void)poseDetectionCapability:(xn::PoseDetectionCapability &)capability inProgressWithPose:(const XnChar *)pose userID:(XnUserID)userID poseStatus:(XnPoseDetectionStatus)poseStatus cookie:(void *)cookie {
@@ -213,18 +213,18 @@ CocoaOpenNI *gSharedOpenNI;
 
 - (void)skeletonCapability:(xn::SkeletonCapability&)capability didEndCalibrationForUserID:(XnUserID)userID calibrationStatus:(XnCalibrationStatus)calibrationStatus cookie:(void *)cookie {
   if (calibrationStatus == XN_CALIBRATION_STATUS_OK) {
-		// Calibration succeeded
-		printf("Calibration complete, start tracking user %d\n", userID);
-		_userGenerator.GetSkeletonCap().StartTracking(userID);
-	} else {
-		// Calibration failed
-		printf("Calibration failed for user %d\n", userID);
-		if (_bNeedPose) {
-			_userGenerator.GetPoseDetectionCap().StartPoseDetection(_strPose, userID);
-		} else {
-			_userGenerator.GetSkeletonCap().RequestCalibration(userID, TRUE);
-		}
-	}
+    // Calibration succeeded
+    printf("Calibration complete, start tracking user %d\n", userID);
+    _userGenerator.GetSkeletonCap().StartTracking(userID);
+  } else {
+    // Calibration failed
+    printf("Calibration failed for user %d\n", userID);
+    if (_bNeedPose) {
+      _userGenerator.GetPoseDetectionCap().StartPoseDetection(_strPose, userID);
+    } else {
+      _userGenerator.GetSkeletonCap().RequestCalibration(userID, TRUE);
+    }
+  }
 }
 
 @end

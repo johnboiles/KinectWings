@@ -15,7 +15,7 @@
 
 @synthesize started=_started;
 
-static void drawAnObject () {
+static void drawTriangle() {
   glColor3f(1.0f, 0.85f, 0.35f);
   glBegin(GL_TRIANGLES);
   {
@@ -26,7 +26,7 @@ static void drawAnObject () {
   glEnd();
 }
 
--(void)drawRect: (NSRect) bounds {
+-(void)drawRect:(NSRect) bounds {
   if (_started) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -57,7 +57,7 @@ static void drawAnObject () {
     // Draw a triange. Why the hell not?
     glClearColor(0, 0, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT);
-    drawAnObject();
+    drawTriangle();
     glFlush();
   }
 }

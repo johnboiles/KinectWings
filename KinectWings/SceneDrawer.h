@@ -27,6 +27,4 @@
 
 void DrawDepthMap(const xn::DepthMetaData& dmd, const xn::SceneMetaData& smd);
 
-void SendCommandToLights(float light1, float light2, float light3, float light4);
-
 #endif
