@@ -3,7 +3,7 @@
  *  JBMouseControllerXcode
  *
  *  Created by John Boiles on 1/13/11.
- *  Copyright 2011 __MyCompanyName__. All rights reserved.
+ *  Copyright 2011 John Boiles. All rights reserved.
  *
  */
 
