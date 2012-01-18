@@ -14,10 +14,9 @@
 
 @implementation JBAppDelegate
 
-@synthesize window = _window;
+@synthesize window=_window;
 
-- (void)dealloc
-{
+- (void)dealloc {
   [super dealloc];
 }
 
@@ -28,7 +27,6 @@
 - (void)initOpenGL {
   glDisable(GL_DEPTH_TEST);
   glEnable(GL_TEXTURE_2D);
-
   glEnableClientState(GL_VERTEX_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
 

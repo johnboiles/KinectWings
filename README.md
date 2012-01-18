@@ -9,9 +9,9 @@ To build using the xcode project, you must symlink /usr/include/ni and
 AFAIK there's not an elegant way to get xcode to use the standard /usr/include
 and /usr/lib paths. For my installation I ran the following commands:
 
-<pre>sudo ln -s /usr/lib/libOpenNI.dylib /Developer/SDKs/MacOSX10.6.sdk/usr/lib/libOpenNI.dylib</pre>
+<pre>sudo ln -s /usr/lib/libOpenNI.dylib /Developer/SDKs/MacOSX10.7.sdk/usr/lib/libOpenNI.dylib</pre>
 
-<pre>sudo ln -s /usr/include/ni /Developer/SDKs/MacOSX10.6.sdk/usr/include/ni</pre>
+<pre>sudo ln -s /usr/include/ni /Developer/SDKs/MacOSX10.7.sdk/usr/include/ni</pre>
 
 To Install OpenNI for Mac
 -------------------------

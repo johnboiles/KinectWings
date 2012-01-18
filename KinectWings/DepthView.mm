@@ -26,7 +26,7 @@ static void drawTriangle() {
 
 @synthesize started=_started;
 
--(void)drawRect:(NSRect)bounds {
+- (void)drawRect:(NSRect)bounds {
   if (_started) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -53,7 +53,7 @@ static void drawTriangle() {
     DrawUserInfo();
 
     // TODO(johnb): I wonder what the difference in swapping buffers and flushing is
-    // glutSwapBuffers();
+    //glutSwapBuffers();
     glFlush();
   } else {
     // Draw a triangle. Why the hell not?
