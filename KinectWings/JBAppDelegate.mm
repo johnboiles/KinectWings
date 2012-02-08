@@ -11,6 +11,10 @@
 #include <XnCppWrapper.h>
 #import <QuartzCore/QuartzCore.h>
 #include <GLUT/glut.h>
+#import "JBFlapGestureRecognizer.h"
+#import "DepthView.h"
+#import "VerticalGuageView.h"
+#import "math.h"
 
 @implementation JBAppDelegate
 
@@ -22,6 +26,9 @@
 
 - (void)display {
   [_openGLView setNeedsDisplay:YES];
+  xn::UserGenerator userGenerator = [[CocoaOpenNI sharedOpenNI] userGenerator];
+  XnUserID user = [[CocoaOpenNI sharedOpenNI] firstTrackingUser];
+  [_flapGestureRecognizer skeletalTrackingDidContinueWithUserGenerator:userGenerator user:user];
 }
 
 - (void)initOpenGL {
@@ -36,8 +43,31 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
   [[CocoaOpenNI sharedOpenNI] start];
   [self initOpenGL];
+  _flapGestureRecognizer = [[JBFlapGestureRecognizer alloc] init];
+  _flapGestureRecognizer.delegate = self;
   // XXX(johnb): I think I'm supposed to do this with CADisplayLink or something like that. This seems ghetto
   [NSTimer scheduledTimerWithTimeInterval:0.03 target:self selector:@selector(display) userInfo:nil repeats:YES];
+}
+
+- (void)flapGestureRecognizer:(JBFlapGestureRecognizer *)flapGestureRecognizer didGetLeftWingVector:(XnVector3D)leftWingVector rightWingVector:(XnVector3D)rightWingVector {
+  //NSLog(@"Vector %f, %f, %f", leftWingVector.X, leftWingVector.Y, leftWingVector.Z);
+  //double magnitude = XnVector3DMagnitude(leftWingVector);
+  //NSLog(@"Magnitude %f", magnitude);
+  NSLog(@"%0.3f %0.3f", leftWingVector.Y, rightWingVector.Y);
+
+  if (leftWingVector.Y < 0) {
+    _leftVerticalGuageView.value = -leftWingVector.Y / 100.0;
+  } else {
+    _leftVerticalGuageView.value = 0;
+  }
+  [_leftVerticalGuageView setNeedsDisplay:YES];
+
+  if (rightWingVector.Y < 0) {
+    _rightVerticalGuageView.value = -rightWingVector.Y / 100.0;
+  } else {
+    _rightVerticalGuageView.value = 0;
+  }
+  [_rightVerticalGuageView setNeedsDisplay:YES];
 }
 
 @end

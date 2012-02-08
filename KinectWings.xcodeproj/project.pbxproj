@@ -21,6 +21,9 @@
 		427B8DEB14C1578100EDAD05 /* DepthView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 427B8DEA14C1578100EDAD05 /* DepthView.mm */; };
 		42BB47A314C13D5F0052AC36 /* CocoaOpenNI.mm in Sources */ = {isa = PBXBuildFile; fileRef = 42BB47A114C13B610052AC36 /* CocoaOpenNI.mm */; };
 		42BB47AE14C14F600052AC36 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42BB47AD14C14F600052AC36 /* QuartzCore.framework */; };
+		42FBA3A714E22123009D13CC /* VerticalGuageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 42FBA3A614E22123009D13CC /* VerticalGuageView.m */; };
+		42FEEEEF14C68692000809D7 /* JB3DGestureRecognizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 42FEEEEE14C68692000809D7 /* JB3DGestureRecognizer.mm */; };
+		42FEEEF314C686C9000809D7 /* JBFlapGestureRecognizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 42FEEEF214C686C9000809D7 /* JBFlapGestureRecognizer.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +51,12 @@
 		42BB47A014C13B610052AC36 /* CocoaOpenNI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaOpenNI.h; sourceTree = "<group>"; };
 		42BB47A114C13B610052AC36 /* CocoaOpenNI.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaOpenNI.mm; sourceTree = "<group>"; };
 		42BB47AD14C14F600052AC36 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		42FBA3A514E22123009D13CC /* VerticalGuageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerticalGuageView.h; sourceTree = "<group>"; };
+		42FBA3A614E22123009D13CC /* VerticalGuageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerticalGuageView.m; sourceTree = "<group>"; };
+		42FEEEED14C68692000809D7 /* JB3DGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JB3DGestureRecognizer.h; sourceTree = "<group>"; };
+		42FEEEEE14C68692000809D7 /* JB3DGestureRecognizer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = JB3DGestureRecognizer.mm; sourceTree = "<group>"; };
+		42FEEEF114C686C9000809D7 /* JBFlapGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBFlapGestureRecognizer.h; sourceTree = "<group>"; };
+		42FEEEF214C686C9000809D7 /* JBFlapGestureRecognizer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = JBFlapGestureRecognizer.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +129,12 @@
 				42312CCA14C12CCB00C616F3 /* Supporting Files */,
 				42BB47A014C13B610052AC36 /* CocoaOpenNI.h */,
 				42BB47A114C13B610052AC36 /* CocoaOpenNI.mm */,
+				42FEEEED14C68692000809D7 /* JB3DGestureRecognizer.h */,
+				42FEEEEE14C68692000809D7 /* JB3DGestureRecognizer.mm */,
+				42FEEEF114C686C9000809D7 /* JBFlapGestureRecognizer.h */,
+				42FEEEF214C686C9000809D7 /* JBFlapGestureRecognizer.mm */,
+				42FBA3A514E22123009D13CC /* VerticalGuageView.h */,
+				42FBA3A614E22123009D13CC /* VerticalGuageView.m */,
 			);
 			path = KinectWings;
 			sourceTree = "<group>";
@@ -213,6 +228,9 @@
 				42312CF714C1399300C616F3 /* main.m in Sources */,
 				42BB47A314C13D5F0052AC36 /* CocoaOpenNI.mm in Sources */,
 				427B8DEB14C1578100EDAD05 /* DepthView.mm in Sources */,
+				42FEEEEF14C68692000809D7 /* JB3DGestureRecognizer.mm in Sources */,
+				42FEEEF314C686C9000809D7 /* JBFlapGestureRecognizer.mm in Sources */,
+				42FBA3A714E22123009D13CC /* VerticalGuageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

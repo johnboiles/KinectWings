@@ -8,10 +8,16 @@
 
 #import <Cocoa/Cocoa.h>
 #import "CocoaOpenNI.h"
-#import "DepthView.h"
+#import "JBFlapGestureRecognizer.h"
 
-@interface JBAppDelegate : NSObject <NSApplicationDelegate> {
+@class DepthView;
+@class VerticalGuageView;
+
+@interface JBAppDelegate : NSObject <NSApplicationDelegate, JBFlapGestureRecognizerDelegate> {
   IBOutlet DepthView *_openGLView;
+  IBOutlet VerticalGuageView *_leftVerticalGuageView;
+  IBOutlet VerticalGuageView *_rightVerticalGuageView;
+  JBFlapGestureRecognizer *_flapGestureRecognizer;
 }
 
 @property (assign) IBOutlet NSWindow *window;
