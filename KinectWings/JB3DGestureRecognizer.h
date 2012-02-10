@@ -9,6 +9,12 @@
 #import <Foundation/Foundation.h>
 #include <XnCppWrapper.h>
 
+@protocol JB3DGestureRecognizer <NSObject>
+- (void)skeletalTrackingBeganWithUserGenerator:(xn::UserGenerator)userGenerator user:(XnUserID)user;
+- (void)skeletalTrackingDidContinueWithUserGenerator:(xn::UserGenerator)userGenerator user:(XnUserID)user;
+- (void)skeletalTrackingDidEnd;
+@end
+
 // States have been modeled after UIGestureRecognizer in an attempt to keep implementation familiar.
 typedef enum {
   // The gesture recognizer has not yet recognized its gesture, but may be evaluating events. This is the default state.
@@ -34,7 +40,7 @@ typedef enum {
   JB3DGestureRecognizerRecognized,
 } JB3DGestureRecognizerState;
 
-@interface JB3DGestureRecognizer : NSObject {
+@interface JB3DGestureRecognizer : NSObject <JB3DGestureRecognizer> {
   JB3DGestureRecognizerState _state;
   XnUserID _user;
   xn::UserGenerator _userGenerator;

@@ -10,7 +10,10 @@
 
 @class JBFlapGestureRecognizer;
 
-@protocol JBFlapGestureRecognizerDelegate
+@protocol JBFlapGestureRecognizerDelegate <NSObject>
+// TODO(johnb): Combine these into a single vector
+// TODO(johnb): Don't register flap gestures if arms aren't extended outward
+// TODO(johnb): Time out flap gestures after a moment of no flapping
 - (void)flapGestureRecognizer:(JBFlapGestureRecognizer *)flapGestureRecognizer didGetLeftWingVector:(XnVector3D)leftWingVector rightWingVector:(XnVector3D)rightWingVector;
 @end
 
@@ -25,14 +28,4 @@
 }
 @property (weak, nonatomic) id<JBFlapGestureRecognizerDelegate> delegate;
 
-- (void)skeletalTrackingDidContinueWithUserGenerator:(xn::UserGenerator)userGenerator user:(XnUserID)user;
-
 @end
-
-XnVector3D XnVector3DSum(NSUInteger count, ...);
-
-XnVector3D XnVector3DAverage(NSUInteger count, ...);
-
-double XnVector3DMagnitude(XnVector3D vector);
-
-XnVector3D XnVector3DDifference(XnVector3D v1, XnVector3D v2);

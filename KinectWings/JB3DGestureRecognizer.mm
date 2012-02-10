@@ -8,9 +8,6 @@
 
 #import "JB3DGestureRecognizer.h"
 #include <XnCppWrapper.h>
-#include <XnOpenNI.h>
-
-#include "XnPrdNode.h"
 
 @implementation JB3DGestureRecognizer
 

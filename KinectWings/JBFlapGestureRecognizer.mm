@@ -8,69 +8,8 @@
 
 #import "JBFlapGestureRecognizer.h"
 #include <XnCppWrapper.h>
-
-XnVector3D XnVector3DSum(NSUInteger count, ...) {
-  va_list arguments;
-  va_start(arguments, count);
-  XnVector3D sumVector;
-  sumVector.X = 0;
-  sumVector.Y = 0;
-  sumVector.Z = 0;
-  for (NSUInteger i = 0; i < count; i++) {
-    XnVector3D vector = va_arg(arguments, XnVector3D);
-    sumVector.X += vector.X;
-    sumVector.Y += vector.Y;
-    sumVector.Z += vector.Z;
-  }
-  va_end(arguments);
-  return sumVector;
-}
-
-XnVector3D XnVector3DAverage(NSUInteger count, ...) {
-  va_list arguments;
-  va_start(arguments, count);
-  XnVector3D sumVector;
-  sumVector.X = 0;
-  sumVector.Y = 0;
-  sumVector.Z = 0;
-  for (NSUInteger i = 0; i < count; i++) {
-    XnVector3D vector = va_arg(arguments, XnVector3D);
-    sumVector.X += vector.X;
-    sumVector.Y += vector.Y;
-    sumVector.Z += vector.Z;
-  }
-  va_end(arguments);
-  sumVector.X = sumVector.X / count;
-  sumVector.Y = sumVector.Y / count;
-  sumVector.Z = sumVector.Z / count;
-  return sumVector;
-}
-
-XnVector3D XnVector3DDifference(XnVector3D v1, XnVector3D v2) {
-  XnVector3D difference;
-  difference.X = v1.X - v2.X;
-  difference.Y = v1.Y - v2.Y;
-  difference.Z = v1.Z - v2.Z;
-  return difference;
-}
-
-XnVector3D XnVector3DMultiply(XnVector3D vector, double multiplier) {
-  XnVector3D difference;
-  difference.X = vector.X * multiplier;
-  difference.Y = vector.Y * multiplier;
-  difference.Z = vector.Z * multiplier;
-  return difference;
-}
-
-double XnVector3DMagnitude(XnVector3D vector) {
-  return sqrt(pow(vector.X, 2) + pow(vector.Y, 2) + pow(vector.Z, 2));
-}
-
-XnSkeletonJointPosition GetJointPosition(xn::UserGenerator userGenerator, XnUserID user, XnSkeletonJoint joint) {
-  XnSkeletonJointPosition jointPosition;
-  xnGetSkeletonJointPosition(userGenerator.GetHandle(), user, joint, &jointPosition);
-  return jointPosition;
-}
+#import "Skeleton.h"
+#import "XnVector3DUtils.h"
 
 @implementation JBFlapGestureRecognizer
 

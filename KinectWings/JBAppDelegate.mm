@@ -29,6 +29,7 @@
   xn::UserGenerator userGenerator = [[CocoaOpenNI sharedOpenNI] userGenerator];
   XnUserID user = [[CocoaOpenNI sharedOpenNI] firstTrackingUser];
   [_flapGestureRecognizer skeletalTrackingDidContinueWithUserGenerator:userGenerator user:user];
+  [_tiltGestureRecognizer skeletalTrackingDidContinueWithUserGenerator:userGenerator user:user];
 }
 
 - (void)initOpenGL {
@@ -45,6 +46,9 @@
   [self initOpenGL];
   _flapGestureRecognizer = [[JBFlapGestureRecognizer alloc] init];
   _flapGestureRecognizer.delegate = self;
+  _tiltGestureRecognizer = [[JBTiltGestureRecognizer alloc] init];
+  _tiltGestureRecognizer.delegate = self;
+
   // XXX(johnb): I think I'm supposed to do this with CADisplayLink or something like that. This seems ghetto
   [NSTimer scheduledTimerWithTimeInterval:0.03 target:self selector:@selector(display) userInfo:nil repeats:YES];
 }
@@ -67,6 +71,16 @@
   } else {
     _rightVerticalGuageView.value = 0;
   }
+  [_rightVerticalGuageView setNeedsDisplay:YES];
+}
+
+#pragma mark - JBTiltGestureRecognizerDelegate
+
+- (void)tiltGestureRecognizer:(JBTiltGestureRecognizer *)tiltGestureRecognizer didGetTiltAngle:(double)angle {
+  [_angleTextField setStringValue:[NSString stringWithFormat:@"%f", angle]];
+  [_leftVerticalGuageView setBoundsRotation:angle];
+  [_leftVerticalGuageView setNeedsDisplay:YES];
+  [_rightVerticalGuageView setBoundsRotation:angle];
   [_rightVerticalGuageView setNeedsDisplay:YES];
 }
 
