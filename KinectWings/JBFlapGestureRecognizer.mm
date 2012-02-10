@@ -18,23 +18,17 @@
 // Figure out the velocity vector for an arm since the last sample
 //- (XnVector3D)vectorFor...
 
-- (void)skeletalTrackingBeganWithUserGenerator:(xn::UserGenerator)userGenerator user:(XnUserID)user {
+- (void)skeletalTrackingBegan {
   // Startup
 }
 
-- (void)skeletalTrackingDidContinueWithUserGenerator:(xn::UserGenerator)userGenerator user:(XnUserID)user {
-  // Maybe we should store all this in a skeleton object for easy comprehension
-  XnSkeletonJointPosition leftHandPosition = GetJointPosition(userGenerator, user, XN_SKEL_LEFT_HAND);
-  //XnSkeletonJointPosition leftElbowJoint = [self getJointPositionForJoint:XN_SKEL_LEFT_ELBOW];
-  //XnSkeletonJointPosition leftShoulderJoint = [self getJointPositionForJoint:XN_SKEL_LEFT_SHOULDER];
-  XnSkeletonJointPosition rightHandPosition = GetJointPosition(userGenerator, user, XN_SKEL_RIGHT_HAND);
-  //XnSkeletonJointPosition rightElbowJoint = [self getJointPositionForJoint:XN_SKEL_RIGHT_ELBOW];
-  //XnSkeletonJointPosition rightShoulderJoint = [self getJointPositionForJoint:XN_SKEL_RIGHT_SHOULDER];
+- (void)skeletalTrackingDidContinueWithSkeleton:(Skeleton *)skeleton {
 
   _index++;
   if (_index >= (kNumberOfSamples)) _index = 0;
-  _leftHandPositions[_index] = leftHandPosition;
-  _rightHandPositions[_index] = rightHandPosition;
+
+  _leftHandPositions[_index] = skeleton.leftHand;
+  _rightHandPositions[_index] = skeleton.rightHand;
 
   // Calculate left hand vector
   // TODO: Not handling initialization

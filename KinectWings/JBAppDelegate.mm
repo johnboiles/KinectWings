@@ -15,6 +15,7 @@
 #import "DepthView.h"
 #import "VerticalGuageView.h"
 #import "math.h"
+#import "Skeleton.h"
 
 @implementation JBAppDelegate
 
@@ -28,8 +29,9 @@
   [_openGLView setNeedsDisplay:YES];
   xn::UserGenerator userGenerator = [[CocoaOpenNI sharedOpenNI] userGenerator];
   XnUserID user = [[CocoaOpenNI sharedOpenNI] firstTrackingUser];
-  [_flapGestureRecognizer skeletalTrackingDidContinueWithUserGenerator:userGenerator user:user];
-  [_tiltGestureRecognizer skeletalTrackingDidContinueWithUserGenerator:userGenerator user:user];
+  Skeleton *skeleton = [Skeleton skeletonFromUserGenerator:userGenerator user:user];
+  [_flapGestureRecognizer skeletalTrackingDidContinueWithSkeleton:skeleton];
+  [_tiltGestureRecognizer skeletalTrackingDidContinueWithSkeleton:skeleton];
 }
 
 - (void)initOpenGL {

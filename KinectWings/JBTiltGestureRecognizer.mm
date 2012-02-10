@@ -15,15 +15,14 @@
 
 @synthesize delegate=_delegate;
 
-- (void)skeletalTrackingBeganWithUserGenerator:(xn::UserGenerator)userGenerator user:(XnUserID)user {
+- (void)skeletalTrackingBegan {
   
 }
 
 // If arms are extended
 //   - Both arms are no more than 20 degrees from the angle projected from the shoulders)
 // Calculate the average of the angle of the arms
-- (void)skeletalTrackingDidContinueWithUserGenerator:(xn::UserGenerator)userGenerator user:(XnUserID)user {
-  Skeleton *skeleton = [Skeleton skeletonFromUserGenerator:userGenerator user:user];
+- (void)skeletalTrackingDidContinueWithSkeleton:(Skeleton *)skeleton {
 
   // Check if arm is straight-ish. Will be 0 if the arm is perfectly straight
   double straightRightArmAngle = AngleBetweenXnVector3D(XnVector3DDifference(skeleton.rightElbow.position, skeleton.rightShoulder.position), XnVector3DDifference(skeleton.rightHand.position, skeleton.rightElbow.position));

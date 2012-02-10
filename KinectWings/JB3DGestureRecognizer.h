@@ -9,9 +9,11 @@
 #import <Foundation/Foundation.h>
 #include <XnCppWrapper.h>
 
+@class Skeleton;
+
 @protocol JB3DGestureRecognizer <NSObject>
-- (void)skeletalTrackingBeganWithUserGenerator:(xn::UserGenerator)userGenerator user:(XnUserID)user;
-- (void)skeletalTrackingDidContinueWithUserGenerator:(xn::UserGenerator)userGenerator user:(XnUserID)user;
+- (void)skeletalTrackingBegan;
+- (void)skeletalTrackingDidContinueWithSkeleton:(Skeleton *)skeleton;
 - (void)skeletalTrackingDidEnd;
 @end
 

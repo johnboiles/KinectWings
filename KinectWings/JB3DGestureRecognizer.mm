@@ -20,11 +20,11 @@
 
 // Must have a seperate instance per user
 
-- (void)skeletalTrackingBeganWithUserGenerator:(xn::UserGenerator)userGenerator user:(XnUserID)user {
+- (void)skeletalTrackingBegan {
   
 }
 
-- (void)skeletalTrackingDidContinueWithUserGenerator:(xn::UserGenerator)userGenerator user:(XnUserID)user {
+- (void)skeletalTrackingDidContinueWithSkeleton:(Skeleton *)skeleton {
   
 }
 
