@@ -12,7 +12,7 @@
 		42312CD414C12CCB00C616F3 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 42312CD214C12CCB00C616F3 /* Credits.rtf */; };
 		42312CDA14C12CCB00C616F3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42312CD814C12CCB00C616F3 /* MainMenu.xib */; };
 		42312CDF14C12D4900C616F3 /* libOpenNI.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 42312CDE14C12D4900C616F3 /* libOpenNI.dylib */; };
-		42312CEE14C12FFB00C616F3 /* SamplesConfig.xml in Resources */ = {isa = PBXBuildFile; fileRef = 42312CED14C12FFB00C616F3 /* SamplesConfig.xml */; };
+		42312CEE14C12FFB00C616F3 /* KinectConfig.xml in Resources */ = {isa = PBXBuildFile; fileRef = 42312CED14C12FFB00C616F3 /* KinectConfig.xml */; };
 		42312CF114C130C600C616F3 /* SceneDrawer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 42312CEF14C130C600C616F3 /* SceneDrawer.mm */; };
 		42312CF314C131D400C616F3 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42312CF214C131D400C616F3 /* GLUT.framework */; };
 		42312CF514C131FC00C616F3 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42312CF414C131FC00C616F3 /* OpenGL.framework */; };
@@ -21,9 +21,9 @@
 		427B8DEB14C1578100EDAD05 /* DepthView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 427B8DEA14C1578100EDAD05 /* DepthView.mm */; };
 		4299AD5814E4D6B5000F148B /* JBTiltGestureRecognizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4299AD5714E4D6B5000F148B /* JBTiltGestureRecognizer.mm */; };
 		4299AD5B14E4D97A000F148B /* Skeleton.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4299AD5A14E4D979000F148B /* Skeleton.mm */; };
-		4299AD5D14E4DC64000F148B /* XnVector3DUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4299AD5C14E4DC64000F148B /* XnVector3DUtils.mm */; };
 		42BB47A314C13D5F0052AC36 /* CocoaOpenNI.mm in Sources */ = {isa = PBXBuildFile; fileRef = 42BB47A114C13B610052AC36 /* CocoaOpenNI.mm */; };
 		42BB47AE14C14F600052AC36 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42BB47AD14C14F600052AC36 /* QuartzCore.framework */; };
+		42F46DD514E7515700E5088A /* XnVector3DUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4299AD5C14E4DC64000F148B /* XnVector3DUtils.mm */; };
 		42FBA3A714E22123009D13CC /* VerticalGuageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 42FBA3A614E22123009D13CC /* VerticalGuageView.m */; };
 		42FEEEEF14C68692000809D7 /* JB3DGestureRecognizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 42FEEEEE14C68692000809D7 /* JB3DGestureRecognizer.mm */; };
 		42FEEEF314C686C9000809D7 /* JBFlapGestureRecognizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 42FEEEF214C686C9000809D7 /* JBFlapGestureRecognizer.mm */; };
@@ -44,7 +44,7 @@
 		42312CD614C12CCB00C616F3 /* JBAppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = JBAppDelegate.mm; sourceTree = "<group>"; };
 		42312CD914C12CCB00C616F3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		42312CDE14C12D4900C616F3 /* libOpenNI.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libOpenNI.dylib; path = SDKs/MacOSX10.7.sdk/usr/lib/libOpenNI.dylib; sourceTree = DEVELOPER_DIR; };
-		42312CED14C12FFB00C616F3 /* SamplesConfig.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SamplesConfig.xml; sourceTree = "<group>"; };
+		42312CED14C12FFB00C616F3 /* KinectConfig.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = KinectConfig.xml; sourceTree = "<group>"; };
 		42312CEF14C130C600C616F3 /* SceneDrawer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SceneDrawer.mm; sourceTree = "<group>"; };
 		42312CF014C130C600C616F3 /* SceneDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneDrawer.h; sourceTree = "<group>"; };
 		42312CF214C131D400C616F3 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/GLUT.framework; sourceTree = DEVELOPER_DIR; };
@@ -169,7 +169,7 @@
 		42312CEC14C12FFB00C616F3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				42312CED14C12FFB00C616F3 /* SamplesConfig.xml */,
+				42312CED14C12FFB00C616F3 /* KinectConfig.xml */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -227,7 +227,7 @@
 				42312CCE14C12CCB00C616F3 /* InfoPlist.strings in Resources */,
 				42312CD414C12CCB00C616F3 /* Credits.rtf in Resources */,
 				42312CDA14C12CCB00C616F3 /* MainMenu.xib in Resources */,
-				42312CEE14C12FFB00C616F3 /* SamplesConfig.xml in Resources */,
+				42312CEE14C12FFB00C616F3 /* KinectConfig.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,7 +248,7 @@
 				42FBA3A714E22123009D13CC /* VerticalGuageView.m in Sources */,
 				4299AD5814E4D6B5000F148B /* JBTiltGestureRecognizer.mm in Sources */,
 				4299AD5B14E4D97A000F148B /* Skeleton.mm in Sources */,
-				4299AD5D14E4DC64000F148B /* XnVector3DUtils.mm in Sources */,
+				42F46DD514E7515700E5088A /* XnVector3DUtils.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

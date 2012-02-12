@@ -23,7 +23,6 @@
 }
 
 - (void)skeletalTrackingDidContinueWithSkeleton:(Skeleton *)skeleton {
-
   _index++;
   if (_index >= (kNumberOfSamples)) _index = 0;
 
@@ -38,7 +37,20 @@
   XnVector3D leftHandVector = XnVector3DSum(2, XnVector3DMultiply(XnVector3DDifference(_leftHandPositions[_index].position, _leftHandPositions[previousIndex].position), 0.7), XnVector3DMultiply(XnVector3DDifference(_leftHandPositions[previousIndex].position, _leftHandPositions[previousPreviousIndex].position), 0.3));
   XnVector3D rightHandVector = XnVector3DSum(2, XnVector3DMultiply(XnVector3DDifference(_rightHandPositions[_index].position, _rightHandPositions[previousIndex].position), 0.7), XnVector3DMultiply(XnVector3DDifference(_rightHandPositions[previousIndex].position, _rightHandPositions[previousPreviousIndex].position), 0.3));
 
-  [_delegate flapGestureRecognizer:self didGetLeftWingVector:leftHandVector rightWingVector:rightHandVector];
+  // Get the mean vector of flap thrust
+  XnVector3D thrustVector = XnVector3DAverage(2, leftHandVector, rightHandVector);
+
+  // Don't consider it a flap gesture unless it has at least some downward thrust
+  if (thrustVector.Y >= 0) {
+    XnVector3D XnVector3DZero;
+    XnVector3DZero.X = 0;
+    XnVector3DZero.Y = 0;
+    XnVector3DZero.Z = 0;
+    [_delegate flapGestureRecognizer:self didGetThrustVector:XnVector3DZero];
+    return;
+  }
+
+  [_delegate flapGestureRecognizer:self didGetThrustVector:thrustVector];
   /*
   switch (_state) {
     case JB3DGestureRecognizerStatePossible:

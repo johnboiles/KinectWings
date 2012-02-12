@@ -11,10 +11,9 @@
 @class JBFlapGestureRecognizer;
 
 @protocol JBFlapGestureRecognizerDelegate <NSObject>
-// TODO(johnb): Combine these into a single vector
 // TODO(johnb): Don't register flap gestures if arms aren't extended outward
-// TODO(johnb): Time out flap gestures after a moment of no flapping
-- (void)flapGestureRecognizer:(JBFlapGestureRecognizer *)flapGestureRecognizer didGetLeftWingVector:(XnVector3D)leftWingVector rightWingVector:(XnVector3D)rightWingVector;
+// TODO(johnb): Time out flap gestures after a moment of no flapping?
+- (void)flapGestureRecognizer:(JBFlapGestureRecognizer *)flapGestureRecognizer didGetThrustVector:(XnVector3D)thrustVector;
 @end
 
 #define kNumberOfSamples 3

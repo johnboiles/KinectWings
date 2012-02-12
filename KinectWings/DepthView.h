@@ -8,9 +8,8 @@
 
 #import <AppKit/AppKit.h>
 
-@interface DepthView : NSOpenGLView {
-  BOOL _started;
-}
-@property (assign, nonatomic) BOOL started;
+@interface DepthView : NSOpenGLView { }
+
+- (void)setup;
 
 @end

@@ -11,6 +11,9 @@
 #import "CocoaOpenNI.h"
 #include <XnCppWrapper.h>
 
+#define kKinectWidth (640.0)
+#define kKinectHeight (480.0)
+
 static void drawTriangle() {
   glColor3f(1.0f, 0.85f, 0.35f);
   glBegin(GL_TRIANGLES);
@@ -24,21 +27,37 @@ static void drawTriangle() {
 
 @implementation DepthView
 
-@synthesize started=_started;
+- (void)setup {
+  glDisable(GL_DEPTH_TEST);
+  glEnable(GL_TEXTURE_2D);
+  glEnableClientState(GL_VERTEX_ARRAY);
+  glDisableClientState(GL_COLOR_ARRAY);
+  
+  // Setup the OpenGL viewpoint
+  glMatrixMode(GL_PROJECTION);
+  glPushMatrix();
+  glLoadIdentity();
+
+  glViewport(0, 0, self.frame.size.width, self.frame.size.height);
+	
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	glOrtho(0.0f, kKinectWidth, kKinectHeight, 0.0f, -1.0f, 1.0f);
+}
+
+- (void)setFrame:(NSRect)frameRect {
+  [self setup];
+  [super setFrame:frameRect];
+}
 
 - (void)drawRect:(NSRect)bounds {
-  if (_started) {
+  if ([[CocoaOpenNI sharedOpenNI] isStarted]) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    // Setup the OpenGL viewpoint
-    glMatrixMode(GL_PROJECTION);
-    glPushMatrix();
-    glLoadIdentity();
 
     xn::SceneMetaData sceneMD;
     xn::DepthMetaData depthMD;
     [[CocoaOpenNI sharedOpenNI] depthGenerator].GetMetaData(depthMD);
-    glOrtho(0, depthMD.XRes(), depthMD.YRes(), 0, -1.0, 1.0);
 
     glDisable(GL_TEXTURE_2D);
 

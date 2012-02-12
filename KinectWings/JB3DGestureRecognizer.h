@@ -45,9 +45,6 @@ typedef enum {
 @interface JB3DGestureRecognizer : NSObject <JB3DGestureRecognizer> {
   JB3DGestureRecognizerState _state;
   XnUserID _user;
-  xn::UserGenerator _userGenerator;
 }
-
-- (XnSkeletonJointPosition)getJointPositionForJoint:(XnSkeletonJoint)joint;
 
 @end

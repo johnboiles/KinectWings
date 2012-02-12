@@ -17,11 +17,14 @@
   xn::ScriptNode _scriptNode;
   xn::DepthGenerator _depthGenerator;
   xn::UserGenerator _userGenerator;
-
+  
   // State;
+  BOOL _started;
   XnBool _bNeedPose;
   XnChar _strPose[20];
 }
+
+@property (readonly, nonatomic, getter=isStarted) BOOL started;
 
 // WARNING: Do not access these as properties. For some strange reason, accessing these like:
 // [CocoaOpenNI sharedOpenNI].userGenerator
@@ -31,10 +34,8 @@
 - (xn::DepthGenerator)depthGenerator;
 - (xn::UserGenerator)userGenerator;
 
-- (XnStatus)start;
-- (void)stop;
-
 - (XnUserID)firstTrackingUser;
+- (XnStatus)startWithConfigPath:(NSString *)configPath;
 
 + (CocoaOpenNI *)sharedOpenNI;
 

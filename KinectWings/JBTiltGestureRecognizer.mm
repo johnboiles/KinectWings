@@ -40,7 +40,11 @@
   // Similarly for flapping, if you flap without fully extended arms you don't get as much power.
 
   // Stop recognizing gesture if arms aren't straight or angles are too extreme or arm angles are too different
-  if (straightRightArmAngle > 40 || straightLeftArmAngle > 40 || abs(rightHandAngleAboveHorizon) > 60 || abs(leftHandAngleAboveHorizon) > 60 || (rightHandAngleAboveHorizon + leftHandAngleAboveHorizon) > 30) {
+  BOOL armsNotStraight = straightRightArmAngle > 40 || straightLeftArmAngle > 40;
+  BOOL anglesTooExtreme = abs(rightHandAngleAboveHorizon) > 60 || abs(leftHandAngleAboveHorizon) > 60;
+  BOOL armAnglesTooDifferent = (rightHandAngleAboveHorizon + leftHandAngleAboveHorizon) > 30;
+  BOOL armsNotOutToTheSide = (abs(AngleFromZAxisOnXZPlane(leftShoulderToHand)) < 45) || (abs(AngleFromZAxisOnXZPlane(rightShoulderToHand) < 45));
+  if (armsNotStraight || anglesTooExtreme || armAnglesTooDifferent || armsNotOutToTheSide) {
     [_delegate tiltGestureRecognizer:self didGetTiltAngle:0];
     return;
   }

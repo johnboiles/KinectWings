@@ -1,5 +1,5 @@
 //
-//  CocoaOpenNI.m
+//  CocoaOpenNI.mm
 //  KinectWings
 //
 //  Created by John Boiles on 1/13/12.
@@ -17,9 +17,6 @@
 - (void)skeletonCapability:(xn::SkeletonCapability &)capability calibrationInProgressForUserID:(XnUserID)userID calibrationStatus:(XnCalibrationStatus)calibrationStatus cookie:(void *)cookie;
 - (void)skeletonCapability:(xn::SkeletonCapability&)capability didEndCalibrationForUserID:(XnUserID)userID calibrationStatus:(XnCalibrationStatus)calibrationStatus cookie:(void *)cookie;
 @end
-
-// TODO(johnb): Make this path come from a Cocoa method
-#define SAMPLE_XML_PATH "./KinectWings.app/Contents/Resources/SamplesConfig.xml"
 
 void XN_CALLBACK_TYPE User_NewUser(xn::UserGenerator& generator, XnUserID user, void* pCookie);
 void XN_CALLBACK_TYPE User_LostUser(xn::UserGenerator& generator, XnUserID user, void* pCookie);
@@ -70,6 +67,8 @@ CocoaOpenNI *gSharedOpenNI;
 
 @implementation CocoaOpenNI
 
+@synthesize started=_started;
+
 + (CocoaOpenNI *)sharedOpenNI {
   if (!gSharedOpenNI) {
     gSharedOpenNI = [[CocoaOpenNI alloc] init];
@@ -85,15 +84,15 @@ CocoaOpenNI *gSharedOpenNI;
   return self;
 }
 
-- (XnStatus)start {
+- (XnStatus)startWithConfigPath:(NSString *)configPath {
   XnStatus nRetVal = XN_STATUS_OK;
   xn::EnumerationErrors errors;
-
+  
   XnBool fileExists;
-  xnOSDoesFileExist(SAMPLE_XML_PATH, &fileExists);
-  if (fileExists) printf("Reading config from: '%s'\n", SAMPLE_XML_PATH);
-
-  nRetVal = _context.InitFromXmlFile(SAMPLE_XML_PATH, _scriptNode, &errors);
+  xnOSDoesFileExist([configPath UTF8String], &fileExists);
+  if (fileExists) printf("Reading config from: '%s'\n", [configPath UTF8String]);
+  
+  nRetVal = _context.InitFromXmlFile([configPath UTF8String], _scriptNode, &errors);
   // If there is no Kinect connected
   if (nRetVal == XN_STATUS_NO_NODE_PRESENT) {
     XnChar strError[1024];
@@ -104,14 +103,14 @@ CocoaOpenNI *gSharedOpenNI;
     printf("Open failed: %s\n", xnGetStatusString(nRetVal));
     return (nRetVal);
   }
-
+  
   // Create depth generator
   nRetVal = _context.FindExistingNode(XN_NODE_TYPE_DEPTH, _depthGenerator);
   if (nRetVal != XN_STATUS_OK) {
     printf("Find depth generator failed: %s\n", xnGetStatusString(nRetVal));
     return nRetVal;
   }
-
+  
   // Create user generator
   nRetVal = _context.FindExistingNode(XN_NODE_TYPE_USER, _userGenerator);
   if (nRetVal != XN_STATUS_OK) {
@@ -121,7 +120,7 @@ CocoaOpenNI *gSharedOpenNI;
       return nRetVal;
     }
   }
-
+  
   // Start user tracking
   if (!_userGenerator.IsCapabilitySupported(XN_CAPABILITY_SKELETON)) {
     printf("Supplied user generator doesn't support skeleton\n");
@@ -131,7 +130,7 @@ CocoaOpenNI *gSharedOpenNI;
   _userGenerator.RegisterUserCallbacks(User_NewUser, User_LostUser, NULL, hUserCallbacks);
   _userGenerator.GetSkeletonCap().RegisterToCalibrationStart(UserCalibration_CalibrationStart, NULL, hCalibrationStart);
   _userGenerator.GetSkeletonCap().RegisterToCalibrationComplete(UserCalibration_CalibrationComplete, NULL, hCalibrationComplete);
-
+  
   // See if we need a pose for calibration
   if (_userGenerator.GetSkeletonCap().NeedPoseForCalibration()) {
     _bNeedPose = TRUE;
@@ -142,22 +141,23 @@ CocoaOpenNI *gSharedOpenNI;
     _userGenerator.GetPoseDetectionCap().RegisterToPoseDetected(UserPose_PoseDetected, NULL, hPoseDetected);
     _userGenerator.GetSkeletonCap().GetCalibrationPose(_strPose);
   }
-
-  _userGenerator.GetSkeletonCap().SetSkeletonProfile(XN_SKEL_PROFILE_UPPER);
-
+  
+  _userGenerator.GetSkeletonCap().SetSkeletonProfile(XN_SKEL_PROFILE_UPPER); //XN_SKEL_PROFILE_ALL);
+  
   nRetVal = _userGenerator.GetSkeletonCap().RegisterToCalibrationInProgress(UserCalibration_CalibrationInProgress, NULL, hCalibrationInProgress);
   nRetVal = _userGenerator.GetPoseDetectionCap().RegisterToPoseInProgress(UserPose_PoseInProgress, NULL, hPoseInProgress);
-
+  
   // Maybe this will retain it?
   xnProductionNodeAddRef(_userGenerator);
-
+  
   // Start generating some users
   nRetVal = _context.StartGeneratingAll();
   if (nRetVal != XN_STATUS_OK) {
     printf("StartGenerating failed: %s\n", xnGetStatusString(nRetVal));
     return nRetVal;
   }
-
+  
+  _started = YES;
   return 0;
 }
 
@@ -176,7 +176,6 @@ CocoaOpenNI *gSharedOpenNI;
 - (xn::UserGenerator)userGenerator {
   return _userGenerator;
 }
-
 
 - (XnUserID)firstTrackingUser {
   XnUserID aUsers[10];

@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#include <XnCppWrapper.h>
+#include <XnTypes.h>
 
 XnVector3D XnVector3DSum(NSUInteger count, ...);
 
@@ -23,4 +23,9 @@ double XnVector3DDotProduct(XnVector3D v1, XnVector3D v2);
 // In degrees
 double AngleBetweenXnVector3D(XnVector3D v1, XnVector3D v2);
 
+// Angle away from ground (XZ plane)
 double AngleAboveHorizon(XnVector3D vector);
+
+double AngleFromYZPlane(XnVector3D vector);
+
+double AngleFromZAxisOnXZPlane(XnVector3D vector);

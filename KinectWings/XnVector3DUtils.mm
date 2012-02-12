@@ -80,3 +80,14 @@ double AngleAboveHorizon(XnVector3D vector) {
   // Just pythagorean theorum and trig
   return atan(vector.Y / sqrt(pow(vector.X, 2) + pow(vector.Z, 2))) * 180 / M_PI;
 }
+
+double AngleFromYZPlane(XnVector3D vector) {
+  // Just pythagorean theorum and trig
+  return atan(vector.X / sqrt(pow(vector.Y, 2) + pow(vector.Z, 2))) * 180 / M_PI;
+}
+
+double AngleFromZAxisOnXZPlane(XnVector3D vector) {
+  // Just pythagorean theorum and trig
+  return atan(vector.X / vector.Z) * 180 / M_PI;
+
+}
