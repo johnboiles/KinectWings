@@ -35,7 +35,7 @@
 
   CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
   [[NSColor whiteColor] set];
-  CGContextFillRect(context, self.bounds);
+  CGContextFillRect(context, NSRectToCGRect(self.bounds));
   [[NSColor grayColor] set];
   CGFloat indicatorHeight = self.frame.size.height * self.value;
   CGContextFillRect(context, CGRectMake(0, self.frame.size.height - indicatorHeight, self.frame.size.width, indicatorHeight));

@@ -43,7 +43,8 @@
   BOOL armsNotStraight = straightRightArmAngle > 40 || straightLeftArmAngle > 40;
   BOOL anglesTooExtreme = abs(rightHandAngleAboveHorizon) > 60 || abs(leftHandAngleAboveHorizon) > 60;
   BOOL armAnglesTooDifferent = (rightHandAngleAboveHorizon + leftHandAngleAboveHorizon) > 30;
-  BOOL armsNotOutToTheSide = (abs(AngleFromZAxisOnXZPlane(leftShoulderToHand)) < 45) || (abs(AngleFromZAxisOnXZPlane(rightShoulderToHand) < 45));
+  BOOL armsNotOutToTheSide = NO;
+  //BOOL armsNotOutToTheSide = (abs(AngleFromZAxisOnXZPlane(leftShoulderToHand)) < 45) || (abs(AngleFromZAxisOnXZPlane(rightShoulderToHand) < 45));
   if (armsNotStraight || anglesTooExtreme || armAnglesTooDifferent || armsNotOutToTheSide) {
     [_delegate tiltGestureRecognizer:self didGetTiltAngle:0];
     return;

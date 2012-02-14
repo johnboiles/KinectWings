@@ -21,6 +21,15 @@
 		427B8DEB14C1578100EDAD05 /* DepthView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 427B8DEA14C1578100EDAD05 /* DepthView.mm */; };
 		4299AD5814E4D6B5000F148B /* JBTiltGestureRecognizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4299AD5714E4D6B5000F148B /* JBTiltGestureRecognizer.mm */; };
 		4299AD5B14E4D97A000F148B /* Skeleton.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4299AD5A14E4D979000F148B /* Skeleton.mm */; };
+		42AF466814E7AC23002B8DC9 /* libpc_ardrone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AF466514E7AC23002B8DC9 /* libpc_ardrone.a */; };
+		42AF466914E7AC23002B8DC9 /* libsdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AF466614E7AC23002B8DC9 /* libsdk.a */; };
+		42AF466A14E7AC23002B8DC9 /* libvlib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AF466714E7AC23002B8DC9 /* libvlib.a */; };
+		42AF46A514EA1CF2002B8DC9 /* ARDrone.m in Sources */ = {isa = PBXBuildFile; fileRef = 42AF469614EA1CF0002B8DC9 /* ARDrone.m */; };
+		42AF46A614EA1CF2002B8DC9 /* ARDroneFTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 42AF469814EA1CF0002B8DC9 /* ARDroneFTP.m */; };
+		42AF46A714EA1CF2002B8DC9 /* mobile_main.c in Sources */ = {isa = PBXBuildFile; fileRef = 42AF469F14EA1CF1002B8DC9 /* mobile_main.c */; };
+		42AF46A814EA1CF2002B8DC9 /* navdata.c in Sources */ = {isa = PBXBuildFile; fileRef = 42AF46A114EA1CF1002B8DC9 /* navdata.c */; };
+		42AF46A914EA1CF2002B8DC9 /* wifi.c in Sources */ = {isa = PBXBuildFile; fileRef = 42AF46A314EA1CF1002B8DC9 /* wifi.c */; };
+		42AF46AA14EA2B3D002B8DC9 /* ControlData.c in Sources */ = {isa = PBXBuildFile; fileRef = 42AF468E14EA1A0A002B8DC9 /* ControlData.c */; };
 		42BB47A314C13D5F0052AC36 /* CocoaOpenNI.mm in Sources */ = {isa = PBXBuildFile; fileRef = 42BB47A114C13B610052AC36 /* CocoaOpenNI.mm */; };
 		42BB47AE14C14F600052AC36 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42BB47AD14C14F600052AC36 /* QuartzCore.framework */; };
 		42F46DD514E7515700E5088A /* XnVector3DUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4299AD5C14E4DC64000F148B /* XnVector3DUtils.mm */; };
@@ -57,6 +66,27 @@
 		4299AD5A14E4D979000F148B /* Skeleton.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Skeleton.mm; sourceTree = "<group>"; };
 		4299AD5C14E4DC64000F148B /* XnVector3DUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XnVector3DUtils.mm; sourceTree = "<group>"; };
 		4299AD5E14E4DC78000F148B /* XnVector3DUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XnVector3DUtils.h; sourceTree = "<group>"; };
+		42AF466514E7AC23002B8DC9 /* libpc_ardrone.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpc_ardrone.a; path = Libraries/libpc_ardrone.a; sourceTree = "<group>"; };
+		42AF466614E7AC23002B8DC9 /* libsdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsdk.a; path = Libraries/libsdk.a; sourceTree = "<group>"; };
+		42AF466714E7AC23002B8DC9 /* libvlib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvlib.a; path = Libraries/libvlib.a; sourceTree = "<group>"; };
+		42AF468E14EA1A0A002B8DC9 /* ControlData.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ControlData.c; sourceTree = "<group>"; };
+		42AF468F14EA1A0A002B8DC9 /* ControlData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlData.h; sourceTree = "<group>"; };
+		42AF469514EA1CF0002B8DC9 /* ARDrone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARDrone.h; sourceTree = "<group>"; };
+		42AF469614EA1CF0002B8DC9 /* ARDrone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARDrone.m; sourceTree = "<group>"; };
+		42AF469714EA1CF0002B8DC9 /* ARDroneFTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARDroneFTP.h; sourceTree = "<group>"; };
+		42AF469814EA1CF0002B8DC9 /* ARDroneFTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARDroneFTP.m; sourceTree = "<group>"; };
+		42AF469914EA1CF0002B8DC9 /* ARDroneGeneratedCommandIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARDroneGeneratedCommandIn.h; sourceTree = "<group>"; };
+		42AF469A14EA1CF0002B8DC9 /* ARDroneGeneratedTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARDroneGeneratedTypes.h; sourceTree = "<group>"; };
+		42AF469B14EA1CF0002B8DC9 /* ARDroneProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARDroneProtocols.h; sourceTree = "<group>"; };
+		42AF469C14EA1CF0002B8DC9 /* ARDroneTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARDroneTypes.h; sourceTree = "<group>"; };
+		42AF469D14EA1CF1002B8DC9 /* ConstantsAndMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConstantsAndMacros.h; sourceTree = "<group>"; };
+		42AF469E14EA1CF1002B8DC9 /* InternalProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InternalProtocols.h; sourceTree = "<group>"; };
+		42AF469F14EA1CF1002B8DC9 /* mobile_main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mobile_main.c; sourceTree = "<group>"; };
+		42AF46A014EA1CF1002B8DC9 /* mobile_main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mobile_main.h; sourceTree = "<group>"; };
+		42AF46A114EA1CF1002B8DC9 /* navdata.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = navdata.c; sourceTree = "<group>"; };
+		42AF46A214EA1CF1002B8DC9 /* navdata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = navdata.h; sourceTree = "<group>"; };
+		42AF46A314EA1CF1002B8DC9 /* wifi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wifi.c; sourceTree = "<group>"; };
+		42AF46A414EA1CF1002B8DC9 /* wifi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wifi.h; sourceTree = "<group>"; };
 		42BB47A014C13B610052AC36 /* CocoaOpenNI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaOpenNI.h; sourceTree = "<group>"; };
 		42BB47A114C13B610052AC36 /* CocoaOpenNI.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaOpenNI.mm; sourceTree = "<group>"; };
 		42BB47AD14C14F600052AC36 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -78,6 +108,9 @@
 				42312CF314C131D400C616F3 /* GLUT.framework in Frameworks */,
 				42312CDF14C12D4900C616F3 /* libOpenNI.dylib in Frameworks */,
 				42312CC414C12CCB00C616F3 /* Cocoa.framework in Frameworks */,
+				42AF466814E7AC23002B8DC9 /* libpc_ardrone.a in Frameworks */,
+				42AF466914E7AC23002B8DC9 /* libsdk.a in Frameworks */,
+				42AF466A14E7AC23002B8DC9 /* libvlib.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,6 +138,9 @@
 		42312CC214C12CCB00C616F3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				42AF466514E7AC23002B8DC9 /* libpc_ardrone.a */,
+				42AF466614E7AC23002B8DC9 /* libsdk.a */,
+				42AF466714E7AC23002B8DC9 /* libvlib.a */,
 				42BB47AD14C14F600052AC36 /* QuartzCore.framework */,
 				42312CF414C131FC00C616F3 /* OpenGL.framework */,
 				42312CF214C131D400C616F3 /* GLUT.framework */,
@@ -128,6 +164,7 @@
 		42312CC914C12CCB00C616F3 /* KinectWings */ = {
 			isa = PBXGroup;
 			children = (
+				42AF468D14EA1A09002B8DC9 /* ARDrone */,
 				427B8DE914C1578100EDAD05 /* DepthView.h */,
 				427B8DEA14C1578100EDAD05 /* DepthView.mm */,
 				42312CF014C130C600C616F3 /* SceneDrawer.h */,
@@ -172,6 +209,31 @@
 				42312CED14C12FFB00C616F3 /* KinectConfig.xml */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		42AF468D14EA1A09002B8DC9 /* ARDrone */ = {
+			isa = PBXGroup;
+			children = (
+				42AF469514EA1CF0002B8DC9 /* ARDrone.h */,
+				42AF469614EA1CF0002B8DC9 /* ARDrone.m */,
+				42AF469714EA1CF0002B8DC9 /* ARDroneFTP.h */,
+				42AF469814EA1CF0002B8DC9 /* ARDroneFTP.m */,
+				42AF469914EA1CF0002B8DC9 /* ARDroneGeneratedCommandIn.h */,
+				42AF469A14EA1CF0002B8DC9 /* ARDroneGeneratedTypes.h */,
+				42AF469B14EA1CF0002B8DC9 /* ARDroneProtocols.h */,
+				42AF469C14EA1CF0002B8DC9 /* ARDroneTypes.h */,
+				42AF469D14EA1CF1002B8DC9 /* ConstantsAndMacros.h */,
+				42AF469E14EA1CF1002B8DC9 /* InternalProtocols.h */,
+				42AF469F14EA1CF1002B8DC9 /* mobile_main.c */,
+				42AF46A014EA1CF1002B8DC9 /* mobile_main.h */,
+				42AF46A114EA1CF1002B8DC9 /* navdata.c */,
+				42AF46A214EA1CF1002B8DC9 /* navdata.h */,
+				42AF46A314EA1CF1002B8DC9 /* wifi.c */,
+				42AF46A414EA1CF1002B8DC9 /* wifi.h */,
+				42AF468E14EA1A0A002B8DC9 /* ControlData.c */,
+				42AF468F14EA1A0A002B8DC9 /* ControlData.h */,
+			);
+			path = ARDrone;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -247,8 +309,14 @@
 				42FEEEF314C686C9000809D7 /* JBFlapGestureRecognizer.mm in Sources */,
 				42FBA3A714E22123009D13CC /* VerticalGuageView.m in Sources */,
 				4299AD5814E4D6B5000F148B /* JBTiltGestureRecognizer.mm in Sources */,
+				42AF46AA14EA2B3D002B8DC9 /* ControlData.c in Sources */,
 				4299AD5B14E4D97A000F148B /* Skeleton.mm in Sources */,
 				42F46DD514E7515700E5088A /* XnVector3DUtils.mm in Sources */,
+				42AF46A514EA1CF2002B8DC9 /* ARDrone.m in Sources */,
+				42AF46A614EA1CF2002B8DC9 /* ARDroneFTP.m in Sources */,
+				42AF46A714EA1CF2002B8DC9 /* mobile_main.c in Sources */,
+				42AF46A814EA1CF2002B8DC9 /* navdata.c in Sources */,
+				42AF46A914EA1CF2002B8DC9 /* wifi.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,7 +366,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -306,16 +374,35 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KinectWings/KinectWings-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					NO_ARDRONE_MAINLOOP,
 					"DEBUG=1",
 					"$(inherited)",
+					__linux__,
+					DEBUG,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /usr/include/ni;
+				HEADER_SEARCH_PATHS = (
+					/usr/include/ni,
+					"$(SRCROOT)/Libraries/ARDroneLib",
+					"$(SRCROOT)/Libraries/ARDroneLib/Soft/Common",
+					"$(SRCROOT)/Libraries/ARDroneLib/Soft/Lib",
+					"$(SRCROOT)/Libraries/ARDroneLib/VLIB",
+					"$(SRCROOT)/Libraries/ARDroneLib/VLIB/Platform/arm11",
+					"$(SRCROOT)/Libraries/ARDroneLib/VP_SDK",
+					"$(SRCROOT)/Libraries/ARDroneLib/VP_SDK/VP_Com",
+					"$(SRCROOT)/Libraries/ARDroneLib/VP_SDK/VP_Os",
+					"$(SRCROOT)/Libraries/ARDroneLib/VP_SDK/VP_Os/linux",
+					"$(SRCROOT)/Libraries/ARDroneLib/VP_SDK/VP_Com/linux",
+				);
 				INFOPLIST_FILE = "KinectWings/KinectWings-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Libraries\"",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -338,8 +425,24 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /usr/include/ni;
+				HEADER_SEARCH_PATHS = (
+					/usr/include/ni,
+					"$(SRCROOT)/Libraries/ARDroneLib",
+					"$(SRCROOT)/Libraries/ARDroneLib/Soft/Common",
+					"$(SRCROOT)/Libraries/ARDroneLib/Soft/Lib",
+					"$(SRCROOT)/Libraries/ARDroneLib/VLIB",
+					"$(SRCROOT)/Libraries/ARDroneLib/VLIB/Platform/arm11",
+					"$(SRCROOT)/Libraries/ARDroneLib/VP_SDK",
+					"$(SRCROOT)/Libraries/ARDroneLib/VP_SDK/VP_Com",
+					"$(SRCROOT)/Libraries/ARDroneLib/VP_SDK/VP_Os",
+					"$(SRCROOT)/Libraries/ARDroneLib/VP_SDK/VP_Os/linux",
+					"$(SRCROOT)/Libraries/ARDroneLib/VP_SDK/VP_Com/linux",
+				);
 				INFOPLIST_FILE = "KinectWings/KinectWings-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Libraries\"",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;

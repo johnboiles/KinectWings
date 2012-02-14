@@ -9,7 +9,19 @@
 #import <Foundation/Foundation.h>
 #include <XnCppWrapper.h>
 
-@interface Skeleton : NSObject { }
+@interface Skeleton : NSObject {
+  XnSkeletonJointPosition head;
+  XnSkeletonJointPosition neck;
+  XnSkeletonJointPosition torso;
+  
+  XnSkeletonJointPosition leftShoulder;
+  XnSkeletonJointPosition leftElbow;
+  XnSkeletonJointPosition leftHand;
+  
+  XnSkeletonJointPosition rightShoulder;
+  XnSkeletonJointPosition rightElbow;
+  XnSkeletonJointPosition rightHand;
+}
 
 @property (assign, nonatomic) XnSkeletonJointPosition head;
 @property (assign, nonatomic) XnSkeletonJointPosition neck;
