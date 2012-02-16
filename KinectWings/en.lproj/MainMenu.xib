@@ -1325,7 +1325,7 @@
 							<string key="NSFrame">{{96, 7}, {49, 160}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="875630934"/>
+							<reference key="NSNextKeyView" ref="438068151"/>
 							<int key="NSViewLayerContentsRedrawPolicy">2</int>
 							<string key="NSReuseIdentifierKey">_NS:1192</string>
 							<string key="NSClassName">VerticalGuageView</string>
@@ -1413,28 +1413,28 @@
 								<int key="NSPeriodicInterval">25</int>
 							</object>
 						</object>
-						<object class="NSTextField" id="875630934">
+						<object class="NSTextField" id="938460561">
 							<reference key="NSNextResponder" ref="439893737"/>
-							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{362, 72}, {100, 46}}</string>
+							<int key="NSvFlags">293</int>
+							<string key="NSFrame">{{390, 20}, {233, 46}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView"/>
 							<int key="NSViewLayerContentsRedrawPolicy">2</int>
 							<string key="NSReuseIdentifierKey">_NS:3944</string>
 							<bool key="NSEnabled">YES</bool>
-							<object class="NSTextFieldCell" key="NSCell" id="349954545">
+							<object class="NSTextFieldCell" key="NSCell" id="985176518">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272630272</int>
 								<string key="NSContents">Label</string>
-								<object class="NSFont" key="NSSupport">
+								<object class="NSFont" key="NSSupport" id="78533542">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">25</double>
 									<int key="NSfFlags">16</int>
 								</object>
 								<string key="NSCellIdentifier">_NS:3944</string>
-								<reference key="NSControlView" ref="875630934"/>
-								<object class="NSColor" key="NSBackgroundColor">
+								<reference key="NSControlView" ref="938460561"/>
+								<object class="NSColor" key="NSBackgroundColor" id="177764204">
 									<int key="NSColorSpace">6</int>
 									<string key="NSCatalogName">System</string>
 									<string key="NSColorName">controlColor</string>
@@ -1443,18 +1443,18 @@
 										<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
 									</object>
 								</object>
-								<object class="NSColor" key="NSTextColor">
+								<object class="NSColor" key="NSTextColor" id="835524917">
 									<int key="NSColorSpace">6</int>
 									<string key="NSCatalogName">System</string>
 									<string key="NSColorName">controlTextColor</string>
-									<object class="NSColor" key="NSColor">
+									<object class="NSColor" key="NSColor" id="888271929">
 										<int key="NSColorSpace">3</int>
 										<bytes key="NSWhite">MAA</bytes>
 									</object>
 								</object>
 							</object>
 						</object>
-						<object class="NSCustomView" id="438872295">
+						<object class="NSCustomView" id="291780441">
 							<reference key="NSNextResponder" ref="439893737"/>
 							<int key="NSvFlags">274</int>
 							<string key="NSFrame">{{0, 223}, {640, 480}}</string>
@@ -1463,13 +1463,34 @@
 							<reference key="NSNextKeyView" ref="272353977"/>
 							<int key="NSViewLayerContentsRedrawPolicy">2</int>
 							<string key="NSReuseIdentifierKey">_NS:1192</string>
-							<string key="NSClassName">DepthView</string>
+							<string key="NSClassName">GLViewController</string>
+						</object>
+						<object class="NSTextField" id="438068151">
+							<reference key="NSNextResponder" ref="439893737"/>
+							<int key="NSvFlags">293</int>
+							<string key="NSFrame">{{390, 74}, {233, 46}}</string>
+							<reference key="NSSuperview" ref="439893737"/>
+							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="938460561"/>
+							<int key="NSViewLayerContentsRedrawPolicy">2</int>
+							<string key="NSReuseIdentifierKey">_NS:3944</string>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSTextFieldCell" key="NSCell" id="504712311">
+								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags2">272630272</int>
+								<string key="NSContents">Label</string>
+								<reference key="NSSupport" ref="78533542"/>
+								<string key="NSCellIdentifier">_NS:3944</string>
+								<reference key="NSControlView" ref="438068151"/>
+								<reference key="NSBackgroundColor" ref="177764204"/>
+								<reference key="NSTextColor" ref="835524917"/>
+							</object>
 						</object>
 					</array>
 					<string key="NSFrameSize">{640, 703}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
-					<reference key="NSNextKeyView" ref="438872295"/>
+					<reference key="NSNextKeyView" ref="291780441"/>
 					<bool key="NSViewIsLayerTreeHost">YES</bool>
 					<int key="NSViewLayerContentsRedrawPolicy">2</int>
 				</object>
@@ -2211,17 +2232,25 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">_angleTextField</string>
 						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="875630934"/>
+						<reference key="destination" ref="938460561"/>
 					</object>
 					<int key="connectionID">562</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">_openGLView</string>
+						<string key="label">_thrustTextField</string>
 						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="438872295"/>
+						<reference key="destination" ref="438068151"/>
 					</object>
-					<int key="connectionID">564</int>
+					<int key="connectionID">567</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_droneVideoView</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="291780441"/>
+					</object>
+					<int key="connectionID">568</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2752,9 +2781,10 @@
 							<reference ref="136934449"/>
 							<reference ref="260699894"/>
 							<reference ref="272353977"/>
-							<reference ref="875630934"/>
 							<reference ref="109854171"/>
-							<reference ref="438872295"/>
+							<reference ref="291780441"/>
+							<reference ref="938460561"/>
+							<reference ref="438068151"/>
 						</array>
 						<reference key="parent" ref="972006081"/>
 					</object>
@@ -3283,21 +3313,34 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">560</int>
-						<reference key="object" ref="875630934"/>
+						<reference key="object" ref="938460561"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="349954545"/>
+							<reference ref="985176518"/>
 						</array>
 						<reference key="parent" ref="439893737"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">561</int>
-						<reference key="object" ref="349954545"/>
-						<reference key="parent" ref="875630934"/>
+						<reference key="object" ref="985176518"/>
+						<reference key="parent" ref="938460561"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">563</int>
-						<reference key="object" ref="438872295"/>
+						<reference key="object" ref="291780441"/>
 						<reference key="parent" ref="439893737"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">565</int>
+						<reference key="object" ref="438068151"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="504712311"/>
+						</array>
+						<reference key="parent" ref="439893737"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">566</int>
+						<reference key="object" ref="504712311"/>
+						<reference key="parent" ref="438068151"/>
 					</object>
 				</array>
 			</object>
@@ -3454,6 +3497,12 @@
 				<string key="560.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="561.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="563.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<real value="0.0" key="563.IBViewIntegration.shadowBlurRadius"/>
+				<reference key="563.IBViewIntegration.shadowColor" ref="888271929"/>
+				<real value="0.0" key="563.IBViewIntegration.shadowOffsetHeight"/>
+				<real value="0.0" key="563.IBViewIntegration.shadowOffsetWidth"/>
+				<string key="565.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="566.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="57.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="58.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="72.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3472,7 +3521,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">564</int>
+			<int key="maxID">568</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3485,19 +3534,33 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">GLViewController</string>
+					<string key="superclassName">NSOpenGLView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/GLViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">JBAppDelegate</string>
 					<string key="superclassName">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="_angleTextField">NSTextField</string>
+						<string key="_droneVideoView">GLViewController</string>
 						<string key="_leftVerticalGuageView">VerticalGuageView</string>
 						<string key="_openGLView">DepthView</string>
 						<string key="_rightVerticalGuageView">VerticalGuageView</string>
+						<string key="_thrustTextField">NSTextField</string>
 						<string key="window">NSWindow</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="_angleTextField">
 							<string key="name">_angleTextField</string>
 							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="_droneVideoView">
+							<string key="name">_droneVideoView</string>
+							<string key="candidateClassName">GLViewController</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="_leftVerticalGuageView">
 							<string key="name">_leftVerticalGuageView</string>
@@ -3510,6 +3573,10 @@
 						<object class="IBToOneOutletInfo" key="_rightVerticalGuageView">
 							<string key="name">_rightVerticalGuageView</string>
 							<string key="candidateClassName">VerticalGuageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="_thrustTextField">
+							<string key="name">_thrustTextField</string>
+							<string key="candidateClassName">NSTextField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="window">
 							<string key="name">window</string>

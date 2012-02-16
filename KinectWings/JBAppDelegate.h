@@ -20,10 +20,12 @@
   NSWindow *_window;
 
   IBOutlet DepthView *_openGLView;
+  IBOutlet GLViewController *_droneVideoView;
   IBOutlet VerticalGuageView *_leftVerticalGuageView;
   IBOutlet VerticalGuageView *_rightVerticalGuageView;
   IBOutlet NSTextField *_angleTextField;
-  
+  IBOutlet NSTextField *_thrustTextField;
+
   JBFlapGestureRecognizer *_flapGestureRecognizer;
   JBTiltGestureRecognizer *_tiltGestureRecognizer;
 

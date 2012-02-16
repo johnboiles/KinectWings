@@ -7,6 +7,7 @@
  */
 #import "InternalProtocols.h"
 #import "ARDrone.h"
+#import "GLViewController.h"
 
 //#define DEBUG_ENNEMIES_DETECTON
 #define DEBUG_NAVIGATION_DATA
@@ -69,6 +70,9 @@ static void ARDroneCallback(ARDRONE_ENGINE_MESSAGE msg)
 		NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); //creates paths so that you can pull the app's path from it
 		strcpy(root_dir, [[paths objectAtIndex:0] cStringUsingEncoding:NSUTF8StringEncoding]);
 		
+    // Create View Controller
+		//glviewctrl = [[GLViewController alloc] initWithFrame:frame withDelegate:self];
+
 		// Create main view controller
 		initControlData();
 		
@@ -107,7 +111,7 @@ static void ARDroneCallback(ARDRONE_ENGINE_MESSAGE msg)
 - (void) render
 {		
 	// Make sure the library is "running"
-	//[glviewctrl drawView];
+	[glviewctrl drawView];
 }
 
 - (void) dealloc
@@ -263,6 +267,11 @@ static void ARDroneCallback(ARDRONE_ENGINE_MESSAGE msg)
   sendControls();
 }
 
+- (void)setPitch:(float)pitch {
+  inputPitch(pitch);
+  sendControls();
+}
+
 extern navdata_unpacked_t ctrlnavdata;
 
 - (void) TimerHandler {
@@ -285,7 +294,7 @@ extern navdata_unpacked_t ctrlnavdata;
     [self parrotNavdata:&ctrlnavdata];
     //[self performSelectorOnMainThread:@selector(update) withObject:nil waitUntilDone:YES];
     checkErrors();
-    NSLog(@"%s", ctrldata.error_msg);
+    //NSLog(@"%s", ctrldata.error_msg);
     //_controlData->framecounter = (controlData->framecounter + 1) % kFPS;
   }
   else

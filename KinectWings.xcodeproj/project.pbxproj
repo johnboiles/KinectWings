@@ -18,6 +18,10 @@
 		42312CF514C131FC00C616F3 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42312CF414C131FC00C616F3 /* OpenGL.framework */; };
 		42312CF614C1390E00C616F3 /* JBAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 42312CD614C12CCB00C616F3 /* JBAppDelegate.mm */; };
 		42312CF714C1399300C616F3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 42312CCF14C12CCB00C616F3 /* main.m */; };
+		42366DDB14ECC58C006F6DFA /* OpenGLSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 42366DD814ECC58C006F6DFA /* OpenGLSprite.m */; };
+		42366DDC14ECC58C006F6DFA /* OpenGLVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 42366DDA14ECC58C006F6DFA /* OpenGLVideo.m */; };
+		42366DE014ECC858006F6DFA /* GLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42366DDF14ECC858006F6DFA /* GLViewController.m */; };
+		42366DE214ECD8F4006F6DFA /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 42366DE114ECD8F4006F6DFA /* background.png */; };
 		427B8DEB14C1578100EDAD05 /* DepthView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 427B8DEA14C1578100EDAD05 /* DepthView.mm */; };
 		4299AD5814E4D6B5000F148B /* JBTiltGestureRecognizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4299AD5714E4D6B5000F148B /* JBTiltGestureRecognizer.mm */; };
 		4299AD5B14E4D97A000F148B /* Skeleton.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4299AD5A14E4D979000F148B /* Skeleton.mm */; };
@@ -58,6 +62,13 @@
 		42312CF014C130C600C616F3 /* SceneDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneDrawer.h; sourceTree = "<group>"; };
 		42312CF214C131D400C616F3 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/GLUT.framework; sourceTree = DEVELOPER_DIR; };
 		42312CF414C131FC00C616F3 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
+		42366DD714ECC58C006F6DFA /* OpenGLSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLSprite.h; sourceTree = "<group>"; };
+		42366DD814ECC58C006F6DFA /* OpenGLSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenGLSprite.m; sourceTree = "<group>"; };
+		42366DD914ECC58C006F6DFA /* OpenGLVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLVideo.h; sourceTree = "<group>"; };
+		42366DDA14ECC58C006F6DFA /* OpenGLVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenGLVideo.m; sourceTree = "<group>"; };
+		42366DDE14ECC858006F6DFA /* GLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLViewController.h; sourceTree = "<group>"; };
+		42366DDF14ECC858006F6DFA /* GLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLViewController.m; sourceTree = "<group>"; };
+		42366DE114ECD8F4006F6DFA /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		427B8DE914C1578100EDAD05 /* DepthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DepthView.h; sourceTree = "<group>"; };
 		427B8DEA14C1578100EDAD05 /* DepthView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DepthView.mm; sourceTree = "<group>"; };
 		4299AD5614E4D6B5000F148B /* JBTiltGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBTiltGestureRecognizer.h; sourceTree = "<group>"; };
@@ -206,6 +217,7 @@
 		42312CEC14C12FFB00C616F3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				42366DE114ECD8F4006F6DFA /* background.png */,
 				42312CED14C12FFB00C616F3 /* KinectConfig.xml */,
 			);
 			path = Resources;
@@ -214,6 +226,12 @@
 		42AF468D14EA1A09002B8DC9 /* ARDrone */ = {
 			isa = PBXGroup;
 			children = (
+				42366DDE14ECC858006F6DFA /* GLViewController.h */,
+				42366DDF14ECC858006F6DFA /* GLViewController.m */,
+				42366DD714ECC58C006F6DFA /* OpenGLSprite.h */,
+				42366DD814ECC58C006F6DFA /* OpenGLSprite.m */,
+				42366DD914ECC58C006F6DFA /* OpenGLVideo.h */,
+				42366DDA14ECC58C006F6DFA /* OpenGLVideo.m */,
 				42AF469514EA1CF0002B8DC9 /* ARDrone.h */,
 				42AF469614EA1CF0002B8DC9 /* ARDrone.m */,
 				42AF469714EA1CF0002B8DC9 /* ARDroneFTP.h */,
@@ -290,6 +308,7 @@
 				42312CD414C12CCB00C616F3 /* Credits.rtf in Resources */,
 				42312CDA14C12CCB00C616F3 /* MainMenu.xib in Resources */,
 				42312CEE14C12FFB00C616F3 /* KinectConfig.xml in Resources */,
+				42366DE214ECD8F4006F6DFA /* background.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,6 +336,9 @@
 				42AF46A714EA1CF2002B8DC9 /* mobile_main.c in Sources */,
 				42AF46A814EA1CF2002B8DC9 /* navdata.c in Sources */,
 				42AF46A914EA1CF2002B8DC9 /* wifi.c in Sources */,
+				42366DDB14ECC58C006F6DFA /* OpenGLSprite.m in Sources */,
+				42366DDC14ECC58C006F6DFA /* OpenGLVideo.m in Sources */,
+				42366DE014ECC858006F6DFA /* GLViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

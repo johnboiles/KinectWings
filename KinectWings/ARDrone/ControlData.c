@@ -113,7 +113,7 @@ void inputYaw(float percent)
 #endif
 	if(-1.0 <= percent && percent <= 1.0)
 		ctrldata.yaw = percent;
-	else if(-1.0 < percent)
+	else if(-1.0 > percent)
 		ctrldata.yaw = -1.0;
 	else
 		ctrldata.yaw = 1.0;
@@ -126,7 +126,7 @@ void inputGaz(float percent)
 #endif
 	if(-1.0 <= percent && percent <= 1.0)
 		ctrldata.gaz = percent;
-	else if(-1.0 < percent)
+	else if(-1.0 > percent)
 		ctrldata.gaz = -1.0;
 	else
 		ctrldata.gaz = 1.0;
@@ -139,7 +139,7 @@ void inputPitch(float percent)
 #endif
 	if(-1.0 <= percent && percent <= 1.0)
 		ctrldata.accelero_theta = -percent;
-	else if(-1.0 < percent)
+	else if(1.0 < percent)
 		ctrldata.accelero_theta = 1.0;
 	else
 		ctrldata.accelero_theta = -1.0;
@@ -152,7 +152,7 @@ void inputRoll(float percent)
 #endif
 	if(-1.0 <= percent && percent <= 1.0)
 		ctrldata.accelero_phi = percent;
-	else if(-1.0 < percent)
+	else if(-1.0 > percent)
 		ctrldata.accelero_phi = -1.0;
 	else
 		ctrldata.accelero_phi = 1.0;

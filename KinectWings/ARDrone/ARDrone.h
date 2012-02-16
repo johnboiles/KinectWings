@@ -28,6 +28,7 @@
  */
 #import <Foundation/Foundation.h>
 #import "ARDroneProtocols.h"
+#import "GLViewController.h"
 
 /**
  * Define HUD configuration structure
@@ -40,6 +41,8 @@ typedef struct
 }
 ARDroneHUDConfiguration;
 
+@class GLViewController;
+
 /**
  * Define a few methods to make it possible for the game engine to control the Parrot drone
  */
@@ -51,6 +54,7 @@ ARDroneHUDConfiguration;
 	CGRect screenFrame;
 	id <ARDroneProtocolOut> _uidelegate;
 	ARDroneHUDConfiguration *hudconfig;
+  GLViewController *glviewctrl;
 }
 
 /**
@@ -85,10 +89,12 @@ ARDroneHUDConfiguration;
  * <li> A set of elements in the foreground (=HUD).</li>
  * </ul>
  */
-- (void) render;
+- (void)render;
 
 - (void)omgflyaway;
 
 - (void)setYaw:(float)yaw;
+
+- (void)setPitch:(float)pitch;
 
 @end

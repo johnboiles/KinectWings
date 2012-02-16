@@ -47,8 +47,6 @@
 #include <unistd.h>
 
 #include <TargetConditionals.h>
-//#include <OpenGLES/ES1/gl.h>
-//#include <OpenGLES/ES1/glext.h>
 #include "mobile_main.h"
 #include "navdata.h"
 #include "ControlData.h"

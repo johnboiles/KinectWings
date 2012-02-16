@@ -19,7 +19,8 @@
 #import "ARDrone.h"
 #include "ControlData.h"
 
-extern navdata_unpacked_t ctrlnavdata;
+extern navdata_unpacked_t ctr;
+extern ControlData ctrldata;
 
 @implementation JBAppDelegate
 
@@ -30,7 +31,8 @@ extern navdata_unpacked_t ctrlnavdata;
 }
 
 - (void)display {
-  [_openGLView setNeedsDisplay:YES];
+  //[_openGLView setNeedsDisplay:YES];
+  [_droneVideoView setNeedsDisplay:YES];
   xn::UserGenerator userGenerator = [[CocoaOpenNI sharedOpenNI] userGenerator];
   XnUserID user = [[CocoaOpenNI sharedOpenNI] firstTrackingUser];
   Skeleton *skeleton = [Skeleton skeletonFromUserGenerator:userGenerator user:user];
@@ -51,15 +53,16 @@ extern navdata_unpacked_t ctrlnavdata;
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
   [_window setAspectRatio:NSMakeSize(640, 480)];
   [[CocoaOpenNI sharedOpenNI] startWithConfigPath:[[NSBundle mainBundle] pathForResource:@"KinectConfig" ofType:@"xml"]];
-  [_openGLView setup];
+  //[_openGLView setup];
   _flapGestureRecognizer = [[JBFlapGestureRecognizer alloc] init];
   _flapGestureRecognizer.delegate = self;
   _tiltGestureRecognizer = [[JBTiltGestureRecognizer alloc] init];
   _tiltGestureRecognizer.delegate = self;
   // XXX(johnb): I think I'm supposed to do this with CADisplayLink or something like that. This seems ghetto
-  [NSTimer scheduledTimerWithTimeInterval:0.03 target:self selector:@selector(display) userInfo:nil repeats:YES];
   _drone = [[ARDrone alloc] initWithFrame:CGRectZero withState:YES withDelegate:self withHUDConfiguration:nil];
   [NSThread detachNewThreadSelector:@selector(TimerHandler) toTarget:_drone withObject:nil];
+  //[NSTimer scheduledTimerWithTimeInterval:0.03 target:self selector:@selector(display) userInfo:nil repeats:YES];
+  [NSTimer scheduledTimerWithTimeInterval:0.03 target:self selector:@selector(display) userInfo:nil repeats:YES];
 
 }
 
@@ -67,20 +70,25 @@ extern navdata_unpacked_t ctrlnavdata;
 
 - (void)flapGestureRecognizer:(JBFlapGestureRecognizer *)flapGestureRecognizer didGetThrustVector:(XnVector3D)thrustVector {
   _leftVerticalGuageView.value = -thrustVector.Y / 100.0;
-  _rightVerticalGuageView.value = 0.5 + thrustVector.Z / 100.0;
   [_leftVerticalGuageView setNeedsDisplay:YES];
   [_rightVerticalGuageView setNeedsDisplay:YES];
+  float thrust = thrustVector.Z / 100;
+  _rightVerticalGuageView.value = 0.5 + thrust / 2;
+  [_thrustTextField setStringValue:[NSString stringWithFormat:@"%0.2f", thrust]];
+  ctrldata.accelero_flag = ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE;
+  [_drone setPitch:-thrust * .8];
 }
 
 #pragma mark - JBTiltGestureRecognizerDelegate
 
 - (void)tiltGestureRecognizer:(JBTiltGestureRecognizer *)tiltGestureRecognizer didGetTiltAngle:(double)angle {
-  [_angleTextField setStringValue:[NSString stringWithFormat:@"%f", angle]];
+  [_angleTextField setStringValue:[NSString stringWithFormat:@"%0.2f", angle]];
   [_leftVerticalGuageView setBoundsRotation:angle];
   [_leftVerticalGuageView setNeedsDisplay:YES];
   [_rightVerticalGuageView setBoundsRotation:angle];
   [_rightVerticalGuageView setNeedsDisplay:YES];
-  [_drone setYaw:angle / 90];
+  float yaw = -angle / 45;
+  [_drone setYaw:yaw];
 }
 
 #pragma mark - ARDroneDelegate
