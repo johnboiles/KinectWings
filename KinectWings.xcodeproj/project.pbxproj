@@ -224,14 +224,14 @@
 				42AF469C14EA1CF0002B8DC9 /* ARDroneTypes.h */,
 				42AF469D14EA1CF1002B8DC9 /* ConstantsAndMacros.h */,
 				42AF469E14EA1CF1002B8DC9 /* InternalProtocols.h */,
-				42AF469F14EA1CF1002B8DC9 /* mobile_main.c */,
 				42AF46A014EA1CF1002B8DC9 /* mobile_main.h */,
-				42AF46A114EA1CF1002B8DC9 /* navdata.c */,
+				42AF469F14EA1CF1002B8DC9 /* mobile_main.c */,
 				42AF46A214EA1CF1002B8DC9 /* navdata.h */,
-				42AF46A314EA1CF1002B8DC9 /* wifi.c */,
+				42AF46A114EA1CF1002B8DC9 /* navdata.c */,
 				42AF46A414EA1CF1002B8DC9 /* wifi.h */,
-				42AF468E14EA1A0A002B8DC9 /* ControlData.c */,
+				42AF46A314EA1CF1002B8DC9 /* wifi.c */,
 				42AF468F14EA1A0A002B8DC9 /* ControlData.h */,
+				42AF468E14EA1A0A002B8DC9 /* ControlData.c */,
 			);
 			path = ARDrone;
 			sourceTree = "<group>";

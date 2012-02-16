@@ -58,8 +58,7 @@ extern navdata_unpacked_t ctrlnavdata;
   _tiltGestureRecognizer.delegate = self;
   // XXX(johnb): I think I'm supposed to do this with CADisplayLink or something like that. This seems ghetto
   [NSTimer scheduledTimerWithTimeInterval:0.03 target:self selector:@selector(display) userInfo:nil repeats:YES];
-  static ARDroneHUDConfiguration hudconfiguration;
-  _drone = [[ARDrone alloc] initWithFrame:CGRectZero withState:YES withDelegate:self withHUDConfiguration:&hudconfiguration];
+  _drone = [[ARDrone alloc] initWithFrame:CGRectZero withState:YES withDelegate:self withHUDConfiguration:nil];
   [NSThread detachNewThreadSelector:@selector(TimerHandler) toTarget:_drone withObject:nil];
 
 }
