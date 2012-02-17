@@ -98,7 +98,7 @@ void DrawRectangle(float topLeftX, float topLeftY, float bottomRightX, float bot
   glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
   //TODO: Maybe glFinish needed here instead - if there's some bad graphics crap
-  glFlush();
+  //glFlush();
 }
 
 void DrawTexture(float topLeftX, float topLeftY, float bottomRightX, float bottomRightY) {

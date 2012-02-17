@@ -8,6 +8,7 @@
 #include "ConstantsAndMacros.h"
 #import "GLViewController.h"
 #import <OpenGl/gl.h>
+#import "DepthView.h"
 
 static void drawTriangle();
 
@@ -37,7 +38,7 @@ float normalize_vector(float x, float y, float z)
 
     video = [[OpenGLVideo alloc] initWithPath:[[NSBundle mainBundle] pathForResource:@"background" ofType:@"png"] withScreenSize:NSSizeToCGSize(frameRect.size)];
   }
-  
+
   return self;
 }
 
@@ -92,6 +93,7 @@ float normalize_vector(float x, float y, float z)
 	glClientActiveTexture(openGLContext.clientActiveTexture);
 }
 
+static DepthView *depthView = NULL;
 - (void)drawView
 {	
 	// Save OpenGLContext
@@ -140,7 +142,6 @@ float normalize_vector(float x, float y, float z)
 	// Bind the background texture
 	// Draw video
 	[video drawSelf];
-
 	// Restore the model view matrix
 	glMatrixMode(GL_TEXTURE);
 	glPopMatrix();
@@ -155,6 +156,11 @@ float normalize_vector(float x, float y, float z)
 
 	// Restore OpenGL context if modified
 	[self restoreOpenGLContext];
+  if (!depthView) {
+    depthView = [[DepthView alloc] init];
+  }
+  [depthView drawRect:NSZeroRect];
+
 }
 
 - (void)dealloc {
@@ -188,7 +194,7 @@ float normalize_vector(float x, float y, float z)
 }
 
 - (void)drawRect:(NSRect)bounds {
-//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   [self drawView];
 }
 

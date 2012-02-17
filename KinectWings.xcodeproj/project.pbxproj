@@ -20,7 +20,7 @@
 		42312CF714C1399300C616F3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 42312CCF14C12CCB00C616F3 /* main.m */; };
 		42366DDB14ECC58C006F6DFA /* OpenGLSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 42366DD814ECC58C006F6DFA /* OpenGLSprite.m */; };
 		42366DDC14ECC58C006F6DFA /* OpenGLVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 42366DDA14ECC58C006F6DFA /* OpenGLVideo.m */; };
-		42366DE014ECC858006F6DFA /* GLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42366DDF14ECC858006F6DFA /* GLViewController.m */; };
+		42366DE014ECC858006F6DFA /* GLViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 42366DDF14ECC858006F6DFA /* GLViewController.mm */; };
 		42366DE214ECD8F4006F6DFA /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 42366DE114ECD8F4006F6DFA /* background.png */; };
 		427B8DEB14C1578100EDAD05 /* DepthView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 427B8DEA14C1578100EDAD05 /* DepthView.mm */; };
 		4299AD5814E4D6B5000F148B /* JBTiltGestureRecognizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4299AD5714E4D6B5000F148B /* JBTiltGestureRecognizer.mm */; };
@@ -67,7 +67,7 @@
 		42366DD914ECC58C006F6DFA /* OpenGLVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLVideo.h; sourceTree = "<group>"; };
 		42366DDA14ECC58C006F6DFA /* OpenGLVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenGLVideo.m; sourceTree = "<group>"; };
 		42366DDE14ECC858006F6DFA /* GLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLViewController.h; sourceTree = "<group>"; };
-		42366DDF14ECC858006F6DFA /* GLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLViewController.m; sourceTree = "<group>"; };
+		42366DDF14ECC858006F6DFA /* GLViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GLViewController.mm; sourceTree = "<group>"; };
 		42366DE114ECD8F4006F6DFA /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		427B8DE914C1578100EDAD05 /* DepthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DepthView.h; sourceTree = "<group>"; };
 		427B8DEA14C1578100EDAD05 /* DepthView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DepthView.mm; sourceTree = "<group>"; };
@@ -227,7 +227,7 @@
 			isa = PBXGroup;
 			children = (
 				42366DDE14ECC858006F6DFA /* GLViewController.h */,
-				42366DDF14ECC858006F6DFA /* GLViewController.m */,
+				42366DDF14ECC858006F6DFA /* GLViewController.mm */,
 				42366DD714ECC58C006F6DFA /* OpenGLSprite.h */,
 				42366DD814ECC58C006F6DFA /* OpenGLSprite.m */,
 				42366DD914ECC58C006F6DFA /* OpenGLVideo.h */,
@@ -338,7 +338,7 @@
 				42AF46A914EA1CF2002B8DC9 /* wifi.c in Sources */,
 				42366DDB14ECC58C006F6DFA /* OpenGLSprite.m in Sources */,
 				42366DDC14ECC58C006F6DFA /* OpenGLVideo.m in Sources */,
-				42366DE014ECC858006F6DFA /* GLViewController.m in Sources */,
+				42366DE014ECC858006F6DFA /* GLViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
