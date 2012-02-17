@@ -61,10 +61,6 @@ static void drawTriangle() {
 
     glDisable(GL_TEXTURE_2D);
 
-    // Read next available data
-    // If we skip this, the view will appear paused
-    [[CocoaOpenNI sharedOpenNI] context].WaitNoneUpdateAll();
-
     // Process the data
     [[CocoaOpenNI sharedOpenNI] depthGenerator].GetMetaData(depthMD);
     [[CocoaOpenNI sharedOpenNI] userGenerator].GetUserPixels(0, sceneMD);

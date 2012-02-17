@@ -32,6 +32,9 @@ extern ControlData ctrldata;
 
 - (void)display {
   //[_openGLView setNeedsDisplay:YES];
+  // Read next available data
+  // If we skip this, the view will appear paused
+  [[CocoaOpenNI sharedOpenNI] context].WaitNoneUpdateAll();
   [_droneVideoView setNeedsDisplay:YES];
   xn::UserGenerator userGenerator = [[CocoaOpenNI sharedOpenNI] userGenerator];
   XnUserID user = [[CocoaOpenNI sharedOpenNI] firstTrackingUser];
@@ -41,7 +44,7 @@ extern ControlData ctrldata;
 }
 
 - (IBAction)takeOff:(id)sender {
-  [_drone omgflyaway];
+  [_drone takeOff];
 }
 
 - (IBAction)left:(id)sender {
@@ -59,11 +62,18 @@ extern ControlData ctrldata;
   _tiltGestureRecognizer = [[JBTiltGestureRecognizer alloc] init];
   _tiltGestureRecognizer.delegate = self;
   // XXX(johnb): I think I'm supposed to do this with CADisplayLink or something like that. This seems ghetto
-  _drone = [[ARDrone alloc] initWithFrame:CGRectZero withState:YES withDelegate:self withHUDConfiguration:nil];
-  [NSThread detachNewThreadSelector:@selector(TimerHandler) toTarget:_drone withObject:nil];
+  _drone = [[ARDrone alloc] initWithFrame:CGRectZero withState:YES withDelegate:self];
+  [NSThread detachNewThreadSelector:@selector(timerThread) toTarget:_drone withObject:nil];
   //[NSTimer scheduledTimerWithTimeInterval:0.03 target:self selector:@selector(display) userInfo:nil repeats:YES];
-  [NSTimer scheduledTimerWithTimeInterval:0.03 target:self selector:@selector(display) userInfo:nil repeats:YES];
+  [NSThread detachNewThreadSelector:@selector(refreshThread) toTarget:self withObject:nil];
+  //[NSTimer scheduledTimerWithTimeInterval:0.03 target:self selector:@selector(display) userInfo:nil repeats:YES];
+}
 
+- (void)refreshThread {
+  while (YES) {
+    [self display];
+    sleep(1.0 / 30.0);
+  }
 }
 
 #pragma mark - JBFlapGestureRecognizerDelegate
@@ -76,7 +86,7 @@ extern ControlData ctrldata;
   _rightVerticalGuageView.value = 0.5 + thrust / 2;
   [_thrustTextField setStringValue:[NSString stringWithFormat:@"%0.2f", thrust]];
   ctrldata.accelero_flag = ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE;
-  [_drone setPitch:-thrust * .8];
+  [_drone setPitch:thrust * .8];
 }
 
 #pragma mark - JBTiltGestureRecognizerDelegate

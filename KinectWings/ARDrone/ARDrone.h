@@ -1,24 +1,3 @@
-/*! \mainpage ParrotBuild
- 
- 
- <center><h1> ARDrone API documentation</h1></center>
- <div align="center">
- <hr>
- </div>
- 
- <div><center>
- This documentation provides an API for ARDrone host development and is still a work in progress.
-
- The following schema explain the structure of the API.
- 
- <img alt="ARDrone API schema" src="ardrone_api.jpg">
-
- A sample demo for Iphone can be found here:
-
- https://projects.ardrone.org/repositories/browse/ardrone-api/Examples 
-
- </center></div>
- */
  /**
  * @file ARDrone.h
  *
@@ -26,34 +5,21 @@
  * @author D HAEYER Frederic
  * @date 2009/10/26
  */
+
 #import <Foundation/Foundation.h>
 #import "ARDroneProtocols.h"
 #import "GLViewController.h"
-
-/**
- * Define HUD configuration structure
- */
-typedef struct
-{
-	BOOL enableSwitchScreen;
-	BOOL enableBackToMainMenu;
-	BOOL enableBatteryPercentage;
-}
-ARDroneHUDConfiguration;
 
 @class GLViewController;
 
 /**
  * Define a few methods to make it possible for the game engine to control the Parrot drone
  */
-@interface ARDrone : NSObject <ARDroneProtocolIn>
-{
+@interface ARDrone : NSObject <ARDroneProtocolIn> {
 	BOOL running;
-  @private
   BOOL inGameOnDemand;
 	CGRect screenFrame;
 	id <ARDroneProtocolOut> _uidelegate;
-	ARDroneHUDConfiguration *hudconfig;
   GLViewController *glviewctrl;
 }
 
@@ -62,7 +28,6 @@ ARDroneHUDConfiguration;
  * Note: It is the library sole responsability to handle change of states and modify its behavior; basically, it should pause some of the threads when "paused" then resume everything back to normal when "running".
  */
 @property (nonatomic, readonly) BOOL running;
-
 
 /**
  * Initialize the Parrot library.<br/>
@@ -74,7 +39,7 @@ ARDroneHUDConfiguration;
  * @param hudconfiguration is a structure to define HUD properties (can be nil)
  * @return Pointer to the newly initialized Parrot library instance.
  */
-- (id) initWithFrame:(CGRect)frame withState:(BOOL)inGame withDelegate:(id <ARDroneProtocolOut>)uidelegate withHUDConfiguration:(ARDroneHUDConfiguration*)hudconfiguration;
+- (id)initWithFrame:(CGRect)frame withState:(BOOL)inGame withDelegate:(id <ARDroneProtocolOut>)uidelegate;
 
 /**
  * Set what shall be the orientation of the screen when rendering a frame.
@@ -91,7 +56,7 @@ ARDroneHUDConfiguration;
  */
 - (void)render;
 
-- (void)omgflyaway;
+- (void)takeOff;
 
 - (void)setYaw:(float)yaw;
 

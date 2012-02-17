@@ -40,63 +40,32 @@
 
 #include <VLIB/Stages/vlib_stage_decode.h>
 
-#include <iniparser3.0b/src/iniparser.h>
-
 #include <time.h>
 #include <sys/time.h>
 #include <unistd.h>
 
-#include <TargetConditionals.h>
 #include "mobile_main.h"
 #include "navdata.h"
 #include "ControlData.h"
 
+#include <TargetConditionals.h>
 #ifdef __OBJC__
 #import <Foundation/Foundation.h>
 #import <AudioToolbox/AudioToolbox.h>
-//#import <MediaPlayer/MediaPlayer.h>
-//#import <UIKit/UIKit.h>
-//#import <OpenGLES/EAGL.h>
-//#import <CoreMotion/CoreMotion.h>
 #endif
 
-//#if TARGET_CPU_X86 == 1 // We are on iPhone simulator
 #define WIFI_ITFNAME "en1"
-//#endif // TARGET_CPU_X86
-
-#if TARGET_CPU_ARM == 1 // We are on real iPhone
-#define WIFI_ITFNAME "en0"
-#endif // TARGET_CPU_ARM
 
 // How many times a second to refresh the screen
 #define kFPS 20		// Frame per second
-#define kAPS 40		// Number of accelerometer() function calls by second 
+#define kAPS 30		// Number of accelerometer() function calls by second 
 
 //#define CHECK_OPENGL_ERROR() ({ GLenum __error = glGetError(); if(__error) NSLog(@"OpenGLES error 0x%04X in %s\n", __error, __FUNCTION__); (__error ? NO : YES); })
-
-#define ARDroneEngineLocalizeString(str) ([[NSBundle mainBundle] localizedStringForKey :str value:@"" table:@"languages"])
-
-//#define WRITE_DEBUG_ACCELERO
-//#define ENABLE_AUTO_TVOUT
-//#define INTERFACE_WITH_DEBUG
 
 typedef struct {
 	float x;
 	float y;
 	float z;
-} Vertex3D, Coord3D, Rotation3D, Scale3D;
-
-typedef struct {
-	float v1;
-	float v2;
-	float v3;
-} Face3D;
-
-typedef struct {
-	float r;
-	float g;
-	float b;
-	float a;	
-} ColorRGBA;
+} Vertex3D, Rotation3D, Scale3D;
 
 #endif // _CONSTANTS_AND_MACROS_H_

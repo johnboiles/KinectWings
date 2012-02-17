@@ -132,7 +132,7 @@ void InitTexture(Texture *texture, CGSize imageSize, CGSize screenSize, eSCALING
 		// Init rotation, translation and scale
 		rotation.x = 0.0;
 		rotation.y = 0.0;
-		rotation.z = 0.0;
+		rotation.z = 90.0;
 		
 		position.x = 0.0;
 		position.y = 0.0;
@@ -195,11 +195,11 @@ void InitTexture(Texture *texture, CGSize imageSize, CGSize screenSize, eSCALING
 	
 	// Scale Texture
 	glScalef(texture.scaleModelX * scale.x, texture.scaleModelY * scale.y, scale.z);
-	
+
 	glRotatef(rotation.x, 1.0, 0.0, 0.0);
 	glRotatef(rotation.y, 0.0, 1.0, 0.0);
 	glRotatef(rotation.z, 0.0, 0.0, 1.0);
-	
+
 	glMatrixMode(GL_TEXTURE);
 	glLoadIdentity();
 	glScalef(texture.scaleTextureX, texture.scaleTextureY, 1.0f);

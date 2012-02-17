@@ -15,8 +15,7 @@ ControlData ctrldata = { 0 };
 navdata_unpacked_t ctrlnavdata;
 extern char iphone_mac_address[];
 
-void setApplicationDefaultConfig(void)
-{
+void setApplicationDefaultConfig(void) {
 	ardrone_application_default_config.navdata_demo = TRUE;
 	ardrone_application_default_config.navdata_options = (NAVDATA_OPTION_MASK(NAVDATA_DEMO_TAG) | NAVDATA_OPTION_MASK(NAVDATA_VISION_DETECT_TAG) | NAVDATA_OPTION_MASK(NAVDATA_GAMES_TAG));
 	ardrone_application_default_config.video_codec = P264_CODEC;
@@ -26,55 +25,50 @@ void setApplicationDefaultConfig(void)
 
 void config_callback(bool_t result);
 
-void config_callback(bool_t result)
-{
-	if(result)
-		ctrldata.configurationState = CONFIG_STATE_IDLE;
+void config_callback(bool_t result) {
+	if(result) ctrldata.configurationState = CONFIG_STATE_IDLE;
 }
 
-void initControlData(void)
-{
+void initControlData(void) {
 	ctrldata.framecounter = 0;
-	
+
 	ctrldata.needSetEmergency = FALSE;
 	ctrldata.needSetTakeOff = FALSE;
 	ctrldata.isInEmergency = FALSE;
 	ctrldata.navdata_connected = FALSE;
-	
+
 	ctrldata.needAnimation = FALSE;
 	vp_os_memset(ctrldata.needAnimationParam, 0, sizeof(ctrldata.needAnimationParam));
-	
+
 	ctrldata.needVideoSwitch = -1;
-	
+
 	ctrldata.needLedAnimation = FALSE;
 	vp_os_memset(ctrldata.needLedAnimationParam, 0, sizeof(ctrldata.needLedAnimationParam));
-	
+
 	ctrldata.wifiReachabled = FALSE;
-	
+
 	strcpy(ctrldata.error_msg, "");
 	strcpy(ctrldata.takeoff_msg, "take_off");
 	strcpy(ctrldata.emergency_msg, "emergency");
-	
+
 	initNavdataControlData();
 	resetControlData();
 	ardrone_tool_start_reset();
-	
+
 	ctrldata.configurationState = CONFIG_STATE_NEEDED;
-	
+
 	ardrone_navdata_write_to_file(FALSE);
-	
+
 	/* Setting default values for ControlEngine */
 	ctrldata.applicationDefaultConfigState = CONFIG_STATE_NEEDED;
 }
 
-void initNavdataControlData(void)
-{
+void initNavdataControlData(void) {
 	//drone data
 	ardrone_navdata_reset_data(&ctrlnavdata);
 }
 
-void resetControlData(void)
-{
+void resetControlData(void) {
 	//printf("reset control data\n");
 	ctrldata.accelero_flag = 0;
 	inputPitch(0.0);
@@ -84,30 +78,26 @@ void resetControlData(void)
 	initNavdataControlData();
 }
 
-void configuration_get(void)
-{
-	if(ctrldata.configurationState == CONFIG_STATE_IDLE)
-		ctrldata.configurationState = CONFIG_STATE_NEEDED;
+void configuration_get(void) {
+  if(ctrldata.configurationState == CONFIG_STATE_IDLE)
+    ctrldata.configurationState = CONFIG_STATE_NEEDED;
 }
 
-void switchTakeOff(void)
-{
-#ifdef DEBUG_CONTROL
-	PRINT("%s\n", __FUNCTION__);
-#endif		
-	ctrldata.needSetTakeOff = TRUE;
-}
-
-void emergency(void)
-{
+void switchTakeOff(void) {
 #ifdef DEBUG_CONTROL
 	PRINT("%s\n", __FUNCTION__);
 #endif
-	ctrldata.needSetEmergency = TRUE;
+  ctrldata.needSetTakeOff = TRUE;
 }
 
-void inputYaw(float percent)
-{
+void emergency(void) {
+#ifdef DEBUG_CONTROL
+  PRINT("%s\n", __FUNCTION__);
+#endif
+  ctrldata.needSetEmergency = TRUE;
+}
+
+void inputYaw(float percent) {
 #ifdef DEBUG_CONTROL
 	PRINT("%s : %f\n", __FUNCTION__, percent);
 #endif
@@ -119,8 +109,7 @@ void inputYaw(float percent)
 		ctrldata.yaw = 1.0;
 }
 
-void inputGaz(float percent)
-{
+void inputGaz(float percent) {
 #ifdef DEBUG_CONTROL
 	PRINT("%s : %f\n", __FUNCTION__, percent);
 #endif
@@ -132,8 +121,7 @@ void inputGaz(float percent)
 		ctrldata.gaz = 1.0;
 }
 
-void inputPitch(float percent)
-{
+void inputPitch(float percent) {
 #ifdef DEBUG_CONTROL
 	PRINT("%s : %f, accelero_enable : %d\n", __FUNCTION__, percent, (ctrldata.accelero_flag >> ARDRONE_PROGRESSIVE_CMD_ENABLE) & 0x1 );
 #endif
@@ -145,8 +133,7 @@ void inputPitch(float percent)
 		ctrldata.accelero_theta = -1.0;
 }
 
-void inputRoll(float percent)
-{
+void inputRoll(float percent) {
 #ifdef DEBUG_CONTROL
 	PRINT("%s : %f, accelero_enable : %d\n", __FUNCTION__, percent, (ctrldata.accelero_flag >> ARDRONE_PROGRESSIVE_CMD_ENABLE) & 0x1);
 #endif
@@ -158,13 +145,11 @@ void inputRoll(float percent)
 		ctrldata.accelero_phi = 1.0;
 }
 
-void sendControls(void)
-{
+void sendControls(void) {
 	ardrone_at_set_progress_cmd(ctrldata.accelero_flag, ctrldata.accelero_phi, ctrldata.accelero_theta, ctrldata.gaz, ctrldata.yaw);
 }
 
-void checkErrors(void)
-{
+void checkErrors(void) {
 	input_state_t* input_state = ardrone_tool_get_input_state();
 	
 	strcpy(ctrldata.error_msg, "");
