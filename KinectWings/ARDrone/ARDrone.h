@@ -62,4 +62,6 @@
 
 - (void)setPitch:(float)pitch;
 
+- (void)setVertical:(float)vertical;
+
 @end

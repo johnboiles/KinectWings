@@ -231,6 +231,11 @@ static void ARDroneCallback(ARDRONE_ENGINE_MESSAGE msg) {
   sendControls();
 }
 
+- (void)setVertical:(float)vertical {
+  inputGaz(vertical);
+  sendControls();
+}
+
 extern navdata_unpacked_t ctrlnavdata;
 
 - (void)timerThread {

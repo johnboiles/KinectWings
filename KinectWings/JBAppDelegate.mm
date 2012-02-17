@@ -87,6 +87,7 @@ extern ControlData ctrldata;
   [_thrustTextField setStringValue:[NSString stringWithFormat:@"%0.2f", thrust]];
   ctrldata.accelero_flag = ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE;
   [_drone setPitch:thrust * .8];
+  [_drone setVertical:- thrustVector.Y / 80 - 0.05];
 }
 
 #pragma mark - JBTiltGestureRecognizerDelegate
