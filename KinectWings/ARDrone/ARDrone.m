@@ -223,16 +223,21 @@ static void ARDroneCallback(ARDRONE_ENGINE_MESSAGE msg) {
 
 - (void)setYaw:(float)yaw {
   inputYaw(yaw);
-  sendControls();
 }
 
 - (void)setPitch:(float)pitch {
   inputPitch(pitch);
-  sendControls();
+  //ctrldata.accelero_flag = ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE;
+  ctrldata.accelero_flag |= ARDRONE_PROGRESSIVE_CMD_ENABLE | ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE;
 }
 
 - (void)setVertical:(float)vertical {
   inputGaz(vertical);
+  //ctrldata.accelero_flag = ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE;
+  ctrldata.accelero_flag |= ARDRONE_PROGRESSIVE_CMD_ENABLE | ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE;
+}
+
+- (void)sendControls {
   sendControls();
 }
 
@@ -264,7 +269,7 @@ extern navdata_unpacked_t ctrlnavdata;
       usleep(refreshTimeInUs - delta);
     }
 	}
-  [pool release];  // Release the objects in the pool.
+  [pool release];
 }
 
 @end

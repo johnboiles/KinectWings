@@ -64,4 +64,6 @@
 
 - (void)setVertical:(float)vertical;
 
+- (void)sendControls;
+
 @end

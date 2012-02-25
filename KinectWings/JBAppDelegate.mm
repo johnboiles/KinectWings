@@ -34,21 +34,18 @@ extern ControlData ctrldata;
   //[_openGLView setNeedsDisplay:YES];
   // Read next available data
   // If we skip this, the view will appear paused
-  [[CocoaOpenNI sharedOpenNI] context].WaitNoneUpdateAll();
+  [[CocoaOpenNI sharedOpenNI] context].WaitAndUpdateAll();
   [_droneVideoView setNeedsDisplay:YES];
   xn::UserGenerator userGenerator = [[CocoaOpenNI sharedOpenNI] userGenerator];
   XnUserID user = [[CocoaOpenNI sharedOpenNI] firstTrackingUser];
   Skeleton *skeleton = [Skeleton skeletonFromUserGenerator:userGenerator user:user];
   [_flapGestureRecognizer skeletalTrackingDidContinueWithSkeleton:skeleton];
   [_tiltGestureRecognizer skeletalTrackingDidContinueWithSkeleton:skeleton];
+  [_drone performSelectorOnMainThread:@selector(sendControls) withObject:nil waitUntilDone:NO];
 }
 
 - (IBAction)takeOff:(id)sender {
   [_drone takeOff];
-}
-
-- (IBAction)left:(id)sender {
-  [_drone setYaw:0];
 }
 
 #pragma mark - NSApplicationDelegate
@@ -65,8 +62,8 @@ extern ControlData ctrldata;
   _drone = [[ARDrone alloc] initWithFrame:CGRectZero withState:YES withDelegate:self];
   [NSThread detachNewThreadSelector:@selector(timerThread) toTarget:_drone withObject:nil];
   //[NSTimer scheduledTimerWithTimeInterval:0.03 target:self selector:@selector(display) userInfo:nil repeats:YES];
-  [NSThread detachNewThreadSelector:@selector(refreshThread) toTarget:self withObject:nil];
-  //[NSTimer scheduledTimerWithTimeInterval:0.03 target:self selector:@selector(display) userInfo:nil repeats:YES];
+  //[NSThread detachNewThreadSelector:@selector(refreshThread) toTarget:self withObject:nil];
+  [NSTimer scheduledTimerWithTimeInterval:1.0/30.0 target:self selector:@selector(display) userInfo:nil repeats:YES];
 }
 
 - (void)refreshThread {
@@ -85,8 +82,7 @@ extern ControlData ctrldata;
   float thrust = thrustVector.Z / 100;
   _rightVerticalGuageView.value = 0.5 + thrust / 2;
   [_thrustTextField setStringValue:[NSString stringWithFormat:@"%0.2f", thrust]];
-  ctrldata.accelero_flag = ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE;
-  [_drone setPitch:thrust * .8];
+  [_drone setPitch:thrust * 0.8];
   [_drone setVertical:- thrustVector.Y / 80 - 0.05];
 }
 
