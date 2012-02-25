@@ -409,16 +409,16 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					/usr/include/ni,
-					"$(SRCROOT)/Libraries/ARDroneLib",
-					"$(SRCROOT)/Libraries/ARDroneLib/Soft/Common",
-					"$(SRCROOT)/Libraries/ARDroneLib/Soft/Lib",
-					"$(SRCROOT)/Libraries/ARDroneLib/VLIB",
-					"$(SRCROOT)/Libraries/ARDroneLib/VLIB/Platform/arm11",
-					"$(SRCROOT)/Libraries/ARDroneLib/VP_SDK",
-					"$(SRCROOT)/Libraries/ARDroneLib/VP_SDK/VP_Com",
-					"$(SRCROOT)/Libraries/ARDroneLib/VP_SDK/VP_Os",
-					"$(SRCROOT)/Libraries/ARDroneLib/VP_SDK/VP_Os/linux",
-					"$(SRCROOT)/Libraries/ARDroneLib/VP_SDK/VP_Com/linux",
+					"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib",
+					"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/Soft/Common",
+					"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/Soft/Lib",
+					"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/VLIB",
+					"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/VLIB/Platform/arm11",
+					"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/VP_SDK",
+					"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/VP_SDK/VP_Com",
+					"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/VP_SDK/VP_Os",
+					"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/VP_SDK/VP_Os/linux",
+					"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/VP_SDK/VP_Com/linux",
 				);
 				INFOPLIST_FILE = "KinectWings/KinectWings-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
@@ -449,16 +449,16 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					/usr/include/ni,
-					"$(SRCROOT)/Libraries/ARDroneLib",
-					"$(SRCROOT)/Libraries/ARDroneLib/Soft/Common",
-					"$(SRCROOT)/Libraries/ARDroneLib/Soft/Lib",
-					"$(SRCROOT)/Libraries/ARDroneLib/VLIB",
-					"$(SRCROOT)/Libraries/ARDroneLib/VLIB/Platform/arm11",
-					"$(SRCROOT)/Libraries/ARDroneLib/VP_SDK",
-					"$(SRCROOT)/Libraries/ARDroneLib/VP_SDK/VP_Com",
-					"$(SRCROOT)/Libraries/ARDroneLib/VP_SDK/VP_Os",
-					"$(SRCROOT)/Libraries/ARDroneLib/VP_SDK/VP_Os/linux",
-					"$(SRCROOT)/Libraries/ARDroneLib/VP_SDK/VP_Com/linux",
+					"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib",
+					"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/Soft/Common",
+					"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/Soft/Lib",
+					"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/VLIB",
+					"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/VLIB/Platform/arm11",
+					"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/VP_SDK",
+					"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/VP_SDK/VP_Com",
+					"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/VP_SDK/VP_Os",
+					"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/VP_SDK/VP_Os/linux",
+					"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/VP_SDK/VP_Com/linux",
 				);
 				INFOPLIST_FILE = "KinectWings/KinectWings-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
