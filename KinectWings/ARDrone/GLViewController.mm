@@ -15,8 +15,8 @@ static void drawTriangle();
 static CGFloat const matrixOrthoFront[] = {1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, -1.0f, 1.0f};
 static CGFloat const matrixOrthoBack[] = {1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f};
 
-static CGFloat const matrixOrthoBackLeft[] = {1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f};
-static CGFloat const matrixOrthoBackRight[] = {-1.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f};
+static GLfloat const matrixOrthoBackLeft[] = {1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f};
+static GLfloat const matrixOrthoBackRight[] = {-1.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f};
 
 float normalize_vector(float x, float y, float z);
 
@@ -124,7 +124,7 @@ static DepthView *depthView = NULL;
 	glPushMatrix();
 	glLoadIdentity();
   BOOL screenOrientationRight = YES;
-	glMultMatrixf(screenOrientationRight ? matrixOrthoBackRight : matrixOrthoBackLeft);
+	glMultMatrixf(matrixOrthoBackRight);
 
   glViewport(0, 0, self.frame.size.width, self.frame.size.height);
   //glOrtho(0.0f, 640, 480, 0.0f, -1.0f, 1.0f);
