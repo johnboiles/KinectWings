@@ -66,4 +66,6 @@
 
 - (void)sendControls;
 
+- (void)setSomeControls;
+
 @end

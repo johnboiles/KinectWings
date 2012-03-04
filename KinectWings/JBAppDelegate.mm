@@ -17,7 +17,7 @@
 #import "math.h"
 #import "Skeleton.h"
 #import "ARDrone.h"
-#include "ControlData.h"
+#import "ControlData.h"
 
 extern navdata_unpacked_t ctr;
 extern ControlData ctrldata;
@@ -34,18 +34,24 @@ extern ControlData ctrldata;
   //[_openGLView setNeedsDisplay:YES];
   // Read next available data
   // If we skip this, the view will appear paused
-  [[CocoaOpenNI sharedOpenNI] context].WaitAndUpdateAll();
+  if ([CocoaOpenNI sharedOpenNI].started) {
+    [[CocoaOpenNI sharedOpenNI] context].WaitAndUpdateAll();
+    xn::UserGenerator userGenerator = [[CocoaOpenNI sharedOpenNI] userGenerator];
+    XnUserID user = [[CocoaOpenNI sharedOpenNI] firstTrackingUser];
+    Skeleton *skeleton = [Skeleton skeletonFromUserGenerator:userGenerator user:user];
+    [_flapGestureRecognizer skeletalTrackingDidContinueWithSkeleton:skeleton];
+    [_tiltGestureRecognizer skeletalTrackingDidContinueWithSkeleton:skeleton];
+    [_drone performSelectorOnMainThread:@selector(sendControls) withObject:nil waitUntilDone:NO];
+  }
   [_droneVideoView setNeedsDisplay:YES];
-  xn::UserGenerator userGenerator = [[CocoaOpenNI sharedOpenNI] userGenerator];
-  XnUserID user = [[CocoaOpenNI sharedOpenNI] firstTrackingUser];
-  Skeleton *skeleton = [Skeleton skeletonFromUserGenerator:userGenerator user:user];
-  [_flapGestureRecognizer skeletalTrackingDidContinueWithSkeleton:skeleton];
-  [_tiltGestureRecognizer skeletalTrackingDidContinueWithSkeleton:skeleton];
-  [_drone performSelectorOnMainThread:@selector(sendControls) withObject:nil waitUntilDone:NO];
 }
 
 - (IBAction)takeOff:(id)sender {
   [_drone takeOff];
+}
+
+- (IBAction)setSomeConfigs:(id)sender {
+  [_drone setSomeControls];
 }
 
 #pragma mark - NSApplicationDelegate
@@ -54,23 +60,19 @@ extern ControlData ctrldata;
   [_window setAspectRatio:NSMakeSize(640, 480)];
   [[CocoaOpenNI sharedOpenNI] startWithConfigPath:[[NSBundle mainBundle] pathForResource:@"KinectConfig" ofType:@"xml"]];
   //[_openGLView setup];
-  _flapGestureRecognizer = [[JBFlapGestureRecognizer alloc] init];
-  _flapGestureRecognizer.delegate = self;
-  _tiltGestureRecognizer = [[JBTiltGestureRecognizer alloc] init];
-  _tiltGestureRecognizer.delegate = self;
+  if ([CocoaOpenNI sharedOpenNI].started) {
+    _flapGestureRecognizer = [[JBFlapGestureRecognizer alloc] init];
+    _flapGestureRecognizer.delegate = self;
+    _tiltGestureRecognizer = [[JBTiltGestureRecognizer alloc] init];
+    _tiltGestureRecognizer.delegate = self;
+  }
   // XXX(johnb): I think I'm supposed to do this with CADisplayLink or something like that. This seems ghetto
   _drone = [[ARDrone alloc] initWithFrame:CGRectZero withState:YES withDelegate:self];
   [NSThread detachNewThreadSelector:@selector(timerThread) toTarget:_drone withObject:nil];
   //[NSTimer scheduledTimerWithTimeInterval:0.03 target:self selector:@selector(display) userInfo:nil repeats:YES];
   //[NSThread detachNewThreadSelector:@selector(refreshThread) toTarget:self withObject:nil];
   [NSTimer scheduledTimerWithTimeInterval:1.0/30.0 target:self selector:@selector(display) userInfo:nil repeats:YES];
-}
-
-- (void)refreshThread {
-  while (YES) {
-    [self display];
-    sleep(1.0 / 30.0);
-  }
+  [_drone setSomeControls];
 }
 
 #pragma mark - JBFlapGestureRecognizerDelegate

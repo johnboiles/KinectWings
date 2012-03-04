@@ -15,12 +15,34 @@ ControlData ctrldata = { 0 };
 navdata_unpacked_t ctrlnavdata;
 extern char iphone_mac_address[];
 
+void setSomeConfigs(void) {
+  // Not sure how i make these do anything?/?
+  //ardrone_control_config.bitrate_ctrl_mode = ARDRONE_VARIABLE_BITRATE_MODE_DISABLED;
+  //ardrone_control_config.bitrate = 400;
+  //ardrone_control_config.video_channel = ARDRONE_VIDEO_CHANNEL_NEXT;
+  //ARDRONE_TOOL_CONFIGURATION_ADDEVENT(bitrate_ctrl_mode, &ardrone_control_config.bitrate_ctrl_mode, NULL);
+  //ARDRONE_TOOL_CONFIGURATION_ADDEVENT(bitrate, &ardrone_control_config.bitrate, NULL);
+  //ARDRONE_TOOL_CONFIGURATION_ADDEVENT(video_channel, &ardrone_control_config.video_channel, NULL);
+  //ctrldata.configurationState = CONFIG_STATE_NEEDED;
+
+  ARDRONE_VARIABLE_BITRATE enabled = ARDRONE_VARIABLE_BITRATE_MANUAL;
+  uint32_t constantBitrate = 5000;
+  ardrone_control_config.bitrate_ctrl_mode = enabled;
+  ardrone_control_config.bitrate = constantBitrate;
+  ARDRONE_TOOL_CONFIGURATION_ADDEVENT(bitrate_ctrl_mode, &ardrone_control_config.bitrate_ctrl_mode, NULL);
+  ARDRONE_TOOL_CONFIGURATION_ADDEVENT(bitrate, &ardrone_control_config.bitrate, NULL);
+}
+
 void setApplicationDefaultConfig(void) {
-	ardrone_application_default_config.navdata_demo = TRUE;
-	ardrone_application_default_config.navdata_options = (NAVDATA_OPTION_MASK(NAVDATA_DEMO_TAG) | NAVDATA_OPTION_MASK(NAVDATA_VISION_DETECT_TAG) | NAVDATA_OPTION_MASK(NAVDATA_GAMES_TAG));
-	ardrone_application_default_config.video_codec = P264_CODEC;
-	ardrone_application_default_config.bitrate_ctrl_mode = ARDRONE_VARIABLE_BITRATE_MODE_DYNAMIC;
-	ctrldata.applicationDefaultConfigState = CONFIG_STATE_IDLE;
+//	ardrone_application_default_config.navdata_demo = TRUE;
+//	ardrone_application_default_config.navdata_options = (NAVDATA_OPTION_MASK(NAVDATA_DEMO_TAG) | NAVDATA_OPTION_MASK(NAVDATA_VISION_DETECT_TAG) | NAVDATA_OPTION_MASK(NAVDATA_GAMES_TAG));
+
+	// I dont think these are doing anything for now
+  ardrone_application_default_config.video_codec = UVLC_CODEC;//P264_CODEC;
+	ardrone_application_default_config.bitrate_ctrl_mode = ARDRONE_VARIABLE_BITRATE_MODE_DISABLED;
+  ardrone_application_default_config.video_channel = ARDRONE_VIDEO_CHANNEL_LARGE_HORI_SMALL_VERT;
+  ardrone_application_default_config.bitrate = 1000;
+  ctrldata.applicationDefaultConfigState = CONFIG_STATE_IDLE;
 }
 
 void config_callback(bool_t result);

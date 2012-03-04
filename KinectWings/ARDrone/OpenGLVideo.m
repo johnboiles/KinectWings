@@ -39,12 +39,12 @@ int get_video_current_numframes( void )
 		texture.widthImage		= config->widthImage;
 		texture.heightImage		= config->heightImage;
 		texture.data          = config->data; 
-		
-		if (config->num_picture_decoded > current_num_picture_decoded)
+
+    if (config->num_picture_decoded > current_num_picture_decoded)
 		{
 			needToUpdate = YES;
 		}
-		
+		NSLog(@"WantImage");
 		current_num_picture_decoded = config->num_picture_decoded;
 
 		vp_os_mutex_unlock( &config->mutex );

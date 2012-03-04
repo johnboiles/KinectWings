@@ -54,7 +54,6 @@ static void ARDroneCallback(ARDRONE_ENGINE_MESSAGE msg) {
 - (id)initWithFrame:(CGRect)frame withState:(BOOL)inGame withDelegate:(id <ARDroneProtocolOut>)uidelegate {
 	if ((self = [super init])) {
 		NSLog(@"Frame ARDrone Engine : %f, %f", frame.size.width, frame.size.height);
-
 		running = NO;
 		inGameOnDemand = inGame;
 		threadStarted = false;
@@ -239,6 +238,10 @@ static void ARDroneCallback(ARDRONE_ENGINE_MESSAGE msg) {
 
 - (void)sendControls {
   sendControls();
+}
+
+- (void)setSomeControls {
+  setSomeConfigs();
 }
 
 extern navdata_unpacked_t ctrlnavdata;

@@ -9,6 +9,7 @@
 #import "GLViewController.h"
 #import <OpenGl/gl.h>
 #import "DepthView.h"
+#import "CocoaOpenNI.h"
 
 static void drawTriangle();
 
@@ -156,11 +157,12 @@ static DepthView *depthView = NULL;
 
 	// Restore OpenGL context if modified
 	[self restoreOpenGLContext];
-  if (!depthView) {
-    depthView = [[DepthView alloc] init];
+  if ([CocoaOpenNI sharedOpenNI].started) {
+    if (!depthView) {
+      depthView = [[DepthView alloc] init];
+    }
+    [depthView drawRect:NSZeroRect];
   }
-  [depthView drawRect:NSZeroRect];
-
 }
 
 - (void)dealloc {

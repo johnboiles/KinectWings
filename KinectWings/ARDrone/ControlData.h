@@ -70,6 +70,7 @@ typedef struct
 	char emergency_msg[SMALL_STRING_SIZE];
 } ControlData;
 
+void setSomeConfigs(void);
 void initControlData(void);
 void resetControlData(void);
 void initNavdataControlData(void);
