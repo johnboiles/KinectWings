@@ -15,6 +15,10 @@ ControlData ctrldata = { 0 };
 navdata_unpacked_t ctrlnavdata;
 extern char iphone_mac_address[];
 
+void configSentCallback(int32_t success) {
+  printf("Config was sent (success=%d)\n", success);
+}
+
 void setSomeConfigs(void) {
   // Not sure how i make these do anything?/?
   //ardrone_control_config.bitrate_ctrl_mode = ARDRONE_VARIABLE_BITRATE_MODE_DISABLED;
@@ -29,8 +33,9 @@ void setSomeConfigs(void) {
   uint32_t constantBitrate = 5000;
   ardrone_control_config.bitrate_ctrl_mode = enabled;
   ardrone_control_config.bitrate = constantBitrate;
-  ARDRONE_TOOL_CONFIGURATION_ADDEVENT(bitrate_ctrl_mode, &ardrone_control_config.bitrate_ctrl_mode, NULL);
-  ARDRONE_TOOL_CONFIGURATION_ADDEVENT(bitrate, &ardrone_control_config.bitrate, NULL);
+  // TODO(johnb): Should try to add a callback here and see what happens
+  ARDRONE_TOOL_CONFIGURATION_ADDEVENT(bitrate_ctrl_mode, &ardrone_control_config.bitrate_ctrl_mode, configSentCallback);
+  ARDRONE_TOOL_CONFIGURATION_ADDEVENT(bitrate, &ardrone_control_config.bitrate, configSentCallback);
 }
 
 void setApplicationDefaultConfig(void) {

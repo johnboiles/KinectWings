@@ -14,7 +14,9 @@
 //#define DEBUG_DETECTION_CAMERA
 //#define DEBUG_DRONE_CAMERA
 
+// Navdata contains information about the drone. The drone sends these 30 times in a second
 extern navdata_unpacked_t ctrlnavdata;
+
 extern char drone_address[];
 extern ControlData ctrldata;
 static bool_t threadStarted = false;
