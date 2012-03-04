@@ -17,9 +17,8 @@
  */
 @interface ARDrone : NSObject <ARDroneProtocolIn> {
 	BOOL running;
+  ControlData controlData;
   BOOL inGameOnDemand;
-	CGRect screenFrame;
-	id <ARDroneProtocolOut> _uidelegate;
   GLViewController *glviewctrl;
 }
 
@@ -35,18 +34,10 @@
  *
  * @param frame Frame of parent view, used to create the library view (which shall cover the whole screen).
  * @param inGame Initial state of the game at startup.
- * @param uidelegate Pointer to the object that implements the Parrot protocol ("ARDroneProtocol"), which will be called whenever the library needs the game engine to change its state.
  * @param hudconfiguration is a structure to define HUD properties (can be nil)
  * @return Pointer to the newly initialized Parrot library instance.
  */
-- (id)initWithFrame:(CGRect)frame withState:(BOOL)inGame withDelegate:(id <ARDroneProtocolOut>)uidelegate;
-
-/**
- * Set what shall be the orientation of the screen when rendering a frame.
- *
- * @param right Orientation of the screen: FALSE for "landscape left", TRUE for "landscape right".
- */
-- (void)setScreenOrientationRight:(BOOL)right;
+- (id)initWithFrame:(CGRect)frame withState:(BOOL)inGame;
 
 /**
  * Render a frame. Basically, the Parrot Library renders:<ul>

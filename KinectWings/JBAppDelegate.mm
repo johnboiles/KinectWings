@@ -20,7 +20,6 @@
 #import "ControlData.h"
 
 extern navdata_unpacked_t ctr;
-extern ControlData ctrldata;
 
 @implementation JBAppDelegate
 
@@ -67,7 +66,7 @@ extern ControlData ctrldata;
     _tiltGestureRecognizer.delegate = self;
   }
   // XXX(johnb): I think I'm supposed to do this with CADisplayLink or something like that. This seems ghetto
-  _drone = [[ARDrone alloc] initWithFrame:CGRectZero withState:YES withDelegate:self];
+  _drone = [[ARDrone alloc] initWithFrame:CGRectZero withState:YES];
   [NSThread detachNewThreadSelector:@selector(timerThread) toTarget:_drone withObject:nil];
   //[NSTimer scheduledTimerWithTimeInterval:0.03 target:self selector:@selector(display) userInfo:nil repeats:YES];
   //[NSThread detachNewThreadSelector:@selector(refreshThread) toTarget:self withObject:nil];
@@ -98,12 +97,6 @@ extern ControlData ctrldata;
   [_rightVerticalGuageView setNeedsDisplay:YES];
   float yaw = -angle / 45;
   [_drone setYaw:yaw];
-}
-
-#pragma mark - ARDroneDelegate
-
-- (void)executeCommandOut:(ARDRONE_COMMAND_OUT)commandId withParameter:(void *)parameter fromSender:(id)sender {
-  NSLog(@"executeCommandOut %d from %@", commandId, sender);
 }
 
 @end

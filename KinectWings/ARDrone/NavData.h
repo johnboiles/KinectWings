@@ -4,6 +4,7 @@
 #include "ConstantsAndMacros.h"
 #include "ARDroneTypes.h"
 
+void ardrone_navdata_set_root_dir(const char *root_dir);
 C_RESULT ardrone_navdata_reset_data(navdata_unpacked_t *nav);
 C_RESULT ardrone_navdata_get_data(navdata_unpacked_t *data);
 C_RESULT ardrone_navdata_write_to_file(bool_t enable);

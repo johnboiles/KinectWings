@@ -11,7 +11,8 @@
 
 //#define DEBUG_CONTROL
 
-ControlData ctrldata = { 0 };
+#define constrain(value, min, max) (value) < (min) ? (min) : ((value) > (max) ? (max) : (value))
+
 navdata_unpacked_t ctrlnavdata;
 extern char iphone_mac_address[];
 
@@ -19,7 +20,10 @@ void configSentCallback(int32_t success) {
   printf("Config was sent (success=%d)\n", success);
 }
 
-void setSomeConfigs(void) {
+// I wonder how we can replace void * callbacks with blocks
+//typedef void (^CallbackBlock)(int32_t);
+
+void setSomeConfigs(ControlData controlData) {
   // Not sure how i make these do anything?/?
   //ardrone_control_config.bitrate_ctrl_mode = ARDRONE_VARIABLE_BITRATE_MODE_DISABLED;
   //ardrone_control_config.bitrate = 400;
@@ -27,18 +31,19 @@ void setSomeConfigs(void) {
   //ARDRONE_TOOL_CONFIGURATION_ADDEVENT(bitrate_ctrl_mode, &ardrone_control_config.bitrate_ctrl_mode, NULL);
   //ARDRONE_TOOL_CONFIGURATION_ADDEVENT(bitrate, &ardrone_control_config.bitrate, NULL);
   //ARDRONE_TOOL_CONFIGURATION_ADDEVENT(video_channel, &ardrone_control_config.video_channel, NULL);
-  //ctrldata.configurationState = CONFIG_STATE_NEEDED;
+  //controlData.configurationState = CONFIG_STATE_NEEDED;
 
   ARDRONE_VARIABLE_BITRATE enabled = ARDRONE_VARIABLE_BITRATE_MANUAL;
   uint32_t constantBitrate = 5000;
   ardrone_control_config.bitrate_ctrl_mode = enabled;
   ardrone_control_config.bitrate = constantBitrate;
+
   // TODO(johnb): Should try to add a callback here and see what happens
   ARDRONE_TOOL_CONFIGURATION_ADDEVENT(bitrate_ctrl_mode, &ardrone_control_config.bitrate_ctrl_mode, configSentCallback);
   ARDRONE_TOOL_CONFIGURATION_ADDEVENT(bitrate, &ardrone_control_config.bitrate, configSentCallback);
 }
 
-void setApplicationDefaultConfig(void) {
+void setApplicationDefaultConfig(ControlData controlData) {
 //	ardrone_application_default_config.navdata_demo = TRUE;
 //	ardrone_application_default_config.navdata_options = (NAVDATA_OPTION_MASK(NAVDATA_DEMO_TAG) | NAVDATA_OPTION_MASK(NAVDATA_VISION_DETECT_TAG) | NAVDATA_OPTION_MASK(NAVDATA_GAMES_TAG));
 
@@ -47,296 +52,277 @@ void setApplicationDefaultConfig(void) {
 	ardrone_application_default_config.bitrate_ctrl_mode = ARDRONE_VARIABLE_BITRATE_MODE_DISABLED;
   ardrone_application_default_config.video_channel = ARDRONE_VIDEO_CHANNEL_LARGE_HORI_SMALL_VERT;
   ardrone_application_default_config.bitrate = 1000;
-  ctrldata.applicationDefaultConfigState = CONFIG_STATE_IDLE;
+  controlData.applicationDefaultConfigState = CONFIG_STATE_IDLE;
 }
 
-void config_callback(bool_t result);
-
-void config_callback(bool_t result) {
-	if(result) ctrldata.configurationState = CONFIG_STATE_IDLE;
+ControlData *controlDataCallbackReference = NULL;
+void configCallback(bool_t result);
+void configCallback(bool_t result) {
+	if (result) controlDataCallbackReference->configurationState = CONFIG_STATE_IDLE;
 }
 
-void initControlData(void) {
-	ctrldata.framecounter = 0;
+void initControlData(ControlData controlData) {
+	controlData.framecounter = 0;
 
-	ctrldata.needSetEmergency = FALSE;
-	ctrldata.needSetTakeOff = FALSE;
-	ctrldata.isInEmergency = FALSE;
-	ctrldata.navdata_connected = FALSE;
+	controlData.needSetEmergency = FALSE;
+	controlData.needSetTakeOff = FALSE;
+	controlData.isInEmergency = FALSE;
+	controlData.navdata_connected = FALSE;
 
-	ctrldata.needAnimation = FALSE;
-	vp_os_memset(ctrldata.needAnimationParam, 0, sizeof(ctrldata.needAnimationParam));
+	controlData.needAnimation = FALSE;
+	vp_os_memset(controlData.needAnimationParam, 0, sizeof(controlData.needAnimationParam));
 
-	ctrldata.needVideoSwitch = -1;
+	controlData.needVideoSwitch = -1;
 
-	ctrldata.needLedAnimation = FALSE;
-	vp_os_memset(ctrldata.needLedAnimationParam, 0, sizeof(ctrldata.needLedAnimationParam));
+	controlData.needLedAnimation = FALSE;
+	vp_os_memset(controlData.needLedAnimationParam, 0, sizeof(controlData.needLedAnimationParam));
 
-	ctrldata.wifiReachabled = FALSE;
+	controlData.wifiReachabled = FALSE;
 
-	strcpy(ctrldata.error_msg, "");
-	strcpy(ctrldata.takeoff_msg, "take_off");
-	strcpy(ctrldata.emergency_msg, "emergency");
+	strcpy(controlData.error_msg, "");
+	strcpy(controlData.takeoff_msg, "take_off");
+	strcpy(controlData.emergency_msg, "emergency");
 
-	initNavdataControlData();
-	resetControlData();
+  // This is done as part of the reset
+	//initNavdataControlData(controlData);
+	resetControlData(controlData);
 	ardrone_tool_start_reset();
 
-	ctrldata.configurationState = CONFIG_STATE_NEEDED;
+	controlData.configurationState = CONFIG_STATE_NEEDED;
 
 	ardrone_navdata_write_to_file(FALSE);
 
 	/* Setting default values for ControlEngine */
-	ctrldata.applicationDefaultConfigState = CONFIG_STATE_NEEDED;
+	controlData.applicationDefaultConfigState = CONFIG_STATE_NEEDED;
 }
 
-void initNavdataControlData(void) {
+void initNavdataControlData(ControlData controlData) {
 	//drone data
 	ardrone_navdata_reset_data(&ctrlnavdata);
 }
 
-void resetControlData(void) {
+void resetControlData(ControlData controlData) {
 	//printf("reset control data\n");
-	ctrldata.accelero_flag = 0;
-	inputPitch(0.0);
-	inputRoll(0.0);
-	inputYaw(0.0);
-	inputGaz(0.0);
-	initNavdataControlData();
+	controlData.accelero_flag = 0;
+	inputPitch(controlData, 0.0);
+	inputRoll(controlData, 0.0);
+	inputYaw(controlData, 0.0);
+	inputGaz(controlData, 0.0);
+	initNavdataControlData(controlData);
 }
 
-void configuration_get(void) {
-  if(ctrldata.configurationState == CONFIG_STATE_IDLE)
-    ctrldata.configurationState = CONFIG_STATE_NEEDED;
+void getConfiguration(ControlData controlData) {
+  if(controlData.configurationState == CONFIG_STATE_IDLE)
+    controlData.configurationState = CONFIG_STATE_NEEDED;
 }
 
-void switchTakeOff(void) {
+void switchTakeOff(ControlData controlData) {
 #ifdef DEBUG_CONTROL
 	PRINT("%s\n", __FUNCTION__);
 #endif
-  ctrldata.needSetTakeOff = TRUE;
+  controlData.needSetTakeOff = TRUE;
 }
 
-void emergency(void) {
+void emergency(ControlData controlData) {
 #ifdef DEBUG_CONTROL
   PRINT("%s\n", __FUNCTION__);
 #endif
-  ctrldata.needSetEmergency = TRUE;
+  controlData.needSetEmergency = TRUE;
 }
 
-void inputYaw(float percent) {
+void inputYaw(ControlData controlData, float percent) {
 #ifdef DEBUG_CONTROL
 	PRINT("%s : %f\n", __FUNCTION__, percent);
 #endif
-	if(-1.0 <= percent && percent <= 1.0)
-		ctrldata.yaw = percent;
-	else if(-1.0 > percent)
-		ctrldata.yaw = -1.0;
-	else
-		ctrldata.yaw = 1.0;
+  controlData.yaw = constrain(percent, -1.0, 1.0);
 }
 
-void inputGaz(float percent) {
+void inputGaz(ControlData controlData, float percent) {
 #ifdef DEBUG_CONTROL
 	PRINT("%s : %f\n", __FUNCTION__, percent);
 #endif
-	if(-1.0 <= percent && percent <= 1.0)
-		ctrldata.gaz = percent;
-	else if(-1.0 > percent)
-		ctrldata.gaz = -1.0;
-	else
-		ctrldata.gaz = 1.0;
+  controlData.gaz = constrain(percent, -1.0, 1.0);
 }
 
-void inputPitch(float percent) {
+void inputPitch(ControlData controlData, float percent) {
 #ifdef DEBUG_CONTROL
-	PRINT("%s : %f, accelero_enable : %d\n", __FUNCTION__, percent, (ctrldata.accelero_flag >> ARDRONE_PROGRESSIVE_CMD_ENABLE) & 0x1 );
+	PRINT("%s : %f, accelero_enable : %d\n", __FUNCTION__, percent, (controlData.accelero_flag >> ARDRONE_PROGRESSIVE_CMD_ENABLE) & 0x1 );
 #endif
-	if(-1.0 <= percent && percent <= 1.0)
-		ctrldata.accelero_theta = -percent;
-	else if(1.0 < percent)
-		ctrldata.accelero_theta = 1.0;
-	else
-		ctrldata.accelero_theta = -1.0;
+  controlData.accelero_theta = constrain(percent, -1.0, 1.0);
 }
 
-void inputRoll(float percent) {
+void inputRoll(ControlData controlData, float percent) {
 #ifdef DEBUG_CONTROL
-	PRINT("%s : %f, accelero_enable : %d\n", __FUNCTION__, percent, (ctrldata.accelero_flag >> ARDRONE_PROGRESSIVE_CMD_ENABLE) & 0x1);
+	PRINT("%s : %f, accelero_enable : %d\n", __FUNCTION__, percent, (controlData.accelero_flag >> ARDRONE_PROGRESSIVE_CMD_ENABLE) & 0x1);
 #endif
-	if(-1.0 <= percent && percent <= 1.0)
-		ctrldata.accelero_phi = percent;
-	else if(-1.0 > percent)
-		ctrldata.accelero_phi = -1.0;
-	else
-		ctrldata.accelero_phi = 1.0;
+  controlData.accelero_phi = constrain(percent, -1.0, 1.0);
 }
 
-void sendControls(void) {
-	ardrone_at_set_progress_cmd(ctrldata.accelero_flag, ctrldata.accelero_phi, ctrldata.accelero_theta, ctrldata.gaz, ctrldata.yaw);
+void sendControls(ControlData controlData) {
+	ardrone_at_set_progress_cmd(controlData.accelero_flag, controlData.accelero_phi, controlData.accelero_theta, controlData.gaz, controlData.yaw);
 }
 
-void checkErrors(void) {
+void checkErrors(ControlData controlData) {
 	input_state_t* input_state = ardrone_tool_get_input_state();
 	
-	strcpy(ctrldata.error_msg, "");
+	strcpy(controlData.error_msg, "");
 	
-	if(!ctrldata.wifiReachabled)
+	if(!controlData.wifiReachabled)
 	{
-		strcpy(ctrldata.error_msg, "WIFI NOT REACHABLE");
-		resetControlData();
+		strcpy(controlData.error_msg, "WIFI NOT REACHABLE");
+		resetControlData(controlData);
 	}
 	else
 	{
-		if(ctrldata.applicationDefaultConfigState == CONFIG_STATE_NEEDED)
+		if(controlData.applicationDefaultConfigState == CONFIG_STATE_NEEDED)
 		{
-			ctrldata.applicationDefaultConfigState = CONFIG_STATE_IN_PROGRESS;
-			setApplicationDefaultConfig();
+			controlData.applicationDefaultConfigState = CONFIG_STATE_IN_PROGRESS;
+			setApplicationDefaultConfig(controlData);
 		}
 		
-		if(ctrldata.configurationState == CONFIG_STATE_NEEDED)
+		if(controlData.configurationState == CONFIG_STATE_NEEDED)
 		{
-			ctrldata.configurationState = CONFIG_STATE_IN_PROGRESS;
-			ARDRONE_TOOL_CONFIGURATION_GET(config_callback);
+			controlData.configurationState = CONFIG_STATE_IN_PROGRESS;
+      controlDataCallbackReference = &controlData;
+			ARDRONE_TOOL_CONFIGURATION_GET(configCallback);
 		}			
 		
-		if(ctrldata.needSetTakeOff)
+		if(controlData.needSetTakeOff)
 		{
 			if(ctrlnavdata.ardrone_state & ARDRONE_EMERGENCY_MASK)
 			{
-				ctrldata.needSetEmergency = TRUE;
+				controlData.needSetEmergency = TRUE;
 			}
 			else
 			{
-				printf("Take off ...\n");
 				if(!(ctrlnavdata.ardrone_state & ARDRONE_USER_FEEDBACK_START))
 					ardrone_tool_set_ui_pad_start(1);
 				else
 					ardrone_tool_set_ui_pad_start(0);
-				ctrldata.needSetTakeOff = FALSE;
+				controlData.needSetTakeOff = FALSE;
 			}
 		}
 		
-		if(ctrldata.needSetEmergency)
+		if(controlData.needSetEmergency)
 		{
-			ctrldata.isInEmergency = (ctrlnavdata.ardrone_state & ARDRONE_EMERGENCY_MASK);
+			controlData.isInEmergency = (ctrlnavdata.ardrone_state & ARDRONE_EMERGENCY_MASK);
 			ardrone_tool_set_ui_pad_select(1);
-			ctrldata.needSetEmergency = FALSE;
+			controlData.needSetEmergency = FALSE;
 		}
 		
 		if(ctrlnavdata.ardrone_state & ARDRONE_NAVDATA_BOOTSTRAP)
 		{
-			configuration_get();
+			getConfiguration(controlData);
 		}
 		
 		if(ardrone_navdata_client_get_num_retries() >= NAVDATA_MAX_RETRIES)
 		{
-			strcpy(ctrldata.error_msg, "CONTROL LINK NOT AVAILABLE");
-			ctrldata.navdata_connected = FALSE;
-			resetControlData();
+			strcpy(controlData.error_msg, "CONTROL LINK NOT AVAILABLE");
+			controlData.navdata_connected = FALSE;
+			resetControlData(controlData);
 		}
 		else
 		{
-			ctrldata.navdata_connected = TRUE;
+			controlData.navdata_connected = TRUE;
 			if(ctrlnavdata.ardrone_state & ARDRONE_EMERGENCY_MASK)
 			{
-				if(!ctrldata.isInEmergency && input_state->select)
+				if(!controlData.isInEmergency && input_state->select)
 					ardrone_tool_set_ui_pad_select(0);
 				
 				if(ctrlnavdata.ardrone_state & ARDRONE_CUTOUT_MASK)
 				{
-					strcpy(ctrldata.error_msg, "CUT OUT EMERGENCY");
+					strcpy(controlData.error_msg, "CUT OUT EMERGENCY");
 				}
 				else if(ctrlnavdata.ardrone_state & ARDRONE_MOTORS_MASK)
 				{
-					strcpy(ctrldata.error_msg, "MOTORS EMERGENCY");
+					strcpy(controlData.error_msg, "MOTORS EMERGENCY");
 				}
 				else if(!(ctrlnavdata.ardrone_state & ARDRONE_VIDEO_THREAD_ON))
 				{
-					strcpy(ctrldata.error_msg, "CAMERA EMERGENCY");
+					strcpy(controlData.error_msg, "CAMERA EMERGENCY");
 				}
 				else if(ctrlnavdata.ardrone_state & ARDRONE_ADC_WATCHDOG_MASK)
 				{
-					strcpy(ctrldata.error_msg, "PIC WATCHDOG EMERGENCY");
+					strcpy(controlData.error_msg, "PIC WATCHDOG EMERGENCY");
 				}
 				else if(!(ctrlnavdata.ardrone_state & ARDRONE_PIC_VERSION_MASK))
 				{
-					strcpy(ctrldata.error_msg, "PIC VERSION EMERGENCY");
+					strcpy(controlData.error_msg, "PIC VERSION EMERGENCY");
 				}
 				else if(ctrlnavdata.ardrone_state & ARDRONE_ANGLES_OUT_OF_RANGE)
 				{
-					strcpy(ctrldata.error_msg, "TOO MUCH ANGLE EMERGENCY");
+					strcpy(controlData.error_msg, "TOO MUCH ANGLE EMERGENCY");
 				}
 				else if(ctrlnavdata.ardrone_state & ARDRONE_VBAT_LOW)
 				{
-					strcpy(ctrldata.error_msg, "BATTERY LOW EMERGENCY");
+					strcpy(controlData.error_msg, "BATTERY LOW EMERGENCY");
 				}
 				else if(ctrlnavdata.ardrone_state & ARDRONE_USER_EL)
 				{
-					strcpy(ctrldata.error_msg, "USER EMERGENCY");
+					strcpy(controlData.error_msg, "USER EMERGENCY");
 				}
 				else if(ctrlnavdata.ardrone_state & ARDRONE_ULTRASOUND_MASK)
 				{
-					strcpy(ctrldata.error_msg, "ULTRASOUND EMERGENCY");
+					strcpy(controlData.error_msg, "ULTRASOUND EMERGENCY");
 				}
 				else
 				{
-					strcpy(ctrldata.error_msg, "UNKNOWN EMERGENCY");
+					strcpy(controlData.error_msg, "UNKNOWN EMERGENCY");
 				}
 							
-				strcpy(ctrldata.emergency_msg, "");
-				strcpy(ctrldata.takeoff_msg, "take_off");
+				strcpy(controlData.emergency_msg, "");
+				strcpy(controlData.takeoff_msg, "take_off");
 				
-				resetControlData();
+				resetControlData(controlData);
 				ardrone_tool_start_reset();
 			}
 			else // Not emergency landing
 			{	
-				if(ctrldata.isInEmergency && input_state->select)
+				if(controlData.isInEmergency && input_state->select)
 				{
 					ardrone_tool_set_ui_pad_select(0);
 				}
 				
 				if(video_stage_get_num_retries() > VIDEO_MAX_RETRIES)
 				{
-					strcpy(ctrldata.error_msg, "VIDEO CONNECTION ALERT");
+					strcpy(controlData.error_msg, "VIDEO CONNECTION ALERT");
 				}
 				else if(ctrlnavdata.ardrone_state & ARDRONE_VBAT_LOW)
 				{
-					strcpy(ctrldata.error_msg, "BATTERY LOW ALERT");
+					strcpy(controlData.error_msg, "BATTERY LOW ALERT");
 				}
 				else if(ctrlnavdata.ardrone_state & ARDRONE_ULTRASOUND_MASK)
 				{
-					strcpy(ctrldata.error_msg, "ULTRASOUND ALERT");
+					strcpy(controlData.error_msg, "ULTRASOUND ALERT");
 				}
 				else if(!(ctrlnavdata.ardrone_state & ARDRONE_VISION_MASK))
 				{
 					ARDRONE_FLYING_STATE tmp_state = ardrone_navdata_get_flying_state(ctrlnavdata);	
 					if(tmp_state == ARDRONE_FLYING_STATE_FLYING)
 					{
-						strcpy(ctrldata.error_msg, "VISION ALERT");
+						strcpy(controlData.error_msg, "VISION ALERT");
 					}
 				}
 
 				if(!(ctrlnavdata.ardrone_state & ARDRONE_TIMER_ELAPSED))
-					strcpy(ctrldata.emergency_msg, "emergency");
+					strcpy(controlData.emergency_msg, "emergency");
 				
 				if(input_state->start)
 				{
 					if(ctrlnavdata.ardrone_state & ARDRONE_USER_FEEDBACK_START)
 					{
-						strcpy(ctrldata.takeoff_msg, "take_land");
+						strcpy(controlData.takeoff_msg, "take_land");
 					}
 					else
 					{	
-						strcpy(ctrldata.takeoff_msg, "take_off");
-						strcpy(ctrldata.error_msg, "START NOT RECEIVED");
+						strcpy(controlData.takeoff_msg, "take_off");
+						strcpy(controlData.error_msg, "START NOT RECEIVED");
 						
 					}
 				}
 				else
 				{
-					strcpy(ctrldata.takeoff_msg, "take_off");
+					strcpy(controlData.takeoff_msg, "take_off");
 				}			
 			}
 		}

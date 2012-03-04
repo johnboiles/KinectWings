@@ -124,7 +124,6 @@ static DepthView *depthView = NULL;
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
 	glLoadIdentity();
-  BOOL screenOrientationRight = YES;
 	glMultMatrixf(matrixOrthoBackRight);
 
   glViewport(0, 0, self.frame.size.width, self.frame.size.height);

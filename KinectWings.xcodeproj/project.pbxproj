@@ -129,7 +129,7 @@
 		42AF46A514EA1CF2002B8DC9 /* ARDrone.m in Sources */ = {isa = PBXBuildFile; fileRef = 42AF469614EA1CF0002B8DC9 /* ARDrone.m */; };
 		42AF46A614EA1CF2002B8DC9 /* ARDroneFTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 42AF469814EA1CF0002B8DC9 /* ARDroneFTP.m */; };
 		42AF46A714EA1CF2002B8DC9 /* mobile_main.c in Sources */ = {isa = PBXBuildFile; fileRef = 42AF469F14EA1CF1002B8DC9 /* mobile_main.c */; };
-		42AF46A814EA1CF2002B8DC9 /* navdata.c in Sources */ = {isa = PBXBuildFile; fileRef = 42AF46A114EA1CF1002B8DC9 /* navdata.c */; };
+		42AF46A814EA1CF2002B8DC9 /* NavData.c in Sources */ = {isa = PBXBuildFile; fileRef = 42AF46A114EA1CF1002B8DC9 /* NavData.c */; };
 		42AF46A914EA1CF2002B8DC9 /* wifi.c in Sources */ = {isa = PBXBuildFile; fileRef = 42AF46A314EA1CF1002B8DC9 /* wifi.c */; };
 		42AF46AA14EA2B3D002B8DC9 /* ControlData.c in Sources */ = {isa = PBXBuildFile; fileRef = 42AF468E14EA1A0A002B8DC9 /* ControlData.c */; };
 		42BB47A314C13D5F0052AC36 /* CocoaOpenNI.mm in Sources */ = {isa = PBXBuildFile; fileRef = 42BB47A114C13B610052AC36 /* CocoaOpenNI.mm */; };
@@ -421,8 +421,8 @@
 		42AF469E14EA1CF1002B8DC9 /* InternalProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InternalProtocols.h; sourceTree = "<group>"; };
 		42AF469F14EA1CF1002B8DC9 /* mobile_main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mobile_main.c; sourceTree = "<group>"; };
 		42AF46A014EA1CF1002B8DC9 /* mobile_main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mobile_main.h; sourceTree = "<group>"; };
-		42AF46A114EA1CF1002B8DC9 /* navdata.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = navdata.c; sourceTree = "<group>"; };
-		42AF46A214EA1CF1002B8DC9 /* navdata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = navdata.h; sourceTree = "<group>"; };
+		42AF46A114EA1CF1002B8DC9 /* NavData.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = NavData.c; sourceTree = "<group>"; };
+		42AF46A214EA1CF1002B8DC9 /* NavData.h */ = {isa = PBXFileReference; fileEncoding = 4; path = NavData.h; sourceTree = "<group>"; };
 		42AF46A314EA1CF1002B8DC9 /* wifi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wifi.c; sourceTree = "<group>"; };
 		42AF46A414EA1CF1002B8DC9 /* wifi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wifi.h; sourceTree = "<group>"; };
 		42BB47A014C13B610052AC36 /* CocoaOpenNI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaOpenNI.h; sourceTree = "<group>"; };
@@ -1062,8 +1062,8 @@
 				42AF469E14EA1CF1002B8DC9 /* InternalProtocols.h */,
 				42AF46A014EA1CF1002B8DC9 /* mobile_main.h */,
 				42AF469F14EA1CF1002B8DC9 /* mobile_main.c */,
-				42AF46A214EA1CF1002B8DC9 /* navdata.h */,
-				42AF46A114EA1CF1002B8DC9 /* navdata.c */,
+				42AF46A214EA1CF1002B8DC9 /* NavData.h */,
+				42AF46A114EA1CF1002B8DC9 /* NavData.c */,
 				42AF46A414EA1CF1002B8DC9 /* wifi.h */,
 				42AF46A314EA1CF1002B8DC9 /* wifi.c */,
 				42AF468F14EA1A0A002B8DC9 /* ControlData.h */,
@@ -1098,7 +1098,7 @@
 		42312CB414C12C8000C616F3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = 42312CB714C12C8000C616F3 /* Build configuration list for PBXProject "KinectWings" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1159,7 +1159,7 @@
 				42AF46A514EA1CF2002B8DC9 /* ARDrone.m in Sources */,
 				42AF46A614EA1CF2002B8DC9 /* ARDroneFTP.m in Sources */,
 				42AF46A714EA1CF2002B8DC9 /* mobile_main.c in Sources */,
-				42AF46A814EA1CF2002B8DC9 /* navdata.c in Sources */,
+				42AF46A814EA1CF2002B8DC9 /* NavData.c in Sources */,
 				42AF46A914EA1CF2002B8DC9 /* wifi.c in Sources */,
 				42366DDB14ECC58C006F6DFA /* OpenGLSprite.m in Sources */,
 				42366DDC14ECC58C006F6DFA /* OpenGLVideo.m in Sources */,
@@ -1365,13 +1365,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Libraries\"",
-					"\"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/Soft/Build/targets_versions/ardrone_lib_DEBUG_MODE_vlib_i386_Darwin_11.2.0_Developerusrbingcc_4.2.1\"",
-					"\"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/Soft/Build/targets_versions/ardrone_lib_DEBUG_MODE_vlib_x86_64_Darwin_11.2.0_Developerusrbingcc_4.2.1\"",
-					"\"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/Soft/Build/targets_versions/sdk_DEBUG_MODE_vlib_i386_Darwin_11.2.0_Developerusrbingcc_4.2.1\"",
-					"\"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/Soft/Build/targets_versions/sdk_DEBUG_MODE_vlib_x86_64_Darwin_11.2.0_Developerusrbingcc_4.2.1\"",
-					"\"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/Soft/Build/targets_versions/vlib_DEBUG_MODE_i386_Darwin_11.2.0_Developerusrbingcc_4.2.1\"",
-					"\"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/Soft/Build/targets_versions/vlib_DEBUG_MODE_x86_64_Darwin_11.2.0_Developerusrbingcc_4.2.1\"",
-					"\"$(SRCROOT)/Libraries/ARDroneSDK/ControlEngine/iPhone/Release\"",
 					"\"$(SDKROOT)/usr/lib/system\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
@@ -1435,13 +1428,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Libraries\"",
-					"\"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/Soft/Build/targets_versions/ardrone_lib_DEBUG_MODE_vlib_i386_Darwin_11.2.0_Developerusrbingcc_4.2.1\"",
-					"\"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/Soft/Build/targets_versions/ardrone_lib_DEBUG_MODE_vlib_x86_64_Darwin_11.2.0_Developerusrbingcc_4.2.1\"",
-					"\"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/Soft/Build/targets_versions/sdk_DEBUG_MODE_vlib_i386_Darwin_11.2.0_Developerusrbingcc_4.2.1\"",
-					"\"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/Soft/Build/targets_versions/sdk_DEBUG_MODE_vlib_x86_64_Darwin_11.2.0_Developerusrbingcc_4.2.1\"",
-					"\"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/Soft/Build/targets_versions/vlib_DEBUG_MODE_i386_Darwin_11.2.0_Developerusrbingcc_4.2.1\"",
-					"\"$(SRCROOT)/Libraries/ARDroneSDK/ARDroneLib/Soft/Build/targets_versions/vlib_DEBUG_MODE_x86_64_Darwin_11.2.0_Developerusrbingcc_4.2.1\"",
-					"\"$(SRCROOT)/Libraries/ARDroneSDK/ControlEngine/iPhone/Release\"",
 					"\"$(SDKROOT)/usr/lib/system\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;

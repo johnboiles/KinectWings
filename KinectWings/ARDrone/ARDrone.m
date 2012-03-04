@@ -17,16 +17,13 @@
 // Navdata contains information about the drone. The drone sends these 30 times in a second
 extern navdata_unpacked_t ctrlnavdata;
 
-extern char drone_address[];
-extern ControlData ctrldata;
-static bool_t threadStarted = false;
-char root_dir[256];
+static bool_t gThreadStarted = false;
 
 static void ARDroneCallback(ARDRONE_ENGINE_MESSAGE msg) {
   NSLog(@"AR drone callback %d", msg);
 	switch(msg) {
 		case ARDRONE_ENGINE_INIT_OK:
-			threadStarted = true;
+			gThreadStarted = true;
 			break;
 		default:
 			break;
@@ -53,25 +50,24 @@ static void ARDroneCallback(ARDRONE_ENGINE_MESSAGE msg) {
  * @param uidelegate Pointer to the object that implements the Parrot protocol ("ARDroneProtocol"), which will be called whenever the library needs the game engine to change its state.
  * @return Pointer to the newly initialized Parrot library instance.
  */
-- (id)initWithFrame:(CGRect)frame withState:(BOOL)inGame withDelegate:(id <ARDroneProtocolOut>)uidelegate {
+- (id)initWithFrame:(CGRect)frame withState:(BOOL)inGame {
 	if ((self = [super init])) {
 		NSLog(@"Frame ARDrone Engine : %f, %f", frame.size.width, frame.size.height);
 		running = NO;
 		inGameOnDemand = inGame;
-		threadStarted = false;
-		_uidelegate = uidelegate;
+		gThreadStarted = false;
 		
 		// Update user path
 		[[NSFileManager defaultManager]changeCurrentDirectoryPath:[[NSBundle mainBundle] resourcePath]];
 		//creates paths so that you can pull the app's path from it
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
-		strcpy(root_dir, [[paths objectAtIndex:0] cStringUsingEncoding:NSUTF8StringEncoding]);
-
+		ardrone_navdata_set_root_dir([[paths objectAtIndex:0] cStringUsingEncoding:NSUTF8StringEncoding]);
+    
     // Create View Controller
 		//glviewctrl = [[GLViewController alloc] initWithFrame:frame withDelegate:self];
 
 		// Create main view controller
-		initControlData();
+		initControlData(controlData);
 		
 		ardroneEngineStart(ARDroneCallback, "KinectWings", "JohnBoiles");
 		[self checkThreadStatus];
@@ -83,10 +79,10 @@ static void ARDroneCallback(ARDRONE_ENGINE_MESSAGE msg) {
 - (void)checkThreadStatus {
 	NSLog(@"%s", __FUNCTION__);
   // Ok so this needs to be set once the wifi is turned on
-  ctrldata.wifiReachabled = threadStarted;
-	if(threadStarted) {
+  controlData.wifiReachabled = gThreadStarted;
+	if(gThreadStarted) {
 		running = YES;
-		[_uidelegate executeCommandOut:ARDRONE_COMMAND_RUN withParameter:(void*)drone_address fromSender:self];
+    // Could notify application to get started here
 		[self changeState:inGameOnDemand];
 	} else {
 		[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(checkThreadStatus) userInfo:nil repeats:NO];
@@ -100,7 +96,6 @@ static void ARDroneCallback(ARDRONE_ENGINE_MESSAGE msg) {
  * </ul>
  */
 - (void)render {
-	// Make sure the library is "running"
 	[glviewctrl drawView];
 }
 
@@ -113,6 +108,67 @@ static void ARDroneCallback(ARDRONE_ENGINE_MESSAGE msg) {
 //  NSLog(@"parrotNavdata");
 	ardrone_navdata_get_data(data);
 }
+
+- (void)takeOff {
+  switchTakeOff(controlData);
+}
+
+- (void)setYaw:(float)yaw {
+  inputYaw(controlData, yaw);
+}
+
+- (void)setPitch:(float)pitch {
+  inputPitch(controlData, pitch);
+  //controlData.accelero_flag = ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE;
+  controlData.accelero_flag |= ARDRONE_PROGRESSIVE_CMD_ENABLE | ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE;
+}
+
+- (void)setVertical:(float)vertical {
+  inputGaz(controlData, vertical);
+  //controlData.accelero_flag = ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE;
+  controlData.accelero_flag |= ARDRONE_PROGRESSIVE_CMD_ENABLE | ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE;
+}
+
+- (void)sendControls {
+  sendControls(controlData);
+}
+
+- (void)setSomeControls {
+  setSomeConfigs(controlData);
+}
+
+extern navdata_unpacked_t ctrlnavdata;
+
+- (void)timerThread {
+  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init]; // Top-level pool
+  
+	ardrone_timer_t timer;
+	int refreshTimeInUs = 1000000 / kFPS;
+  
+	ardrone_timer_reset(&timer);
+	ardrone_timer_update(&timer);
+  
+	while(YES) {
+    int delta = ardrone_timer_delta_us(&timer);
+    if(delta >= refreshTimeInUs) {
+      // Render frame
+      ardrone_timer_update(&timer);
+      
+      [self parrotNavdata:&ctrlnavdata];
+      //[self performSelectorOnMainThread:@selector(update) withObject:nil waitUntilDone:YES];
+      
+      checkErrors(controlData);
+      //NSLog(@"%s", controlData.error_msg);
+      controlData.framecounter = (controlData.framecounter + 1) % kFPS;
+    } else {
+      //printf("Time waited : %d us\n", refreshTimeInUs - delta);
+      usleep(refreshTimeInUs - delta);
+    }
+	}
+  [pool release];
+}
+
+#pragma mark - ARDroneProtocolIn
 
 /**
  * Get the latest drone's navigation data.
@@ -179,7 +235,7 @@ static void ARDroneCallback(ARDRONE_ENGINE_MESSAGE msg) {
 - (void)changeState:(BOOL)inGame {
   NSLog(@"change state to %d", inGame);
 	// Check whether there is a change of state
-	if(threadStarted) {
+	if(gThreadStarted) {
 		// Change the state of the library
 		if(inGame) ardroneEngineResume();
 		else ardroneEnginePause();
@@ -208,74 +264,17 @@ static void ARDroneCallback(ARDRONE_ENGINE_MESSAGE msg) {
 	return running;
 }
 
+/*
 - (void)camera {
-  /*
    int value;
    value = ARDRONE_CAMERA_DETECTION_NONE;
    [self setDefaultConfigurationForKey:ARDRONE_CONFIG_KEY_DETECT_TYPE withValue:&value];
    value = 0;
    [self setDefaultConfigurationForKey:ARDRONE_CONFIG_KEY_CONTROL_LEVEL withValue:&value];
-   */
 }
+ */
 
-- (void)takeOff {
-  switchTakeOff();
-}
 
-- (void)setYaw:(float)yaw {
-  inputYaw(yaw);
-}
-
-- (void)setPitch:(float)pitch {
-  inputPitch(pitch);
-  //ctrldata.accelero_flag = ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE;
-  ctrldata.accelero_flag |= ARDRONE_PROGRESSIVE_CMD_ENABLE | ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE;
-}
-
-- (void)setVertical:(float)vertical {
-  inputGaz(vertical);
-  //ctrldata.accelero_flag = ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE;
-  ctrldata.accelero_flag |= ARDRONE_PROGRESSIVE_CMD_ENABLE | ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE;
-}
-
-- (void)sendControls {
-  sendControls();
-}
-
-- (void)setSomeControls {
-  setSomeConfigs();
-}
-
-extern navdata_unpacked_t ctrlnavdata;
-
-- (void)timerThread {
-  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init]; // Top-level pool
-
-	ardrone_timer_t timer;
-	int refreshTimeInUs = 1000000 / kFPS;
-
-	ardrone_timer_reset(&timer);
-	ardrone_timer_update(&timer);
-
-	while(YES) {
-    int delta = ardrone_timer_delta_us(&timer);
-    if(delta >= refreshTimeInUs) {
-      // Render frame
-      ardrone_timer_update(&timer);
-
-      [self parrotNavdata:&ctrlnavdata];
-      //[self performSelectorOnMainThread:@selector(update) withObject:nil waitUntilDone:YES];
-
-      checkErrors();
-      //NSLog(@"%s", ctrldata.error_msg);
-      ctrldata.framecounter = (ctrldata.framecounter + 1) % kFPS;
-    } else {
-      //printf("Time waited : %d us\n", refreshTimeInUs - delta);
-      usleep(refreshTimeInUs - delta);
-    }
-	}
-  [pool release];
-}
 
 @end
 

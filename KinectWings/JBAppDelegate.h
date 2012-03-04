@@ -16,7 +16,7 @@
 @class DepthView;
 @class VerticalGuageView;
 
-@interface JBAppDelegate : NSObject <NSApplicationDelegate, JBFlapGestureRecognizerDelegate, JBTiltGestureRecognizerDelegate, ARDroneProtocolOut> {
+@interface JBAppDelegate : NSObject <NSApplicationDelegate, JBFlapGestureRecognizerDelegate, JBTiltGestureRecognizerDelegate> {
   NSWindow *_window;
 
   IBOutlet DepthView *_openGLView;

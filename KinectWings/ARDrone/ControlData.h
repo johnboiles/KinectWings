@@ -32,14 +32,14 @@ typedef struct
 	 * Current navdata_connected
 	 */
 	bool_t navdata_connected;
-	
+
 	/**
 	 * Progressive commands
 	 * And accelerometers values transmitted to drone, FALSE otherwise
 	 */
 	float yaw, gaz, accelero_phi, accelero_theta;
 	int32_t accelero_flag;
-	
+
 	/**
 	 * variable to know if setting is needed
 	 */
@@ -55,13 +55,13 @@ typedef struct
 
 	bool_t needAnimation;
 	char needAnimationParam[SMALL_STRING_SIZE];
-	
+
 	bool_t needLedAnimation;
 	char needLedAnimationParam[SMALL_STRING_SIZE];
-	
+
 	CONFIG_STATE applicationDefaultConfigState;
 	CONFIG_STATE configurationState;
-	
+
 	/**
 	 * Strings to display in interface
 	 */	
@@ -70,23 +70,24 @@ typedef struct
 	char emergency_msg[SMALL_STRING_SIZE];
 } ControlData;
 
-void setSomeConfigs(void);
-void initControlData(void);
-void resetControlData(void);
-void initNavdataControlData(void);
-void checkErrors(void);
-void controlfps(void);
-void sendControls(void);
-void configuration_get(void);
-void setApplicationDefaultConfig(void);
-void switchTakeOff(void);
-void emergency(void);
-void handleAccelerometers(void);
-void disableAccelerometers(void);
-void inputYaw(float percent);
-void inputGaz(float percent);
-void inputPitch(float percent);
-void inputRoll(float percent);
-void signal_input(int new_input);
-void send_inputs(void);
+void setSomeConfigs(ControlData controlData);
+void initControlData(ControlData controlData);
+void resetControlData(ControlData controlData);
+void initNavdataControlData(ControlData controlData);
+void checkErrors(ControlData controlData);
+void controlfps(ControlData controlData);
+void sendControls(ControlData controlData);
+void getConfiguration(ControlData controlData);
+void setApplicationDefaultConfig(ControlData controlData);
+void switchTakeOff(ControlData controlData);
+void emergency(ControlData controlData);
+void handleAccelerometers(ControlData controlData);
+void disableAccelerometers(ControlData controlData);
+void inputYaw(ControlData controlData, float percent);
+void inputGaz(ControlData controlData, float percent);
+void inputPitch(ControlData controlData, float percent);
+void inputRoll(ControlData controlData, float percent);
+void signal_input(ControlData controlData, int new_input);
+void send_inputs(ControlData controlData);
+
 #endif // _CONTROLDATA_H_

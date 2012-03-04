@@ -3,34 +3,41 @@
 #include <control_states.h>
 #include <ardrone_tool/Navdata/ardrone_navdata_file.h>
 #include <ardrone_tool/Navdata/ardrone_navdata_client.h>
-navdata_unpacked_t inst_nav;
-vp_os_mutex_t inst_nav_mutex;
-extern char root_dir[];
-static bool_t writeToFile = FALSE;
 
-static inline C_RESULT ardrone_navdata_init( void* data )
+// These globals should only be referenced in this class
+navdata_unpacked_t gInstNav;
+vp_os_mutex_t gInstNavMutex;
+static bool_t gWriteToFile = FALSE;
+char gRootDir[256];
+
+void ardrone_navdata_set_root_dir( const char *root_dir )
+{
+  strcpy(gRootDir, root_dir);
+}
+
+static inline C_RESULT ardrone_navdata_init( void* data)
 {
   printf("navdata init");
-	vp_os_mutex_init( &inst_nav_mutex );
+	vp_os_mutex_init( &gInstNavMutex );
 	
-	vp_os_mutex_lock( &inst_nav_mutex);
-	ardrone_navdata_reset_data(&inst_nav);
-	vp_os_mutex_unlock( &inst_nav_mutex);
+	vp_os_mutex_lock( &gInstNavMutex);
+	ardrone_navdata_reset_data(&gInstNav);
+	vp_os_mutex_unlock( &gInstNavMutex);
 	
-	writeToFile = FALSE;
+	gWriteToFile = FALSE;
 	
 	return C_OK;
 }
 
 static inline C_RESULT ardrone_navdata_process( const navdata_unpacked_t* const navdata )
 {
-	if( writeToFile )
+	if( gWriteToFile )
 	{
 		if( navdata_file == NULL )
 		{
-			ardrone_navdata_file_init(root_dir);
+			ardrone_navdata_file_init(gRootDir);
 			
-			PRINT("Saving in %s file\n", root_dir);
+			PRINT("Saving in %s file\n", gRootDir);
 		}
 		ardrone_navdata_file_process( navdata );
 	}
@@ -40,14 +47,14 @@ static inline C_RESULT ardrone_navdata_process( const navdata_unpacked_t* const 
 			ardrone_navdata_file_release();			
 	}
 	
-	vp_os_mutex_lock( &inst_nav_mutex);
-/*	inst_nav.ardrone_state = navdata->ardrone_state;
-	inst_nav.vision_defined = navdata->vision_defined;
-	vp_os_memcpy(&inst_nav.navdata_demo, &navdata->navdata_demo, sizeof(navdata_demo_t));
-	vp_os_memcpy(&inst_nav.navdata_vision_detect, &navdata->navdata_vision_detect, sizeof(navdata_vision_detect_t));
+	vp_os_mutex_lock( &gInstNavMutex);
+/*	gInstNav.ardrone_state = navdata->ardrone_state;
+	gInstNav.vision_defined = navdata->vision_defined;
+	vp_os_memcpy(&gInstNav.navdata_demo, &navdata->navdata_demo, sizeof(navdata_demo_t));
+	vp_os_memcpy(&gInstNav.navdata_vision_detect, &navdata->navdata_vision_detect, sizeof(navdata_vision_detect_t));
 */
-	vp_os_memcpy(&inst_nav, navdata, sizeof(navdata_unpacked_t));
-	vp_os_mutex_unlock( &inst_nav_mutex );
+	vp_os_memcpy(&gInstNav, navdata, sizeof(navdata_unpacked_t));
+	vp_os_mutex_unlock( &gInstNavMutex );
 
 	return C_OK;
 }
@@ -61,7 +68,7 @@ static inline C_RESULT ardrone_navdata_release( void )
 
 C_RESULT ardrone_navdata_write_to_file(bool_t enable)
 {
-	writeToFile = enable;
+	gWriteToFile = enable;
 	return C_OK;
 }
 
@@ -84,14 +91,14 @@ C_RESULT ardrone_navdata_get_data(navdata_unpacked_t *data)
 	
 	if(data)
 	{
-		vp_os_mutex_lock( &inst_nav_mutex );
-/*		data->ardrone_state = inst_nav.ardrone_state;
-		data->vision_defined = inst_nav.vision_defined;
-		vp_os_memcpy(&data->navdata_demo, &inst_nav.navdata_demo, sizeof(navdata_demo_t));
-		vp_os_memcpy(&data->navdata_vision_detect, &inst_nav.navdata_vision_detect, sizeof(navdata_vision_detect_t));
+		vp_os_mutex_lock( &gInstNavMutex );
+/*		data->ardrone_state = gInstNav.ardrone_state;
+		data->vision_defined = gInstNav.vision_defined;
+		vp_os_memcpy(&data->navdata_demo, &gInstNav.navdata_demo, sizeof(navdata_demo_t));
+		vp_os_memcpy(&data->navdata_vision_detect, &gInstNav.navdata_vision_detect, sizeof(navdata_vision_detect_t));
 */
-		vp_os_memcpy(data, &inst_nav, sizeof(navdata_unpacked_t));
-		vp_os_mutex_unlock( &inst_nav_mutex );
+		vp_os_memcpy(data, &gInstNav, sizeof(navdata_unpacked_t));
+		vp_os_mutex_unlock( &gInstNavMutex );
 		result = C_OK;
 	}
 	
