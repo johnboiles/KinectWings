@@ -24,7 +24,8 @@ DEFINE_THREAD_ROUTINE(mobile_main, data)
 
 	ardroneEngineCallback callback = param->callback;
 	vp_os_memset(drone_address, 0x0, sizeof(drone_address));
-	
+
+  // TODO(johnb): Make this autodetect based on network interfaces
 	while(((config = (vp_com_wifi_config_t *)wifi_config()) != NULL) && (strcmp(config->itfName, WIFI_ITFNAME) != 0))
 	{
 		PRINT("Wait WIFI connection !\n");

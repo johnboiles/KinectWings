@@ -44,7 +44,7 @@ int get_video_current_numframes( void )
 		{
 			needToUpdate = YES;
 		}
-		NSLog(@"WantImage");
+		//NSLog(@"WantImage");
 		current_num_picture_decoded = config->num_picture_decoded;
 
 		vp_os_mutex_unlock( &config->mutex );

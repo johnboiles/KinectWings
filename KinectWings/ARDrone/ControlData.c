@@ -33,8 +33,8 @@ void setSomeConfigs(ControlData controlData) {
   //ARDRONE_TOOL_CONFIGURATION_ADDEVENT(video_channel, &ardrone_control_config.video_channel, NULL);
   //controlData.configurationState = CONFIG_STATE_NEEDED;
 
-  ARDRONE_VARIABLE_BITRATE enabled = ARDRONE_VARIABLE_BITRATE_MANUAL;
-  uint32_t constantBitrate = 5000;
+  ARDRONE_VARIABLE_BITRATE enabled = ARDRONE_VARIABLE_BITRATE_MODE_DISABLED;
+  uint32_t constantBitrate = 10000;
   ardrone_control_config.bitrate_ctrl_mode = enabled;
   ardrone_control_config.bitrate = constantBitrate;
 
