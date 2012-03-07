@@ -18,6 +18,7 @@
 #import "Skeleton.h"
 #import "ARDrone.h"
 #import "ControlData.h"
+#import "JBWindow.h"
 
 extern navdata_unpacked_t ctr;
 
@@ -37,10 +38,12 @@ extern navdata_unpacked_t ctr;
     [[CocoaOpenNI sharedOpenNI] context].WaitAndUpdateAll();
     xn::UserGenerator userGenerator = [[CocoaOpenNI sharedOpenNI] userGenerator];
     XnUserID user = [[CocoaOpenNI sharedOpenNI] firstTrackingUser];
-    Skeleton *skeleton = [Skeleton skeletonFromUserGenerator:userGenerator user:user];
-    [_flapGestureRecognizer skeletalTrackingDidContinueWithSkeleton:skeleton];
-    [_tiltGestureRecognizer skeletalTrackingDidContinueWithSkeleton:skeleton];
-    [_drone performSelectorOnMainThread:@selector(sendControls) withObject:nil waitUntilDone:NO];
+    if (user) {
+      Skeleton *skeleton = [Skeleton skeletonFromUserGenerator:userGenerator user:user];
+      [_flapGestureRecognizer skeletalTrackingDidContinueWithSkeleton:skeleton];
+      [_tiltGestureRecognizer skeletalTrackingDidContinueWithSkeleton:skeleton];
+      [_drone performSelectorOnMainThread:@selector(sendControls) withObject:nil waitUntilDone:NO];
+    }
   }
   [_droneVideoView setNeedsDisplay:YES];
 }
@@ -57,6 +60,7 @@ extern navdata_unpacked_t ctr;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
   [_window setAspectRatio:NSMakeSize(640, 480)];
+  [_window setWindowDelegate:self];
   [[CocoaOpenNI sharedOpenNI] startWithConfigPath:[[NSBundle mainBundle] pathForResource:@"KinectConfig" ofType:@"xml"]];
   //[_openGLView setup];
   if ([CocoaOpenNI sharedOpenNI].started) {
@@ -99,4 +103,53 @@ extern navdata_unpacked_t ctr;
   [_drone setYaw:yaw];
 }
 
+#pragma mark - JBWindowDelegate
+
+- (BOOL)handleKeyDownEvent:(NSEvent *)event {
+  if ([event modifierFlags] & NSNumericPadKeyMask) {
+    NSString *arrow = [event charactersIgnoringModifiers];
+    unichar keyChar = [arrow characterAtIndex:0];
+    if (keyChar == NSRightArrowFunctionKey) {
+      NSLog(@"Right Arrow");
+      [_drone setYaw:0.7];
+      [_drone sendControls];
+    } else if (keyChar == NSLeftArrowFunctionKey) {
+      NSLog(@"Left Arrow");
+      [_drone setYaw:-0.7];
+      [_drone sendControls];
+    } else if (keyChar == NSUpArrowFunctionKey) {
+      NSLog(@"Up Arrow");
+      [_drone setPitch:0.7];
+      [_drone sendControls];
+    } else if (keyChar == NSDownArrowFunctionKey) {
+      NSLog(@"Down Arrow");
+      [_drone setPitch:-0.7];
+      [_drone sendControls];
+    }
+    return YES;
+  } else {
+    return NO;
+  }
+}
+
+- (BOOL)handleKeyUpEvent:(NSEvent *)event {
+  if ([event modifierFlags] & NSNumericPadKeyMask) {
+    NSString *arrow = [event charactersIgnoringModifiers];
+    unichar keyChar = [arrow characterAtIndex:0];
+    if (keyChar == NSRightArrowFunctionKey || keyChar == NSLeftArrowFunctionKey) {
+      NSLog(@"Right or Left Arrow Up");
+      [_drone setYaw:0.0];
+      [_drone sendControls];
+    } else if (keyChar == NSUpArrowFunctionKey || keyChar == NSDownArrowFunctionKey) {
+      NSLog(@"Up or Down Arrow Up");
+      [_drone setPitch:0.0];
+      [_drone sendControls];
+    }
+    return YES;
+  } else {
+    return NO;
+  }
+}
+
 @end
+

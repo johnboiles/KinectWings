@@ -59,4 +59,6 @@
 
 - (void)setSomeControls;
 
+- (void)resetControls;
+
 @end

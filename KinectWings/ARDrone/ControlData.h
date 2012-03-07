@@ -70,24 +70,24 @@ typedef struct
 	char emergency_msg[SMALL_STRING_SIZE];
 } ControlData;
 
-void setSomeConfigs(ControlData controlData);
-void initControlData(ControlData controlData);
-void resetControlData(ControlData controlData);
-void initNavdataControlData(ControlData controlData);
-void checkErrors(ControlData controlData);
-void controlfps(ControlData controlData);
-void sendControls(ControlData controlData);
-void getConfiguration(ControlData controlData);
-void setApplicationDefaultConfig(ControlData controlData);
-void switchTakeOff(ControlData controlData);
-void emergency(ControlData controlData);
-void handleAccelerometers(ControlData controlData);
-void disableAccelerometers(ControlData controlData);
-void inputYaw(ControlData controlData, float percent);
-void inputGaz(ControlData controlData, float percent);
-void inputPitch(ControlData controlData, float percent);
-void inputRoll(ControlData controlData, float percent);
-void signal_input(ControlData controlData, int new_input);
-void send_inputs(ControlData controlData);
+void setSomeConfigs(ControlData *controlData);
+void initControlData(ControlData *controlData);
+void resetControlData(ControlData *controlData);
+void initNavdataControlData(ControlData *controlData);
+void checkErrors(ControlData *controlData);
+void controlfps(ControlData *controlData);
+void sendControls(ControlData *controlData);
+void getConfiguration(ControlData *controlData);
+void setApplicationDefaultConfig(ControlData *controlData);
+void switchTakeOff(ControlData *controlData);
+void emergency(ControlData *controlData);
+void handleAccelerometers(ControlData *controlData);
+void disableAccelerometers(ControlData *controlData);
+void inputYaw(ControlData *controlData, float percent);
+void inputGaz(ControlData *controlData, float percent);
+void inputPitch(ControlData *controlData, float percent);
+void inputRoll(ControlData *controlData, float percent);
+void signal_input(ControlData *controlData, int new_input);
+void send_inputs(ControlData *controlData);
 
 #endif // _CONTROLDATA_H_

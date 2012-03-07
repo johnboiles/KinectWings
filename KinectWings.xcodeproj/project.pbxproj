@@ -124,6 +124,7 @@
 		4248F8F814F9AA0C00FDB354 /* vp_stages_io_file.c in Sources */ = {isa = PBXBuildFile; fileRef = 4248F4A014F9AA0B00FDB354 /* vp_stages_io_file.c */; };
 		4248F8FA14F9AA0C00FDB354 /* vp_stages_yuv2rgb.c in Sources */ = {isa = PBXBuildFile; fileRef = 4248F4A414F9AA0B00FDB354 /* vp_stages_yuv2rgb.c */; };
 		427B8DEB14C1578100EDAD05 /* DepthView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 427B8DEA14C1578100EDAD05 /* DepthView.mm */; };
+		427C2A861505987600C65572 /* JBWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 427C2A851505987600C65572 /* JBWindow.m */; };
 		4299AD5814E4D6B5000F148B /* JBTiltGestureRecognizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4299AD5714E4D6B5000F148B /* JBTiltGestureRecognizer.mm */; };
 		4299AD5B14E4D97A000F148B /* Skeleton.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4299AD5A14E4D979000F148B /* Skeleton.mm */; };
 		42AF46A514EA1CF2002B8DC9 /* ARDrone.m in Sources */ = {isa = PBXBuildFile; fileRef = 42AF469614EA1CF0002B8DC9 /* ARDrone.m */; };
@@ -401,6 +402,8 @@
 		4248F65014F9AA0B00FDB354 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		427B8DE914C1578100EDAD05 /* DepthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DepthView.h; sourceTree = "<group>"; };
 		427B8DEA14C1578100EDAD05 /* DepthView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DepthView.mm; sourceTree = "<group>"; };
+		427C2A841505987600C65572 /* JBWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBWindow.h; sourceTree = "<group>"; };
+		427C2A851505987600C65572 /* JBWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JBWindow.m; sourceTree = "<group>"; };
 		4299AD5614E4D6B5000F148B /* JBTiltGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBTiltGestureRecognizer.h; sourceTree = "<group>"; };
 		4299AD5714E4D6B5000F148B /* JBTiltGestureRecognizer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = JBTiltGestureRecognizer.mm; sourceTree = "<group>"; };
 		4299AD5914E4D979000F148B /* Skeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Skeleton.h; sourceTree = "<group>"; };
@@ -422,7 +425,7 @@
 		42AF469F14EA1CF1002B8DC9 /* mobile_main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mobile_main.c; sourceTree = "<group>"; };
 		42AF46A014EA1CF1002B8DC9 /* mobile_main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mobile_main.h; sourceTree = "<group>"; };
 		42AF46A114EA1CF1002B8DC9 /* NavData.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = NavData.c; sourceTree = "<group>"; };
-		42AF46A214EA1CF1002B8DC9 /* NavData.h */ = {isa = PBXFileReference; fileEncoding = 4; path = NavData.h; sourceTree = "<group>"; };
+		42AF46A214EA1CF1002B8DC9 /* NavData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavData.h; sourceTree = "<group>"; };
 		42AF46A314EA1CF1002B8DC9 /* wifi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wifi.c; sourceTree = "<group>"; };
 		42AF46A414EA1CF1002B8DC9 /* wifi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wifi.h; sourceTree = "<group>"; };
 		42BB47A014C13B610052AC36 /* CocoaOpenNI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaOpenNI.h; sourceTree = "<group>"; };
@@ -520,6 +523,8 @@
 				4299AD5A14E4D979000F148B /* Skeleton.mm */,
 				4299AD5E14E4DC78000F148B /* XnVector3DUtils.h */,
 				4299AD5C14E4DC64000F148B /* XnVector3DUtils.mm */,
+				427C2A841505987600C65572 /* JBWindow.h */,
+				427C2A851505987600C65572 /* JBWindow.m */,
 			);
 			path = KinectWings;
 			sourceTree = "<group>";
@@ -1265,6 +1270,7 @@
 				4248F8F714F9AA0C00FDB354 /* vp_stages_io_console.c in Sources */,
 				4248F8F814F9AA0C00FDB354 /* vp_stages_io_file.c in Sources */,
 				4248F8FA14F9AA0C00FDB354 /* vp_stages_yuv2rgb.c in Sources */,
+				427C2A861505987600C65572 /* JBWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

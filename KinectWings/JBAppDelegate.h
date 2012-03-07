@@ -12,12 +12,13 @@
 #import "JBTiltGestureRecognizer.h"
 #import "ARDrone.h"
 #import "ControlData.h"
+#import "JBWindow.h"
 
 @class DepthView;
 @class VerticalGuageView;
 
-@interface JBAppDelegate : NSObject <NSApplicationDelegate, JBFlapGestureRecognizerDelegate, JBTiltGestureRecognizerDelegate> {
-  NSWindow *_window;
+@interface JBAppDelegate : NSObject <NSApplicationDelegate, JBFlapGestureRecognizerDelegate, JBTiltGestureRecognizerDelegate, JBWindowDelegate> {
+  JBWindow *_window;
 
   IBOutlet DepthView *_openGLView;
   IBOutlet GLViewController *_droneVideoView;
@@ -33,6 +34,6 @@
   ControlData *_controlData;
 }
 
-@property (assign) IBOutlet NSWindow *window;
+@property (assign) IBOutlet JBWindow *window;
 
 @end

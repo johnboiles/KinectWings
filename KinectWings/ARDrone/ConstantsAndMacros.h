@@ -54,11 +54,11 @@
 #import <AudioToolbox/AudioToolbox.h>
 #endif
 
-#define WIFI_ITFNAME "en4"
+#define WIFI_ITFNAME "en1"
 
 
 // How many times a second to refresh the screen
-#define kFPS 40		// Frame per second
+#define kFPS 30		// Frame per second
 #define kAPS 30		// Number of accelerometer() function calls by second 
 
 //#define CHECK_OPENGL_ERROR() ({ GLenum __error = glGetError(); if(__error) NSLog(@"OpenGLES error 0x%04X in %s\n", __error, __FUNCTION__); (__error ? NO : YES); })

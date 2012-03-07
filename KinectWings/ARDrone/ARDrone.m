@@ -67,7 +67,7 @@ static void ARDroneCallback(ARDRONE_ENGINE_MESSAGE msg) {
 		//glviewctrl = [[GLViewController alloc] initWithFrame:frame withDelegate:self];
 
 		// Create main view controller
-		initControlData(controlData);
+		initControlData(&controlData);
 		
 		ardroneEngineStart(ARDroneCallback, "KinectWings", "JohnBoiles");
 		[self checkThreadStatus];
@@ -110,31 +110,36 @@ static void ARDroneCallback(ARDRONE_ENGINE_MESSAGE msg) {
 }
 
 - (void)takeOff {
-  switchTakeOff(controlData);
+  switchTakeOff(&controlData);
 }
 
 - (void)setYaw:(float)yaw {
-  inputYaw(controlData, yaw);
+  inputYaw(&controlData, yaw);
+  controlData.accelero_flag |= (1 << ARDRONE_PROGRESSIVE_CMD_ENABLE) | (1 << ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE);
 }
 
 - (void)setPitch:(float)pitch {
-  inputPitch(controlData, pitch);
-  //controlData.accelero_flag = ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE;
-  controlData.accelero_flag |= ARDRONE_PROGRESSIVE_CMD_ENABLE | ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE;
+  inputPitch(&controlData, pitch);
+  //&controlData.accelero_flag = ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE;
+  controlData.accelero_flag = (1 << ARDRONE_PROGRESSIVE_CMD_ENABLE);// | (1 << ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE);
 }
 
 - (void)setVertical:(float)vertical {
-  inputGaz(controlData, vertical);
+  inputGaz(&controlData, vertical);
   //controlData.accelero_flag = ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE;
-  controlData.accelero_flag |= ARDRONE_PROGRESSIVE_CMD_ENABLE | ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE;
+  controlData.accelero_flag = (1 << ARDRONE_PROGRESSIVE_CMD_ENABLE);
 }
 
 - (void)sendControls {
-  sendControls(controlData);
+  sendControls(&controlData);
 }
 
 - (void)setSomeControls {
-  setSomeConfigs(controlData);
+  setSomeConfigs(&controlData);
+}
+
+- (void)resetControls {
+  resetControlData(&controlData);
 }
 
 extern navdata_unpacked_t ctrlnavdata;
@@ -157,8 +162,10 @@ extern navdata_unpacked_t ctrlnavdata;
       [self parrotNavdata:&ctrlnavdata];
       //[self performSelectorOnMainThread:@selector(update) withObject:nil waitUntilDone:YES];
       
-      checkErrors(controlData);
-      //NSLog(@"%s", controlData.error_msg);
+      checkErrors(&controlData);
+      if (strlen(controlData.error_msg) != 0) {
+        NSLog(@"%s", controlData.error_msg);
+      }
       controlData.framecounter = (controlData.framecounter + 1) % kFPS;
     } else {
       //printf("Time waited : %d us\n", refreshTimeInUs - delta);
