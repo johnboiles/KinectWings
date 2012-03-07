@@ -9,7 +9,7 @@
 #include "ConstantsAndMacros.h"
 #include "ControlData.h"
 
-#define DEBUG_CONTROL
+//#define DEBUG_CONTROL
 
 #define constrain(value, min, max) (value) < (min) ? (min) : ((value) > (max) ? (max) : (value))
 
@@ -37,10 +37,11 @@ void setSomeConfigs(ControlData *controlData) {
   uint32_t constantBitrate = 10000;
   ardrone_control_config.bitrate_ctrl_mode = enabled;
   ardrone_control_config.bitrate = constantBitrate;
-
+  ardrone_control_config.video_channel = ARDRONE_VIDEO_CHANNEL_HORI;
   // TODO(johnb): Should try to add a callback here and see what happens
   ARDRONE_TOOL_CONFIGURATION_ADDEVENT(bitrate_ctrl_mode, &ardrone_control_config.bitrate_ctrl_mode, configSentCallback);
   ARDRONE_TOOL_CONFIGURATION_ADDEVENT(bitrate, &ardrone_control_config.bitrate, configSentCallback);
+  ARDRONE_TOOL_CONFIGURATION_ADDEVENT(video_channel, &ardrone_control_config.video_channel, configSentCallback);
 }
 
 void setApplicationDefaultConfig(ControlData *controlData) {
@@ -51,7 +52,7 @@ void setApplicationDefaultConfig(ControlData *controlData) {
   ardrone_application_default_config.video_codec = UVLC_CODEC;//P264_CODEC;
 	ardrone_application_default_config.bitrate_ctrl_mode = ARDRONE_VARIABLE_BITRATE_MODE_DISABLED;
   ardrone_application_default_config.video_channel = ARDRONE_VIDEO_CHANNEL_LARGE_HORI_SMALL_VERT;
-  ardrone_application_default_config.bitrate = 1000;
+  ardrone_application_default_config.bitrate = 10000;
   controlData->applicationDefaultConfigState = CONFIG_STATE_IDLE;
 }
 
@@ -148,7 +149,7 @@ void inputPitch(ControlData *controlData, float percent) {
 #ifdef DEBUG_CONTROL
 	PRINT("%s : %f, accelero_enable : %d\n", __FUNCTION__, percent, (controlData->accelero_flag >> ARDRONE_PROGRESSIVE_CMD_ENABLE) & 0x1 );
 #endif
-  controlData->accelero_theta = constrain(percent, -1.0, 1.0);
+  controlData->accelero_theta = constrain(-percent, -1.0, 1.0);
 }
 
 void inputRoll(ControlData *controlData, float percent) {
