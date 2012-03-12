@@ -225,6 +225,7 @@ extern navdata_unpacked_t ctr;
 - (void)flyingControllerDidRecognizeFlyer:(JBFlyingController *)flyingController {
   _indicatorImage.image = [NSImage imageNamed:@"indicator_green.png"];
   _drone.controlData->accelero_flag |= (1 << ARDRONE_PROGRESSIVE_CMD_ENABLE);
+  _drone.controlData->accelero_flag |= (1 << ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE);
 }
 
 - (void)flyingControllerStopRecognizingFlyer:(JBFlyingController *)flyingController {

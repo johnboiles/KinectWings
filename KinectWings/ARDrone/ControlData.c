@@ -51,6 +51,7 @@ void setApplicationDefaultConfig(ControlData *controlData) {
 	ardrone_application_default_config.bitrate_ctrl_mode = ARDRONE_VARIABLE_BITRATE_MANUAL;
   ardrone_application_default_config.video_channel = ARDRONE_VIDEO_CHANNEL_HORI;
   ardrone_application_default_config.bitrate = 5000;
+  ardrone_application_default_config.altitude_max = 10000;
   controlData->applicationDefaultConfigState = CONFIG_STATE_IDLE;
 }
 

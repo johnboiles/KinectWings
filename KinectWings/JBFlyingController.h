@@ -33,7 +33,9 @@
   JBTiltGestureRecognizer *_tiltGestureRecognizer;
   JBArmsExtendedGestureRecognizer *_armsExtendedGestureRecognizer;
 
+  double _forwardCumulative;
   double _forward;
+  double _verticalCumulative;
   double _vertical;
   double _sidestep;
   double _turn;

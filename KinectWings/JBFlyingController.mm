@@ -55,8 +55,26 @@
 #pragma mark - JBFlapGestureRecognizerDelegate
 
 - (void)flapGestureRecognizer:(JBFlapGestureRecognizer *)flapGestureRecognizer didGetThrustVector:(XnVector3D)thrustVector {
-  _forward = thrustVector.Z / 100;
-  _vertical = -thrustVector.Y / 80 - 0.05;
+  _forwardCumulative += thrustVector.Z / 170;
+  _forwardCumulative = constrain(_forwardCumulative, -2.5, 2.5);
+  // TODO: do this compensation using a timestamp
+  if (_forwardCumulative > 0) {
+    _forwardCumulative -= 0.05;
+  } else {
+    _forwardCumulative += 0.05;
+  }
+  _forward = _forwardCumulative;
+
+  double verticalThrust = -thrustVector.Y / 250;
+  _verticalCumulative += verticalThrust;
+  _verticalCumulative = constrain(_verticalCumulative, -2, 2);
+  if (_verticalCumulative > 0.00) {
+    _verticalCumulative -= 0.06;
+  } else {
+    _verticalCumulative += 0.06;
+  }
+  _verticalCumulative -= 0.05;
+  _vertical = _verticalCumulative;
 }
 
 #pragma mark - JBTiltGestureRecognizerDelegate
