@@ -13,6 +13,8 @@
 #define SMALL_STRING_SIZE	16
 #define MEDIUM_STRING_SIZE	64
 
+#define constrain(value, min, max) (value) < (min) ? (min) : ((value) > (max) ? (max) : (value))
+
 typedef enum _EMERGENCY_STATE_
 {
 	EMERGENCY_STATE_EMERGENCY,
@@ -38,7 +40,7 @@ typedef struct
 	 * And accelerometers values transmitted to drone, FALSE otherwise
 	 */
 	float yaw, gaz, accelero_phi, accelero_theta;
-	int32_t accelero_flag;
+	int32_t accelero_flag; // See ARDRONE_PROGRESSIVE_CMD_FLAG
 
 	/**
 	 * variable to know if setting is needed
@@ -50,8 +52,6 @@ typedef struct
 	int framecounter;
 	bool_t needSetEmergency;
 	bool_t needSetTakeOff;
-	
-	int needVideoSwitch;
 
 	bool_t needAnimation;
 	char needAnimationParam[SMALL_STRING_SIZE];
@@ -68,6 +68,7 @@ typedef struct
 	char error_msg[MEDIUM_STRING_SIZE];
 	char takeoff_msg[SMALL_STRING_SIZE];
 	char emergency_msg[SMALL_STRING_SIZE];
+
 } ControlData;
 
 void setSomeConfigs(ControlData *controlData);

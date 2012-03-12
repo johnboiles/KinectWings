@@ -39,7 +39,8 @@ static void ARDroneCallback(ARDRONE_ENGINE_MESSAGE msg) {
  * Define a few methods to make it possible for the game engine to control the Parrot drone
  */
 @implementation ARDrone
-@synthesize running;
+
+@synthesize running, delegate;
 
 /**
  * Initialize the Parrot library.<br/>
@@ -115,19 +116,18 @@ static void ARDroneCallback(ARDRONE_ENGINE_MESSAGE msg) {
 
 - (void)setYaw:(float)yaw {
   inputYaw(&controlData, yaw);
-  controlData.accelero_flag |= (1 << ARDRONE_PROGRESSIVE_CMD_ENABLE) | (1 << ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE);
 }
 
 - (void)setPitch:(float)pitch {
   inputPitch(&controlData, pitch);
-  //&controlData.accelero_flag = ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE;
-  controlData.accelero_flag = (1 << ARDRONE_PROGRESSIVE_CMD_ENABLE);// | (1 << ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE);
+}
+
+- (void)setRoll:(float)roll {
+  inputRoll(&controlData, roll);
 }
 
 - (void)setVertical:(float)vertical {
   inputGaz(&controlData, vertical);
-  //controlData.accelero_flag = ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE;
-  controlData.accelero_flag = (1 << ARDRONE_PROGRESSIVE_CMD_ENABLE);
 }
 
 - (void)sendControls {
@@ -140,6 +140,10 @@ static void ARDroneCallback(ARDRONE_ENGINE_MESSAGE msg) {
 
 - (void)resetControls {
   resetControlData(&controlData);
+}
+
+- (ControlData *)controlData {
+  return &controlData;
 }
 
 extern navdata_unpacked_t ctrlnavdata;
@@ -162,9 +166,14 @@ extern navdata_unpacked_t ctrlnavdata;
       [self parrotNavdata:&ctrlnavdata];
       //[self performSelectorOnMainThread:@selector(update) withObject:nil waitUntilDone:YES];
       
+      static BOOL emergency = NO;
       checkErrors(&controlData);
-      if (strlen(controlData.error_msg) != 0) {
-        NSLog(@"%s", controlData.error_msg);
+      if (!emergency && strlen(controlData.error_msg) > 0) {
+        [delegate drone:self didEmergencyWithMessage:[NSString stringWithCString:controlData.error_msg encoding:NSASCIIStringEncoding]];
+        emergency = YES;
+      } else if (emergency && strlen(controlData.error_msg) == 0) {
+        [delegate droneDidEndEmergency:self];
+        emergency = NO;
       }
       controlData.framecounter = (controlData.framecounter + 1) % kFPS;
     } else {

@@ -37,6 +37,8 @@
 
 + (Skeleton *)skeletonFromUserGenerator:(xn::UserGenerator)userGenerator user:(XnUserID)user;
 
+- (BOOL)armsAreStraightOutToTheSide;
+
 @end
 
 XnSkeletonJointPosition GetJointPosition(xn::UserGenerator userGenerator, XnUserID user, XnSkeletonJoint joint);

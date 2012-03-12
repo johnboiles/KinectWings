@@ -31,18 +31,19 @@ extern navdata_unpacked_t ctr;
 }
 
 - (void)display {
-  //[_openGLView setNeedsDisplay:YES];
   // Read next available data
   // If we skip this, the view will appear paused
   if ([CocoaOpenNI sharedOpenNI].started) {
+    // Sometimes we get a crash in here
     [[CocoaOpenNI sharedOpenNI] context].WaitAndUpdateAll();
     xn::UserGenerator userGenerator = [[CocoaOpenNI sharedOpenNI] userGenerator];
     XnUserID user = [[CocoaOpenNI sharedOpenNI] firstTrackingUser];
+    // TODO: Need to keep some state to track when the user tracking began
     if (user) {
       Skeleton *skeleton = [Skeleton skeletonFromUserGenerator:userGenerator user:user];
-      [_flapGestureRecognizer skeletalTrackingDidContinueWithSkeleton:skeleton];
-      [_tiltGestureRecognizer skeletalTrackingDidContinueWithSkeleton:skeleton];
-      [_drone performSelectorOnMainThread:@selector(sendControls) withObject:nil waitUntilDone:NO];
+      [_flyingController skeletalTrackingDidContinueWithSkeleton:skeleton];
+    } else {
+      [_flyingController skeletalTrackingDidEnd];
     }
   }
   [_droneVideoView setNeedsDisplay:YES];
@@ -64,92 +65,174 @@ extern navdata_unpacked_t ctr;
   [[CocoaOpenNI sharedOpenNI] startWithConfigPath:[[NSBundle mainBundle] pathForResource:@"KinectConfig" ofType:@"xml"]];
   //[_openGLView setup];
   if ([CocoaOpenNI sharedOpenNI].started) {
-    _flapGestureRecognizer = [[JBFlapGestureRecognizer alloc] init];
-    _flapGestureRecognizer.delegate = self;
-    _tiltGestureRecognizer = [[JBTiltGestureRecognizer alloc] init];
-    _tiltGestureRecognizer.delegate = self;
+    _flyingController = [[JBFlyingController alloc] init];
+    _flyingController.delegate = self;
   }
-  // XXX(johnb): I think I'm supposed to do this with CADisplayLink or something like that. This seems ghetto
+
   _drone = [[ARDrone alloc] initWithFrame:CGRectZero withState:YES];
+  _drone.delegate = self;
+  // TODO: Wait are we using this one or the one that the drone owns?
+  [_droneVideoView setWantsLayer:YES];
+  // XXX(johnb): I think I'm supposed to do this with CADisplayLink or something like that. This seems ghetto
+  // TODO: Move this inside of ARDrone
   [NSThread detachNewThreadSelector:@selector(timerThread) toTarget:_drone withObject:nil];
-  //[NSTimer scheduledTimerWithTimeInterval:0.03 target:self selector:@selector(display) userInfo:nil repeats:YES];
-  //[NSThread detachNewThreadSelector:@selector(refreshThread) toTarget:self withObject:nil];
   [NSTimer scheduledTimerWithTimeInterval:1.0/30.0 target:self selector:@selector(display) userInfo:nil repeats:YES];
-  [_drone setSomeControls];
+
+  _indicatorImage.image = [NSImage imageNamed:@"indicator_red.png"];
 }
 
-#pragma mark - JBFlapGestureRecognizerDelegate
+#pragma mark - ARDroneDelegate
 
-- (void)flapGestureRecognizer:(JBFlapGestureRecognizer *)flapGestureRecognizer didGetThrustVector:(XnVector3D)thrustVector {
-  _leftVerticalGuageView.value = -thrustVector.Y / 100.0;
-  [_leftVerticalGuageView setNeedsDisplay:YES];
-  [_rightVerticalGuageView setNeedsDisplay:YES];
-  float thrust = thrustVector.Z / 100;
-  _rightVerticalGuageView.value = 0.5 + thrust / 2;
-  [_thrustTextField setStringValue:[NSString stringWithFormat:@"%0.2f", thrust]];
-  [_drone setPitch:thrust * 0.8];
-  [_drone setVertical:- thrustVector.Y / 80 - 0.05];
+- (void)drone:(ARDrone *)drone didEmergencyWithMessage:(NSString *)message {
+  NSLog(@"Emergency! %@", message);
+  [_emergencyStatusField setStringValue:message];
+  [_emergencyStatusField setNeedsDisplay];
 }
 
-#pragma mark - JBTiltGestureRecognizerDelegate
-
-- (void)tiltGestureRecognizer:(JBTiltGestureRecognizer *)tiltGestureRecognizer didGetTiltAngle:(double)angle {
-  [_angleTextField setStringValue:[NSString stringWithFormat:@"%0.2f", angle]];
-  [_leftVerticalGuageView setBoundsRotation:angle];
-  [_leftVerticalGuageView setNeedsDisplay:YES];
-  [_rightVerticalGuageView setBoundsRotation:angle];
-  [_rightVerticalGuageView setNeedsDisplay:YES];
-  float yaw = -angle / 45;
-  [_drone setYaw:yaw];
+- (void)droneDidEndEmergency:(ARDrone *)drone {
+  NSLog(@"Phew, emergency is over!");
+  [_emergencyStatusField setStringValue:@""];
+  [_emergencyStatusField setNeedsDisplay];
 }
 
 #pragma mark - JBWindowDelegate
 
 - (BOOL)handleKeyDownEvent:(NSEvent *)event {
-  if ([event modifierFlags] & NSNumericPadKeyMask) {
-    NSString *arrow = [event charactersIgnoringModifiers];
-    unichar keyChar = [arrow characterAtIndex:0];
-    if (keyChar == NSRightArrowFunctionKey) {
-      NSLog(@"Right Arrow");
-      [_drone setYaw:0.7];
-      [_drone sendControls];
-    } else if (keyChar == NSLeftArrowFunctionKey) {
-      NSLog(@"Left Arrow");
-      [_drone setYaw:-0.7];
-      [_drone sendControls];
-    } else if (keyChar == NSUpArrowFunctionKey) {
-      NSLog(@"Up Arrow");
-      [_drone setPitch:0.7];
-      [_drone sendControls];
-    } else if (keyChar == NSDownArrowFunctionKey) {
-      NSLog(@"Down Arrow");
-      [_drone setPitch:-0.7];
-      [_drone sendControls];
-    }
-    return YES;
-  } else {
-    return NO;
+  BOOL keyPressed = NO;
+  NSCharacterSet *characters = [NSCharacterSet characterSetWithCharactersInString:[event characters]];
+
+  if ([characters characterIsMember:NSRightArrowFunctionKey]) {
+    [_drone setYaw:0.7];
+    keyPressed = YES;    
   }
+  if ([characters characterIsMember:NSLeftArrowFunctionKey]) {
+    [_drone setYaw:-0.7];
+    keyPressed = YES;    
+  }
+  if ([characters characterIsMember:NSUpArrowFunctionKey]) {
+    [_drone setVertical:1.0];
+    keyPressed = YES;    
+  }
+  if ([characters characterIsMember:NSDownArrowFunctionKey]) {
+    [_drone setVertical:-1.0];
+    keyPressed = YES;    
+  }
+  if ([characters characterIsMember:[@" " characterAtIndex:0]]) {
+    [_drone takeOff];
+    keyPressed = YES;    
+  }
+  if ([characters characterIsMember:[@"w" characterAtIndex:0]]) {
+    [_drone setPitch:0.7];
+    keyPressed = YES;
+  }
+  if ([characters characterIsMember:[@"a" characterAtIndex:0]]) {
+    [_drone setRoll:-0.7];
+    keyPressed = YES;
+  }
+  if ([characters characterIsMember:[@"s" characterAtIndex:0]]) {
+    [_drone setPitch:-0.7];
+    keyPressed = YES;
+  }
+  if ([characters characterIsMember:[@"d" characterAtIndex:0]]) {
+    [_drone setRoll:0.7];
+    keyPressed = YES;
+  }
+
+  if (keyPressed) {
+    [_drone sendControls];
+    return YES;
+  }
+  return NO;
 }
 
 - (BOOL)handleKeyUpEvent:(NSEvent *)event {
-  if ([event modifierFlags] & NSNumericPadKeyMask) {
-    NSString *arrow = [event charactersIgnoringModifiers];
-    unichar keyChar = [arrow characterAtIndex:0];
-    if (keyChar == NSRightArrowFunctionKey || keyChar == NSLeftArrowFunctionKey) {
-      NSLog(@"Right or Left Arrow Up");
-      [_drone setYaw:0.0];
-      [_drone sendControls];
-    } else if (keyChar == NSUpArrowFunctionKey || keyChar == NSDownArrowFunctionKey) {
-      NSLog(@"Up or Down Arrow Up");
-      [_drone setPitch:0.0];
-      [_drone sendControls];
-    }
-    return YES;
-  } else {
-    return NO;
+  BOOL keyPressed = NO;
+  NSCharacterSet *characters = [NSCharacterSet characterSetWithCharactersInString:[event characters]];
+  
+  if ([characters characterIsMember:NSRightArrowFunctionKey]) {
+    [_drone setYaw:0.0];
+    keyPressed = YES;    
   }
+  if ([characters characterIsMember:NSLeftArrowFunctionKey]) {
+    [_drone setYaw:0.0];
+    keyPressed = YES;    
+  }
+  if ([characters characterIsMember:NSUpArrowFunctionKey]) {
+    [_drone setVertical:0.0];
+    keyPressed = YES;    
+  }
+  if ([characters characterIsMember:NSDownArrowFunctionKey]) {
+    [_drone setVertical:0.0];
+    keyPressed = YES;    
+  }
+  if ([characters characterIsMember:[@"w" characterAtIndex:0]]) {
+    [_drone setPitch:0.0];
+    keyPressed = YES;
+  }
+  if ([characters characterIsMember:[@"a" characterAtIndex:0]]) {
+    [_drone setRoll:0.0];
+    keyPressed = YES;
+  }
+  if ([characters characterIsMember:[@"s" characterAtIndex:0]]) {
+    [_drone setPitch:0.0];
+    keyPressed = YES;
+  }
+  if ([characters characterIsMember:[@"d" characterAtIndex:0]]) {
+    [_drone setRoll:0.0];
+    keyPressed = YES;
+  }
+
+  if (keyPressed) {
+    [_drone sendControls];
+    return YES;
+  }
+  return NO;
 }
+
+#pragma mark - JBFlyingControllerDelegate
+
+- (void)flyingController:(JBFlyingController *)flyingController didGetForward:(double)forward vertical:(double)vertical sidestep:(double)sidestep turn:(double)turn {
+    
+  _leftVerticalGuageView.value = vertical;
+  [_leftVerticalGuageView setNeedsDisplay:YES];
+
+  _rightVerticalGuageView.value = 0.5 + forward / 2;
+  [_rightVerticalGuageView setNeedsDisplay:YES];  
+  [_thrustTextField setStringValue:[NSString stringWithFormat:@"%0.2f", forward]];
+
+  // Let's build a proper rotation indicator sometime
+  [_angleTextField setStringValue:[NSString stringWithFormat:@"%0.2f", turn]];
+  //[_leftVerticalGuageView setBoundsRotation:angle];
+  //[_leftVerticalGuageView setNeedsDisplay:YES];
+  //[_rightVerticalGuageView setBoundsRotation:angle];
+  //[_rightVerticalGuageView setNeedsDisplay:YES];
+
+  [_drone setPitch:forward];
+  [_drone setYaw:turn];
+  // Always be drifting down
+  [_drone setVertical:vertical - 0.07];
+  [_drone sendControls];
+}
+
+- (void)flyingControllerShouldLand:(JBFlyingController *)flyingController {
+  //[_drone land];
+}
+
+- (void)flyingControllerShouldTakeOff:(JBFlyingController *)flyingController {
+  //[_drone takeOff];  
+} 
+
+- (void)flyingControllerDidRecognizeFlyer:(JBFlyingController *)flyingController {
+  _indicatorImage.image = [NSImage imageNamed:@"indicator_green.png"];
+  _drone.controlData->accelero_flag |= (1 << ARDRONE_PROGRESSIVE_CMD_ENABLE);
+}
+
+- (void)flyingControllerStopRecognizingFlyer:(JBFlyingController *)flyingController {
+  _indicatorImage.image = [NSImage imageNamed:@"indicator_red.png"];
+  _drone.controlData->accelero_flag &= ~(1 << ARDRONE_PROGRESSIVE_CMD_ENABLE);
+
+}
+
 
 @end
 

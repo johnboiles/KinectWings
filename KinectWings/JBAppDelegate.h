@@ -8,16 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 #import "CocoaOpenNI.h"
-#import "JBFlapGestureRecognizer.h"
-#import "JBTiltGestureRecognizer.h"
-#import "ARDrone.h"
 #import "ControlData.h"
 #import "JBWindow.h"
+#import "ARDrone.h"
+#import "JBFlyingController.h"
 
 @class DepthView;
 @class VerticalGuageView;
 
-@interface JBAppDelegate : NSObject <NSApplicationDelegate, JBFlapGestureRecognizerDelegate, JBTiltGestureRecognizerDelegate, JBWindowDelegate> {
+@interface JBAppDelegate : NSObject <NSApplicationDelegate, JBWindowDelegate, JBFlyingControllerDelegate, ARDroneDelegate> {
   JBWindow *_window;
 
   IBOutlet DepthView *_openGLView;
@@ -26,10 +25,10 @@
   IBOutlet VerticalGuageView *_rightVerticalGuageView;
   IBOutlet NSTextField *_angleTextField;
   IBOutlet NSTextField *_thrustTextField;
+  IBOutlet NSImageView *_indicatorImage;
+  IBOutlet NSTextField *_emergencyStatusField;
 
-  JBFlapGestureRecognizer *_flapGestureRecognizer;
-  JBTiltGestureRecognizer *_tiltGestureRecognizer;
-
+  JBFlyingController *_flyingController;
   ARDrone *_drone;
   ControlData *_controlData;
 }

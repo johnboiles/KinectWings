@@ -11,8 +11,6 @@
 
 //#define DEBUG_CONTROL
 
-#define constrain(value, min, max) (value) < (min) ? (min) : ((value) > (max) ? (max) : (value))
-
 navdata_unpacked_t ctrlnavdata;
 extern char iphone_mac_address[];
 
@@ -50,9 +48,9 @@ void setApplicationDefaultConfig(ControlData *controlData) {
 
 	// I dont think these are doing anything for now
   ardrone_application_default_config.video_codec = UVLC_CODEC;//P264_CODEC;
-	ardrone_application_default_config.bitrate_ctrl_mode = ARDRONE_VARIABLE_BITRATE_MODE_DISABLED;
-  ardrone_application_default_config.video_channel = ARDRONE_VIDEO_CHANNEL_LARGE_HORI_SMALL_VERT;
-  ardrone_application_default_config.bitrate = 10000;
+	ardrone_application_default_config.bitrate_ctrl_mode = ARDRONE_VARIABLE_BITRATE_MANUAL;
+  ardrone_application_default_config.video_channel = ARDRONE_VIDEO_CHANNEL_HORI;
+  ardrone_application_default_config.bitrate = 5000;
   controlData->applicationDefaultConfigState = CONFIG_STATE_IDLE;
 }
 
@@ -72,8 +70,6 @@ void initControlData(ControlData *controlData) {
 
 	controlData->needAnimation = FALSE;
 	vp_os_memset(controlData->needAnimationParam, 0, sizeof(controlData->needAnimationParam));
-
-	controlData->needVideoSwitch = -1;
 
 	controlData->needLedAnimation = FALSE;
 	vp_os_memset(controlData->needLedAnimationParam, 0, sizeof(controlData->needLedAnimationParam));

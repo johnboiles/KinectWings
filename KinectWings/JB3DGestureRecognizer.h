@@ -43,7 +43,7 @@ typedef enum {
 } JB3DGestureRecognizerState;
 
 @interface JB3DGestureRecognizer : NSObject <JB3DGestureRecognizer> {
-  JB3DGestureRecognizerState _state;
+  //JB3DGestureRecognizerState _state;
   XnUserID _user;
 }
 

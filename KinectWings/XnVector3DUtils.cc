@@ -9,14 +9,14 @@
 #import "XnVector3DUtils.h"
 #import "math.h"
 
-XnVector3D XnVector3DSum(NSUInteger count, ...) {
+XnVector3D XnVector3DSum(int count, ...) {
   va_list arguments;
   va_start(arguments, count);
   XnVector3D sumVector;
   sumVector.X = 0;
   sumVector.Y = 0;
   sumVector.Z = 0;
-  for (NSUInteger i = 0; i < count; i++) {
+  for (int i = 0; i < count; i++) {
     XnVector3D vector = va_arg(arguments, XnVector3D);
     sumVector.X += vector.X;
     sumVector.Y += vector.Y;
@@ -26,14 +26,14 @@ XnVector3D XnVector3DSum(NSUInteger count, ...) {
   return sumVector;
 }
 
-XnVector3D XnVector3DAverage(NSUInteger count, ...) {
+XnVector3D XnVector3DAverage(int count, ...) {
   va_list arguments;
   va_start(arguments, count);
   XnVector3D sumVector;
   sumVector.X = 0;
   sumVector.Y = 0;
   sumVector.Z = 0;
-  for (NSUInteger i = 0; i < count; i++) {
+  for (int i = 0; i < count; i++) {
     XnVector3D vector = va_arg(arguments, XnVector3D);
     sumVector.X += vector.X;
     sumVector.Y += vector.Y;
@@ -89,5 +89,12 @@ double AngleFromYZPlane(XnVector3D vector) {
 double AngleFromZAxisOnXZPlane(XnVector3D vector) {
   // Just pythagorean theorum and trig
   return atan(vector.X / vector.Z) * 180 / M_PI;
+}
 
+XnVector3D FlattenToXZPlane(XnVector3D vector) {
+  XnVector3D flatVector;
+  flatVector.X = vector.X;
+  flatVector.Y = 0;
+  flatVector.Z = vector.Z;
+  return flatVector;
 }
