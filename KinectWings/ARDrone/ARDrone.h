@@ -31,6 +31,7 @@
 }
 
 @property (assign, nonatomic) id<ARDroneDelegate> delegate;
+@property (readonly, nonatomic, getter=isFlying) BOOL flying;
 
 /**
  * Boolean flag that indicates whether the library is running (YES) or paused (NO).<br/>
@@ -57,7 +58,7 @@
  */
 - (void)render;
 
-- (void)takeOff;
+- (void)switchTakeOff;
 
 - (void)setYaw:(float)yaw;
 
@@ -72,5 +73,11 @@
 - (void)setSomeControls;
 
 - (void)resetControls;
+
+- (BOOL)isFlying;
+
+- (void)takeOff;
+
+- (void)land;
 
 @end

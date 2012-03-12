@@ -50,7 +50,7 @@ extern navdata_unpacked_t ctr;
 }
 
 - (IBAction)takeOff:(id)sender {
-  [_drone takeOff];
+  [_drone switchTakeOff];
 }
 
 - (IBAction)setSomeConfigs:(id)sender {
@@ -119,7 +119,7 @@ extern navdata_unpacked_t ctr;
     keyPressed = YES;    
   }
   if ([characters characterIsMember:[@" " characterAtIndex:0]]) {
-    [_drone takeOff];
+    [_drone switchTakeOff];
     keyPressed = YES;
   }
   if ([characters characterIsMember:[@"w" characterAtIndex:0]]) {
@@ -233,11 +233,11 @@ extern navdata_unpacked_t ctr;
 }
 
 - (void)flyingControllerShouldLand:(JBFlyingController *)flyingController {
-  //[_drone land];
+  [_drone land];
 }
 
 - (void)flyingControllerShouldTakeOff:(JBFlyingController *)flyingController {
-  //[_drone takeOff];  
+  [_drone takeOff];
 } 
 
 - (void)flyingControllerDidRecognizeFlyer:(JBFlyingController *)flyingController {
@@ -249,7 +249,7 @@ extern navdata_unpacked_t ctr;
 - (void)flyingControllerStopRecognizingFlyer:(JBFlyingController *)flyingController {
   _indicatorImage.image = [NSImage imageNamed:@"indicator_red.png"];
   _drone.controlData->accelero_flag &= ~(1 << ARDRONE_PROGRESSIVE_CMD_ENABLE);
-
+  _drone.controlData->accelero_flag &= ~(1 << ARDRONE_PROGRESSIVE_CMD_COMBINED_YAW_ACTIVE);
 }
 
 

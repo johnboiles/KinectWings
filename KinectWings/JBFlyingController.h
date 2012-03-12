@@ -32,6 +32,8 @@
   JBFlapGestureRecognizer *_flapGestureRecognizer;
   JBTiltGestureRecognizer *_tiltGestureRecognizer;
   JBArmsExtendedGestureRecognizer *_armsExtendedGestureRecognizer;
+  NSTimer *_takeOffTimer;
+  NSTimer *_landTimer;
 
   double _forwardCumulative;
   double _forward;

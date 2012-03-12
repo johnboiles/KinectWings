@@ -48,9 +48,9 @@ void setApplicationDefaultConfig(ControlData *controlData) {
 
   // I dont think these are doing anything for now
   ardrone_application_default_config.video_codec = UVLC_CODEC;//P264_CODEC;
-  ardrone_application_default_config.bitrate_ctrl_mode = ARDRONE_VARIABLE_BITRATE_MANUAL;
+  ardrone_application_default_config.bitrate_ctrl_mode = ARDRONE_VARIABLE_BITRATE_MODE_DISABLED;
   ardrone_application_default_config.video_channel = ARDRONE_VIDEO_CHANNEL_HORI;
-  ardrone_application_default_config.bitrate = 5000;
+  ardrone_application_default_config.bitrate = 10000;
   ardrone_application_default_config.altitude_max = 10000;
   controlData->applicationDefaultConfigState = CONFIG_STATE_IDLE;
 }
@@ -237,7 +237,7 @@ void checkErrors(ControlData *controlData) {
       strcpy(controlData->error_msg, "Unknown error");
     }
 
-    // Not flying (possibly update flying state)
+    controlData->flying = 0;
     // Old code disabled the manual emergency button here
 
     resetControlData(controlData);
@@ -273,17 +273,16 @@ void checkErrors(ControlData *controlData) {
 
   // This logic used to set the takeoff_msg string, but that was goofy
   // I'm leaving it here because it could still be useful for setting some takeoff/land state
-  /*
   if (input_state->start) {
     if (ctrlnavdata.ardrone_state & ARDRONE_USER_FEEDBACK_START) {
-      // Flying
+      controlData->flying = 1;
     } else {
+      controlData->flying = 1;
       // Not flying but hopefully gonna fly
       strcpy(controlData->error_msg, "Waiting for drone to start");
     }
   } else {
-    // Not flying
+    controlData->flying = 0;
   }
-   */
 }
 

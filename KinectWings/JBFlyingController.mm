@@ -28,6 +28,8 @@
 }
 
 - (void)dealloc {
+  [_landTimer invalidate];
+  _landTimer = nil;
   _flapGestureRecognizer.delegate = nil;
   [_flapGestureRecognizer release];
   _tiltGestureRecognizer.delegate = nil;
@@ -52,11 +54,21 @@
   
 }
 
+- (void)_takeOff {
+  _takeOffTimer = nil;
+  [_delegate flyingControllerShouldTakeOff:self];
+}
+
+- (void)_land {
+  _landTimer = nil;
+  [_delegate flyingControllerShouldLand:self];
+}
+
 #pragma mark - JBFlapGestureRecognizerDelegate
 
 - (void)flapGestureRecognizer:(JBFlapGestureRecognizer *)flapGestureRecognizer didGetThrustVector:(XnVector3D)thrustVector {
   _forwardCumulative += thrustVector.Z / 170;
-  _forwardCumulative = constrain(_forwardCumulative, -2.5, 2.5);
+  _forwardCumulative = constrain(_forwardCumulative, -2.0, 2.0);
   // TODO: do this compensation using a timestamp
   if (_forwardCumulative > 0) {
     _forwardCumulative -= 0.05;
@@ -87,10 +99,18 @@
 
 - (void)armsExtendedGestureRecognizerDidExtendArms:(JBArmsExtendedGestureRecognizer *)armsExtendedGestureRecognizer {
   [_delegate flyingControllerDidRecognizeFlyer:self];
+  [_landTimer invalidate];
+  _landTimer = nil;
+  [_takeOffTimer invalidate];
+  _takeOffTimer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(_takeOff) userInfo:nil repeats:NO];
 }
 
 - (void)armsExtendedGestureRecognizerDidFinishExtendingArms:(JBArmsExtendedGestureRecognizer *)armsExtendedGestureRecognizer {
   [_delegate flyingControllerStopRecognizingFlyer:self];
+  [_takeOffTimer invalidate];
+  _takeOffTimer = nil;
+  [_landTimer invalidate];
+  _landTimer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(_land) userInfo:nil repeats:NO];
 }
 
 @end

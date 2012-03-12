@@ -35,6 +35,8 @@ typedef struct
 	 */
 	bool_t navdata_connected;
 
+  bool_t flying;
+
 	/**
 	 * Progressive commands
 	 * And accelerometers values transmitted to drone, FALSE otherwise

@@ -8,6 +8,8 @@
 #import "InternalProtocols.h"
 #import "ARDrone.h"
 #import "GLViewController.h"
+#import "NavData.h"
+#import "ARDroneTypes.h"
 
 //#define DEBUG_ENNEMIES_DETECTON
 #define DEBUG_NAVIGATION_DATA
@@ -110,8 +112,16 @@ static void ARDroneCallback(ARDRONE_ENGINE_MESSAGE msg) {
 	ardrone_navdata_get_data(data);
 }
 
-- (void)takeOff {
+- (void)switchTakeOff {
   switchTakeOff(&controlData);
+}
+
+- (void)takeOff {
+  if (![self isFlying]) switchTakeOff(&controlData);
+}
+
+- (void)land {
+  if ([self isFlying]) switchTakeOff(&controlData);  
 }
 
 - (void)setYaw:(float)yaw {
@@ -165,7 +175,8 @@ extern navdata_unpacked_t ctrlnavdata;
       
       [self parrotNavdata:&ctrlnavdata];
       //[self performSelectorOnMainThread:@selector(update) withObject:nil waitUntilDone:YES];
-      
+
+      //NSLog(@"Battery is %d", ctrlnavdata.navdata_demo.vbat_flying_percentage);
       static BOOL emergency = NO;
       checkErrors(&controlData);
       // TODO: This logic does not handle moving directly from one emergency to another
@@ -185,6 +196,15 @@ extern navdata_unpacked_t ctrlnavdata;
   [pool release];
 }
 
+extern navdata_unpacked_t ctrlnavdata;
+
+- (BOOL)isFlying {
+  if (controlData.flying) {
+    return YES;
+  }
+  return NO;
+}
+
 #pragma mark - ARDroneProtocolIn
 
 /**
@@ -192,7 +212,7 @@ extern navdata_unpacked_t ctrlnavdata;
  *
  * @param data Pointer to a navigation data structure.
  */
-- (void)navigationData:(ARDroneNavigationData*)data {
+- (void)navigationData:(ARDroneNavigationData *)data {
   static int numsamples = 0;
   if(numsamples++ > 64) {
     NSLog(@"x : %f, y : %f, z : %f, flying state : %d, navdata video num frame : %d, video num frames : %d", data->angularPosition.x, data->angularPosition.y, data->angularPosition.z, data->flyingState, data->navVideoNumFrames, data->videoNumFrames);		

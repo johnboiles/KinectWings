@@ -1408,10 +1408,40 @@
 							<reference key="NSNextResponder" ref="439893737"/>
 							<int key="NSvFlags">274</int>
 							<array class="NSMutableArray" key="NSSubviews">
+								<object class="NSImageView" id="513623618">
+									<reference key="NSNextResponder" ref="291780441"/>
+									<int key="NSvFlags">292</int>
+									<set class="NSMutableSet" key="NSDragTypes">
+										<string>Apple PDF pasteboard type</string>
+										<string>Apple PICT pasteboard type</string>
+										<string>Apple PNG pasteboard type</string>
+										<string>NSFilenamesPboardType</string>
+										<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
+										<string>NeXT TIFF v4.0 pasteboard type</string>
+									</set>
+									<string key="NSFrame">{{76, 20}, {20, 20}}</string>
+									<reference key="NSSuperview" ref="291780441"/>
+									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView" ref="438068151"/>
+									<bool key="NSViewIsLayerTreeHost">YES</bool>
+									<int key="NSViewLayerContentsRedrawPolicy">2</int>
+									<string key="NSReuseIdentifierKey">_NS:9</string>
+									<bool key="NSEnabled">YES</bool>
+									<object class="NSImageCell" key="NSCell" id="257724153">
+										<int key="NSCellFlags">130560</int>
+										<int key="NSCellFlags2">33554432</int>
+										<string key="NSCellIdentifier">_NS:9</string>
+										<int key="NSAlign">0</int>
+										<int key="NSScale">0</int>
+										<int key="NSStyle">0</int>
+										<bool key="NSAnimates">NO</bool>
+									</object>
+									<bool key="NSEditable">YES</bool>
+								</object>
 								<object class="NSCustomView" id="458654430">
 									<reference key="NSNextResponder" ref="291780441"/>
 									<int key="NSvFlags">292</int>
-									<string key="NSFrame">{{13, 20}, {49, 160}}</string>
+									<string key="NSFrame">{{20, 20}, {20, 160}}</string>
 									<reference key="NSSuperview" ref="291780441"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="109854171"/>
@@ -1423,7 +1453,7 @@
 								<object class="NSCustomView" id="109854171">
 									<reference key="NSNextResponder" ref="291780441"/>
 									<int key="NSvFlags">292</int>
-									<string key="NSFrame">{{76, 20}, {49, 160}}</string>
+									<string key="NSFrame">{{48, 20}, {20, 160}}</string>
 									<reference key="NSSuperview" ref="291780441"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="272353977"/>
@@ -1442,9 +1472,9 @@
 									<bool key="NSViewIsLayerTreeHost">YES</bool>
 									<object class="NSShadow" key="NSViewShadow">
 										<double key="NSShadowBlurRadius">4</double>
-										<object class="NSColor" key="NSShadowColor" id="881289793">
+										<object class="NSColor" key="NSShadowColor" id="52106660">
 											<int key="NSColorSpace">1</int>
-											<bytes key="NSRGB">MSAxIDEAA</bytes>
+											<bytes key="NSRGB">MCAwIDAAA</bytes>
 										</object>
 									</object>
 									<int key="NSViewLayerContentsRedrawPolicy">2</int>
@@ -1460,7 +1490,7 @@
 										<reference key="NSBackgroundColor" ref="177764204"/>
 										<object class="NSColor" key="NSTextColor">
 											<int key="NSColorSpace">1</int>
-											<bytes key="NSRGB">MC43MzE0NDUzMTI1IDAgMC4wMDc5MzY5MTc3MjEAA</bytes>
+											<bytes key="NSRGB">MC43NTQyNjQ5ODcyIDAuMDA4Mzc0MTgwMTQyIDAuMDI0NzQ1Mzk0NDMAA</bytes>
 										</object>
 									</object>
 								</object>
@@ -1494,35 +1524,6 @@
 								<reference key="NSBackgroundColor" ref="177764204"/>
 								<reference key="NSTextColor" ref="835524917"/>
 							</object>
-						</object>
-						<object class="NSImageView" id="513623618">
-							<reference key="NSNextResponder" ref="439893737"/>
-							<int key="NSvFlags">292</int>
-							<set class="NSMutableSet" key="NSDragTypes">
-								<string>Apple PDF pasteboard type</string>
-								<string>Apple PICT pasteboard type</string>
-								<string>Apple PNG pasteboard type</string>
-								<string>NSFilenamesPboardType</string>
-								<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
-								<string>NeXT TIFF v4.0 pasteboard type</string>
-							</set>
-							<string key="NSFrame">{{231, 20}, {20, 20}}</string>
-							<reference key="NSSuperview" ref="439893737"/>
-							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="438068151"/>
-							<int key="NSViewLayerContentsRedrawPolicy">2</int>
-							<string key="NSReuseIdentifierKey">_NS:9</string>
-							<bool key="NSEnabled">YES</bool>
-							<object class="NSImageCell" key="NSCell" id="257724153">
-								<int key="NSCellFlags">130560</int>
-								<int key="NSCellFlags2">33554432</int>
-								<string key="NSCellIdentifier">_NS:9</string>
-								<int key="NSAlign">0</int>
-								<int key="NSScale">0</int>
-								<int key="NSStyle">0</int>
-								<bool key="NSAnimates">NO</bool>
-							</object>
-							<bool key="NSEditable">YES</bool>
 						</object>
 					</array>
 					<string key="NSFrameSize">{640, 560}</string>
@@ -2268,14 +2269,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">_indicatorImage</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="513623618"/>
-					</object>
-					<int key="connectionID">575</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">_emergencyStatusField</string>
 						<reference key="source" ref="976324537"/>
 						<reference key="destination" ref="375331650"/>
@@ -2297,6 +2290,14 @@
 						<reference key="destination" ref="458654430"/>
 					</object>
 					<int key="connectionID">543</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_indicatorImage</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="513623618"/>
+					</object>
+					<int key="connectionID">575</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2826,7 +2827,6 @@
 							<reference ref="291780441"/>
 							<reference ref="272353977"/>
 							<reference ref="307885043"/>
-							<reference ref="513623618"/>
 							<reference ref="938460561"/>
 							<reference ref="438068151"/>
 						</array>
@@ -3336,8 +3336,9 @@
 						<reference key="object" ref="291780441"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="375331650"/>
-							<reference ref="109854171"/>
 							<reference ref="458654430"/>
+							<reference ref="109854171"/>
+							<reference ref="513623618"/>
 						</array>
 						<reference key="parent" ref="439893737"/>
 					</object>
@@ -3368,19 +3369,6 @@
 						<reference key="parent" ref="307885043"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">573</int>
-						<reference key="object" ref="513623618"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="257724153"/>
-						</array>
-						<reference key="parent" ref="439893737"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">574</int>
-						<reference key="object" ref="257724153"/>
-						<reference key="parent" ref="513623618"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">576</int>
 						<reference key="object" ref="375331650"/>
 						<array class="NSMutableArray" key="children">
@@ -3402,6 +3390,19 @@
 						<int key="objectID">539</int>
 						<reference key="object" ref="458654430"/>
 						<reference key="parent" ref="291780441"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">573</int>
+						<reference key="object" ref="513623618"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="257724153"/>
+						</array>
+						<reference key="parent" ref="291780441"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">574</int>
+						<reference key="object" ref="257724153"/>
+						<reference key="parent" ref="513623618"/>
 					</object>
 				</array>
 			</object>
@@ -3567,7 +3568,7 @@
 				<string key="574.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="576.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<real value="4" key="576.IBViewIntegration.shadowBlurRadius"/>
-				<reference key="576.IBViewIntegration.shadowColor" ref="881289793"/>
+				<reference key="576.IBViewIntegration.shadowColor" ref="52106660"/>
 				<real value="0.0" key="576.IBViewIntegration.shadowOffsetHeight"/>
 				<real value="0.0" key="576.IBViewIntegration.shadowOffsetWidth"/>
 				<string key="577.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
