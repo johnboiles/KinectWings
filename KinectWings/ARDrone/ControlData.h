@@ -66,8 +66,6 @@ typedef struct
 	 * Strings to display in interface
 	 */	
 	char error_msg[MEDIUM_STRING_SIZE];
-	char takeoff_msg[SMALL_STRING_SIZE];
-	char emergency_msg[SMALL_STRING_SIZE];
 
 } ControlData;
 
