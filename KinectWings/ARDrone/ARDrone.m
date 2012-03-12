@@ -168,6 +168,7 @@ extern navdata_unpacked_t ctrlnavdata;
       
       static BOOL emergency = NO;
       checkErrors(&controlData);
+      // TODO: This logic does not handle moving directly from one emergency to another
       if (!emergency && strlen(controlData.error_msg) > 0) {
         [delegate drone:self didEmergencyWithMessage:[NSString stringWithCString:controlData.error_msg encoding:NSASCIIStringEncoding]];
         emergency = YES;

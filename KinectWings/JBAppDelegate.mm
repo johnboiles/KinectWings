@@ -99,6 +99,7 @@ extern navdata_unpacked_t ctr;
 
 - (BOOL)handleKeyDownEvent:(NSEvent *)event {
   BOOL keyPressed = NO;
+  BOOL enablePitchAndRoll = NO;
   NSCharacterSet *characters = [NSCharacterSet characterSetWithCharactersInString:[event characters]];
 
   if ([characters characterIsMember:NSRightArrowFunctionKey]) {
@@ -119,23 +120,31 @@ extern navdata_unpacked_t ctr;
   }
   if ([characters characterIsMember:[@" " characterAtIndex:0]]) {
     [_drone takeOff];
-    keyPressed = YES;    
+    keyPressed = YES;
   }
   if ([characters characterIsMember:[@"w" characterAtIndex:0]]) {
     [_drone setPitch:0.7];
     keyPressed = YES;
+    enablePitchAndRoll = YES;
   }
   if ([characters characterIsMember:[@"a" characterAtIndex:0]]) {
     [_drone setRoll:-0.7];
     keyPressed = YES;
+    enablePitchAndRoll = YES;
   }
   if ([characters characterIsMember:[@"s" characterAtIndex:0]]) {
     [_drone setPitch:-0.7];
     keyPressed = YES;
+    enablePitchAndRoll = YES;
   }
   if ([characters characterIsMember:[@"d" characterAtIndex:0]]) {
     [_drone setRoll:0.7];
     keyPressed = YES;
+    enablePitchAndRoll = YES;
+  }
+
+  if (enablePitchAndRoll) {
+    _drone.controlData->accelero_flag |= (1 << ARDRONE_PROGRESSIVE_CMD_ENABLE);
   }
 
   if (keyPressed) {
@@ -147,6 +156,7 @@ extern navdata_unpacked_t ctr;
 
 - (BOOL)handleKeyUpEvent:(NSEvent *)event {
   BOOL keyPressed = NO;
+  BOOL disablePitchAndRoll = NO;
   NSCharacterSet *characters = [NSCharacterSet characterSetWithCharactersInString:[event characters]];
   
   if ([characters characterIsMember:NSRightArrowFunctionKey]) {
@@ -168,18 +178,26 @@ extern navdata_unpacked_t ctr;
   if ([characters characterIsMember:[@"w" characterAtIndex:0]]) {
     [_drone setPitch:0.0];
     keyPressed = YES;
+    disablePitchAndRoll = YES;
   }
   if ([characters characterIsMember:[@"a" characterAtIndex:0]]) {
     [_drone setRoll:0.0];
     keyPressed = YES;
+    disablePitchAndRoll = YES;
   }
   if ([characters characterIsMember:[@"s" characterAtIndex:0]]) {
     [_drone setPitch:0.0];
     keyPressed = YES;
+    disablePitchAndRoll = YES;
   }
   if ([characters characterIsMember:[@"d" characterAtIndex:0]]) {
     [_drone setRoll:0.0];
     keyPressed = YES;
+    disablePitchAndRoll = YES;
+  }
+
+  if (disablePitchAndRoll) {
+    _drone.controlData->accelero_flag &= ~(1 << ARDRONE_PROGRESSIVE_CMD_ENABLE);
   }
 
   if (keyPressed) {
