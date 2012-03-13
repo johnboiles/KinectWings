@@ -31,8 +31,8 @@ void setSomeConfigs(ControlData *controlData) {
   //ARDRONE_TOOL_CONFIGURATION_ADDEVENT(video_channel, &ardrone_control_config.video_channel, NULL);
   //controlData->configurationState = CONFIG_STATE_NEEDED;
 
-  ARDRONE_VARIABLE_BITRATE enabled = ARDRONE_VARIABLE_BITRATE_MODE_DISABLED;
-  uint32_t constantBitrate = 10000;
+  ARDRONE_VARIABLE_BITRATE enabled = ARDRONE_VARIABLE_BITRATE_MANUAL;
+  uint32_t constantBitrate = 15000;
   ardrone_control_config.bitrate_ctrl_mode = enabled;
   ardrone_control_config.bitrate = constantBitrate;
   ardrone_control_config.video_channel = ARDRONE_VIDEO_CHANNEL_HORI;
@@ -43,16 +43,16 @@ void setSomeConfigs(ControlData *controlData) {
 }
 
 void setApplicationDefaultConfig(ControlData *controlData) {
-//  ardrone_application_default_config.navdata_demo = TRUE;
-//  ardrone_application_default_config.navdata_options = (NAVDATA_OPTION_MASK(NAVDATA_DEMO_TAG) | NAVDATA_OPTION_MASK(NAVDATA_VISION_DETECT_TAG) | NAVDATA_OPTION_MASK(NAVDATA_GAMES_TAG));
-
+  ardrone_application_default_config.navdata_demo = TRUE;
+  ardrone_application_default_config.navdata_options = (NAVDATA_OPTION_MASK(NAVDATA_DEMO_TAG) | NAVDATA_OPTION_MASK(NAVDATA_VISION_DETECT_TAG) | NAVDATA_OPTION_MASK(NAVDATA_GAMES_TAG));
+  
   // I dont think these are doing anything for now
   ardrone_application_default_config.video_codec = UVLC_CODEC;//P264_CODEC;
-  ardrone_application_default_config.bitrate_ctrl_mode = ARDRONE_VARIABLE_BITRATE_MODE_DISABLED;
+  ardrone_application_default_config.bitrate_ctrl_mode = ARDRONE_VARIABLE_BITRATE_MODE_DYNAMIC;
   ardrone_application_default_config.video_channel = ARDRONE_VIDEO_CHANNEL_HORI;
-  ardrone_application_default_config.bitrate = 10000;
+  //ardrone_application_default_config.bitrate = 15000;
   ardrone_application_default_config.altitude_max = 10000;
-  controlData->applicationDefaultConfigState = CONFIG_STATE_IDLE;
+  controlData->applicationDefaultConfigState =   CONFIG_STATE_IDLE;
 }
 
 ControlData *controlDataCallbackReference = NULL;

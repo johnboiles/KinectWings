@@ -54,7 +54,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 #endif
 
-#define WIFI_ITFNAME "en1"
+#define WIFI_ITFNAME "en4"
 
 
 // How many times a second to refresh the screen
