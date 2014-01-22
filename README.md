@@ -4,6 +4,8 @@ http://github.com/johnboiles/KinectWings
 
 Quadcopter controller using Kinect.
 
+Watch the [Video](http://www.youtube.com/watch?v=_TAaj2Q-I-Q). Read the [Blog Post](http://engineeringblog.yelp.com/2012/04/after-hours-project-simulating-flight-with-kinect.html).
+
 To build using the xcode project, you must symlink /usr/include/ni and
 /usr/lib/libOpenNI.dylib to the appropriate places in your developer install.
 AFAIK there's not an elegant way to get xcode to use the standard /usr/include
